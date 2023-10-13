@@ -87,7 +87,7 @@ open class ListSection: Section {
 
     public typealias SwipeActionConfigurationProvider = (any ListCellConfigurable) -> UISwipeActionsConfiguration?
 
-    public var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, ListCellConfigurable>!
+    public private(set) var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, ListCellConfigurable>!
     public private(set) var items: [any ListCellConfigurable]
 
     public var isExpanded = true
@@ -101,7 +101,7 @@ open class ListSection: Section {
             return isExpandable
         }
     }
-
+    
     public func expand(_ expand: Bool) -> ListSection {
         isExpanded = expand
         return self

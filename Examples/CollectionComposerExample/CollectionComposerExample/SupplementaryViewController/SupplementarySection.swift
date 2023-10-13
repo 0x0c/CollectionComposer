@@ -37,13 +37,14 @@ class SupplementarySection: Section {
     let id: String
     let items: [Model]
 
-    var cellRegistration: UICollectionView.CellRegistration<TextCell, Model>! = UICollectionView.CellRegistration<TextCell, Model> { cell, _, model in
+    let cellRegistration: UICollectionView.CellRegistration<TextCell, Model>! = UICollectionView.CellRegistration<TextCell, Model> { cell, _, model in
         cell.label.text = model.title
         cell.contentView.backgroundColor = .cyan
         cell.contentView.layer.borderColor = UIColor.black.cgColor
         cell.contentView.layer.borderWidth = 1
         cell.label.textAlignment = .center
     }
+
     let headerRegistration = UICollectionView.SupplementaryRegistration
     <TextSupplementaryView>(elementKind: SupplementarySection.sectionHeaderElementKind) {
         supplementaryView, _, _ in
