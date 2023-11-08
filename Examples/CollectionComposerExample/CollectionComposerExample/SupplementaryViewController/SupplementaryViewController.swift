@@ -9,7 +9,7 @@ import CollectionComposer
 import UIKit
 
 class SupplementaryViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
-    var sections = [any Section]()
+    private(set) var sections = [any Section]()
 
     lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
 
@@ -30,5 +30,9 @@ class SupplementaryViewController: ComposedCollectionViewController, SectionProv
                 }
             }
         }
+    }
+    
+    func store(_ sections: [any CollectionComposer.Section]) {
+        self.sections = sections
     }
 }

@@ -11,7 +11,7 @@ import UIKit
 class ListViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
     lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
 
-    var sections = [any Section]()
+    private(set) var sections = [any Section]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,5 +86,9 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
         if section is ListSection, let item = item as? ListItem {
             print(item)
         }
+    }
+
+    func store(_ sections: [any CollectionComposer.Section]) {
+        self.sections = sections
     }
 }

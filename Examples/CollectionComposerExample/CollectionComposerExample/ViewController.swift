@@ -44,7 +44,7 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
 
     lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
 
-    var sections = [any Section]()
+    private(set) var sections = [any Section]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,5 +77,9 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
         case .supplementary:
             navigationController?.pushViewController(SupplementaryViewController(), animated: true)
         }
+    }
+
+    func store(_ sections: [any CollectionComposer.Section]) {
+        self.sections = sections
     }
 }

@@ -10,17 +10,13 @@ import Foundation
 // MARK: - SectionDataSource
 
 public protocol SectionDataSource: AnyObject {
-    var sections: [any Section] { get set }
+    var sections: [any Section] { get }
 
     func store(_ sections: [any Section])
     func section(for sectionIndex: Int) -> any Section
 }
 
 public extension SectionDataSource {
-    func store(_ sections: [any Section]) {
-        self.sections = sections
-    }
-
     func section(for sectionIndex: Int) -> any Section {
         return sections[sectionIndex]
     }
