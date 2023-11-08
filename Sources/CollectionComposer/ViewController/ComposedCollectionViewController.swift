@@ -119,7 +119,7 @@ open class ComposedCollectionViewController: UIViewController {
         }
     }
 
-    open func didSelectItem(_ item: AnyHashable, in section: any Section) {}
+    open func didSelectItem(_ item: AnyHashable, in section: any Section, at indexPath: IndexPath) {}
 
     // MARK: Public
 
@@ -157,6 +157,6 @@ extension ComposedCollectionViewController: UICollectionViewDelegate {
               let item = dataSource.itemIdentifier(for: indexPath) else {
             return
         }
-        didSelectItem(item, in: section)
+        didSelectItem(item, in: section, at: indexPath)
     }
 }

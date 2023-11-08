@@ -82,7 +82,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
         }
     }
 
-    override func didSelectItem(_ item: AnyHashable, in section: any Section) {
+    override func didSelectItem(_ item: AnyHashable, in section: any Section, at indexPath: IndexPath) {
         if section is ListSection, let item = item as? ListItem {
             print(item)
         }

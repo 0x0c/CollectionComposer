@@ -67,7 +67,7 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
         }
     }
 
-    override func didSelectItem(_ item: AnyHashable, in section: any Section) {
+    override func didSelectItem(_ item: AnyHashable, in section: any Section, at indexPath: IndexPath) {
         guard let example = item as? Example else {
             return
         }
