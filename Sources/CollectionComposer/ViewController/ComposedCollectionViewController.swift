@@ -73,7 +73,7 @@ open class ComposedCollectionViewController: UIViewController {
         return view
     }
 
-    open func layout(configuration: UICollectionViewCompositionalLayoutConfiguration) -> UICollectionViewCompositionalLayout {
+    private func layout(configuration: UICollectionViewCompositionalLayoutConfiguration) -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout(sectionProvider: { [unowned self] sectionIndex, environment -> NSCollectionLayoutSection? in
             return provider?
                 .sectionDataSource
@@ -119,7 +119,7 @@ open class ComposedCollectionViewController: UIViewController {
         }
     }
 
-    open func didSelectItem(in section: any Section, item: AnyHashable) {}
+    open func didSelectItem(_ item: AnyHashable, in section: any Section) {}
 
     // MARK: Public
 
@@ -157,6 +157,6 @@ extension ComposedCollectionViewController: UICollectionViewDelegate {
               let item = dataSource.itemIdentifier(for: indexPath) else {
             return
         }
-        didSelectItem(in: section, item: item)
+        didSelectItem(item, in: section)
     }
 }
