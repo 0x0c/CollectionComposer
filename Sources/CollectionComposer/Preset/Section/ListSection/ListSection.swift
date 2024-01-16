@@ -145,7 +145,6 @@ open class ListSection: Section {
 
     private let id: String
     private let cellStyle: CellStyle
-    private var cellRegistration2: UICollectionView.CellRegistration<UICollectionViewListCell, any ListCellConfigurable>!
     private var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>!
     private var headerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
     private var footerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
