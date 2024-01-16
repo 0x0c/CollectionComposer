@@ -20,7 +20,7 @@ dependencies: [
 
 ### 1. Declare `Section`, `Item` and `Cell`
 
-```
+```swift
 class SampleSection: Section {
     // MARK: Lifecycle
 
@@ -53,7 +53,7 @@ class SampleSection: Section {
 ```
 
 
-```
+```swift
 class TextCell: UICollectionViewCell {
     // MARK: Lifecycle
 
@@ -85,7 +85,7 @@ class TextCell: UICollectionViewCell {
 
 ### 2. Declare layout of cells in `Section`
 
-```
+```swift
 func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
     let itemSize = NSCollectionLayoutSize(
         widthDimension: .fractionalWidth(0.25),
@@ -105,8 +105,7 @@ func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollecti
 
 ### 3. Load sections in ViewController that inherits ComposedCollectionViewController
 
-```
-
+```swift
 class ViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
 ...
     // Confirm SectionProvider and SectionDataSource protocol
