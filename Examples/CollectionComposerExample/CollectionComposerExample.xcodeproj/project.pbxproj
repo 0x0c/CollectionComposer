@@ -20,6 +20,7 @@
 		E9AEE73A2ACD438400C23B31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9AEE7392ACD438400C23B31 /* Assets.xcassets */; };
 		E9AEE73D2ACD438400C23B31 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9AEE73B2ACD438400C23B31 /* LaunchScreen.storyboard */; };
 		E9AEE7462ACD439F00C23B31 /* CollectionComposer in Frameworks */ = {isa = PBXBuildFile; productRef = E9AEE7452ACD439F00C23B31 /* CollectionComposer */; };
+		E9C737E82B5628AC002658AF /* ComposedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C737E72B5628AC002658AF /* ComposedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		E9AEE7392ACD438400C23B31 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9AEE73C2ACD438400C23B31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E9AEE73E2ACD438400C23B31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9C737E72B5628AC002658AF /* ComposedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 				E9AEE7392ACD438400C23B31 /* Assets.xcassets */,
 				E9AEE73B2ACD438400C23B31 /* LaunchScreen.storyboard */,
 				E9AEE73E2ACD438400C23B31 /* Info.plist */,
+				E9C737E72B5628AC002658AF /* ComposedViewController.swift */,
 			);
 			path = CollectionComposerExample;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9C737E82B5628AC002658AF /* ComposedViewController.swift in Sources */,
 				E91F15122AD30CA700EEE73C /* SupplementarySection.swift in Sources */,
 				E9AEE7352ACD438300C23B31 /* ViewController.swift in Sources */,
 				E9AEE7312ACD438300C23B31 /* AppDelegate.swift in Sources */,

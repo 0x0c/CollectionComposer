@@ -21,6 +21,7 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
         enum Kind: String {
             case list
             case supplementary
+            case composed
         }
 
         let kind: Kind
@@ -56,6 +57,7 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
             ListSection(apperarance: .insetGrouped) {
                 Example(.list)
                 Example(.supplementary)
+                Example(.composed)
             }
         }
     }
@@ -76,6 +78,8 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
             navigationController?.pushViewController(ListViewController(), animated: true)
         case .supplementary:
             navigationController?.pushViewController(SupplementaryViewController(), animated: true)
+        case .composed:
+            navigationController?.pushViewController(ComposedViewController(), animated: true)
         }
     }
 
