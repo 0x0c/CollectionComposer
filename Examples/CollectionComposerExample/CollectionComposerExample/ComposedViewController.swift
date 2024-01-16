@@ -18,25 +18,24 @@ class ComposedViewController: ComposedCollectionViewController, SectionProvider,
         title = "List"
 
         provider = self
-        store(animate: false) {
-            ListSection(id: "first-list", apperarance: .plain) {
-                ListItem(text: "Item 1")
-                ListItem(text: "Item 2")
-                ListItem(text: "Item 3")
-            }.header(.plain("Header"))
-                .footer(.plain("Footer"))
+        store {
+            ListSection(id: "first-list", apperarance: .insetGrouped) {
+                ListItem(text: "Item 1", secondaryText: "Seconday")
+                ListItem(text: "Item 2", secondaryText: "Seconday")
+                ListItem(text: "Item 3", secondaryText: "Seconday")
+            }
             SupplementarySection(id: "first-supplementary") {
-                for index in 0 ... 25 {
+                for index in 0 ... 4 {
                     SupplementarySection.Model(title: "\(index)")
                 }
             }
-            ListSection(id: "second-list", apperarance: .plain) {
-                ListItem(text: "Item 1")
-                ListItem(text: "Item 2")
-                ListItem(text: "Item 3")
-                ListItem(text: "Item 4")
-                ListItem(text: "Item 5")
-            }.header(.plain("Header"))
+            ListSection(id: "second-list", apperarance: .insetGrouped) {
+                ListItem(text: "Item 1", secondaryText: "Seconday")
+                ListItem(text: "Item 2", secondaryText: "Seconday")
+                ListItem(text: "Item 3", secondaryText: "Seconday")
+                ListItem(text: "Item 4", secondaryText: "Seconday")
+                ListItem(text: "Item 5", secondaryText: "Seconday")
+            }.header(.plain("Expandable Header", isExpandable: true))
                 .footer(.plain("Footer"))
         }
     }

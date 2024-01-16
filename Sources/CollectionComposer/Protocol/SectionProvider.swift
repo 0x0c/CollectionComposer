@@ -10,10 +10,17 @@ import Foundation
 
 // MARK: - SectionProvider
 
+/// `SectionProvider` is a protocol to store sections in SectionDataSource and notify changes of data soruce.
 public protocol SectionProvider: AnyObject {
+    /// A data source for sections.
     var sectionDataSource: SectionDataSource { get }
+    /// A publisher to notify changes of data source.
     var storePublisher: AnyPublisher<Bool, Never> { get }
 
+    /// A function to store sections into the data source.
+    /// - Parameters:
+    ///   - animate: If true, the collection view is being added to the sections using an animation.
+    ///   - sections: Sections that will be stored into the data source.
     func store(animate: Bool, @SectionBuilder _ sections: () -> [any Section])
 }
 

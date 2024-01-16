@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// `ListSection` provides table layout like UITableView by ``UICollectionLayoutListConfiguration``
 open class ListSection: Section {
     // MARK: Lifecycle
 
