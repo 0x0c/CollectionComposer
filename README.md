@@ -114,13 +114,22 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
 
     private(set) var sections = [any Section]()
 
-    store {
-        SampleSection(id: "first") {
-            SampleSection.Model(tilte: "Item 1")
-            SampleSection.Model(tilte: "Item 2")
-            SampleSection.Model(tilte: "Item 3")
-            SampleSection.Model(tilte: "Item 4")
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        provider = self
+        store {
+            SampleSection(id: "first") {
+                SampleSection.Model(tilte: "Item 1")
+                SampleSection.Model(tilte: "Item 2")
+                SampleSection.Model(tilte: "Item 3")
+                SampleSection.Model(tilte: "Item 4")
+            }
         }
+    }
+
+    func store(_ sections: [any CollectionComposer.Section]) {
+        self.sections = sections
     }
 ...
 }
