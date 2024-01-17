@@ -15,11 +15,13 @@ open class ListSection: Section {
         id: String = UUID().uuidString,
         cellStyle: CellStyle = .default,
         apperarance: UICollectionLayoutListConfiguration.Appearance = .plain,
+        isHighlightable: Bool = false,
         @ItemBuilder<any ListCellConfigurable> _ items: () -> [any ListCellConfigurable]
     ) {
         self.id = id
         self.items = items()
         self.cellStyle = cellStyle
+        self.isHighlightable = isHighlightable
         listConfiguration = UICollectionLayoutListConfiguration(appearance: apperarance)
         prepare()
     }
@@ -64,6 +66,9 @@ open class ListSection: Section {
     }
 
     open func isHighlightable(for index: Int) -> Bool {
+        if isHighlightable {
+            return true
+        }
         return items[index].isHighlightable
     }
 
@@ -95,6 +100,7 @@ open class ListSection: Section {
     public private(set) var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, ListCellConfigurable>!
     public private(set) var items: [any ListCellConfigurable]
 
+    public var isHighlightable: Bool
     public var isExpanded = true
 
     public var isExpandable: Bool {
