@@ -40,6 +40,8 @@ public protocol Section {
     /// This function is used to deque cells by dequeueConfiguredReusableCell and UICollectionView.CellRegistration.
     /// See also ``ListSection``.
     func exactItem<T>(for item: AnyHashable, in items: [T]) -> T
+    /// Indicates the section allows to highlight cells.
+    func isHighlightable(for index: Int) -> Bool
 }
 
 public extension Section {

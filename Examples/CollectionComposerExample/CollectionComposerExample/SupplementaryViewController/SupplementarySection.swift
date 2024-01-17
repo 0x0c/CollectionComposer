@@ -45,6 +45,8 @@ class SupplementarySection: Section {
         cell.label.textAlignment = .center
     }
 
+    var isExpanded = false
+
     let headerRegistration = UICollectionView.SupplementaryRegistration
     <TextSupplementaryView>(elementKind: SupplementarySection.sectionHeaderElementKind) {
         supplementaryView, _, _ in
@@ -71,8 +73,11 @@ class SupplementarySection: Section {
         return items.map { AnyHashable($0) }
     }
 
-    var isExpanded = false
     var isExpandable: Bool {
+        return false
+    }
+
+    func isHighlightable(for index: Int) -> Bool {
         return false
     }
 

@@ -16,6 +16,7 @@ public protocol ListCellConfigurable: Hashable {
     var attributedText: NSAttributedString? { get }
     var secondaryText: String? { get }
     var secondaryAttributedText: NSAttributedString? { get }
+    var isHighlightable: Bool { get }
 
     var accessories: [UICellAccessory]? { get }
 }
@@ -32,6 +33,7 @@ public extension ListCellConfigurable {
         hasher.combine(attributedText)
         hasher.combine(secondaryText)
         hasher.combine(secondaryAttributedText)
+        hasher.combine(isHighlightable)
         accessories?.forEach {
             hasher.combine($0.accessoryType.hashValue)
         }

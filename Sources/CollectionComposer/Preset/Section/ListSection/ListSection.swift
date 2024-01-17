@@ -63,6 +63,10 @@ open class ListSection: Section {
         }
     }
 
+    open func isHighlightable(for index: Int) -> Bool {
+        return items[index].isHighlightable
+    }
+
     // MARK: Public
 
     public typealias Cell = UICollectionViewListCell
@@ -102,7 +106,7 @@ open class ListSection: Section {
             return isExpandable
         }
     }
-    
+
     public func expand(_ expand: Bool) -> ListSection {
         isExpanded = expand
         return self

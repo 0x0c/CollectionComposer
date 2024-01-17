@@ -73,15 +73,6 @@ open class ComposedCollectionViewController: UIViewController {
         return view
     }
 
-    private func layout(configuration: UICollectionViewCompositionalLayoutConfiguration) -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout(sectionProvider: { [unowned self] sectionIndex, environment -> NSCollectionLayoutSection? in
-            return provider?
-                .sectionDataSource
-                .section(for: sectionIndex)
-                .layoutSection(for: environment)
-        }, configuration: configuration)
-    }
-
     open func layoutConfiguration() -> UICollectionViewCompositionalLayoutConfiguration {
         return UICollectionViewCompositionalLayoutConfiguration()
     }
@@ -147,6 +138,15 @@ open class ComposedCollectionViewController: UIViewController {
     // MARK: Private
 
     private var cancellable = Set<AnyCancellable>()
+
+    private func layout(configuration: UICollectionViewCompositionalLayoutConfiguration) -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout(sectionProvider: { [unowned self] sectionIndex, environment -> NSCollectionLayoutSection? in
+            return provider?
+                .sectionDataSource
+                .section(for: sectionIndex)
+                .layoutSection(for: environment)
+        }, configuration: configuration)
+    }
 }
 
 // MARK: UICollectionViewDelegate
@@ -158,5 +158,12 @@ extension ComposedCollectionViewController: UICollectionViewDelegate {
             return
         }
         didSelectItem(item, in: section, at: indexPath)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        guard let section = provider?.sectionDataSource.section(for: indexPath.section) else {
+            return false
+        }
+        return section.isHighlightable(for: indexPath.row)
     }
 }

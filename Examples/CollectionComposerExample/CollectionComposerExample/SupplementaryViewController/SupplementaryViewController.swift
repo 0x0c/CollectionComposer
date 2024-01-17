@@ -31,7 +31,7 @@ class SupplementaryViewController: ComposedCollectionViewController, SectionProv
             }
         }
     }
-    
+
     func store(_ sections: [any CollectionComposer.Section]) {
         self.sections = sections
     }

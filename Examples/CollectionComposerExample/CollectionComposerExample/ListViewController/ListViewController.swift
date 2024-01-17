@@ -20,7 +20,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
         provider = self
         store(animate: false) {
             ListSection(id: "first", apperarance: .plain) {
-                ListItem(text: "Item 1")
+                ListItem(isHighlightable: true, text: "Item 1")
                 ListItem(text: "Item 2")
                 ListItem(text: "Item 3")
                 ListItem(text: "Item 4")

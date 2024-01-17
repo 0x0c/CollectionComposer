@@ -30,6 +30,10 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
         var secondaryText: String?
         var secondaryAttributedText: NSAttributedString?
 
+        var isHighlightable: Bool {
+            return true
+        }
+
         var id: String {
             return kind.rawValue
         }
