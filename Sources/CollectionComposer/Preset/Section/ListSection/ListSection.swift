@@ -27,7 +27,7 @@ open class ListSection: Section {
     // MARK: Open
 
     open var identifier: String {
-        return "collection-composer-list-section-\(id)"
+        return id
     }
 
     open var snapshotItems: [AnyHashable] {
