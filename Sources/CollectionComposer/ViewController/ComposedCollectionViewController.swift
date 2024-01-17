@@ -115,7 +115,6 @@ open class ComposedCollectionViewController: UIViewController {
     // MARK: Public
 
     public var collectionView: UICollectionView!
-    public var highlightedColor: UIColor?
     public var dataSource: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable>!
     public var ignoreEmptySection = false
 
