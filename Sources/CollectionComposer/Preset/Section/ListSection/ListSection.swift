@@ -28,10 +28,6 @@ open class ListSection: Section {
 
     // MARK: Open
 
-    open var identifier: String {
-        return id
-    }
-
     open var snapshotItems: [AnyHashable] {
         return items.map { AnyHashable($0) }
     }
@@ -103,6 +99,8 @@ open class ListSection: Section {
     public var isHighlightable: Bool
     public var isExpanded = true
 
+    public let id: String
+
     public var isExpandable: Bool {
         guard let header else {
             return false
@@ -154,7 +152,6 @@ open class ListSection: Section {
 
     private var listConfiguration: UICollectionLayoutListConfiguration
 
-    private let id: String
     private let cellStyle: CellStyle
     private var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>!
     private var headerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
