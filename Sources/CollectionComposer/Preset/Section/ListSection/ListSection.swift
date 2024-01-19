@@ -11,21 +11,31 @@ import UIKit
 open class ListSection: Section {
     // MARK: Lifecycle
 
-    public init(
+    public convenience init(
         id: String = UUID().uuidString,
         cellStyle: CellStyle = .default,
         apperarance: UICollectionLayoutListConfiguration.Appearance = .plain,
         isHighlightable: Bool = false,
         @ItemBuilder<any ListCellConfigurable> _ items: () -> [any ListCellConfigurable]
     ) {
+        self.init(id: id, cellStyle: cellStyle, apperarance: apperarance, isHighlightable: isHighlightable, items: items())
+    }
+
+    public init(
+        id: String = UUID().uuidString,
+        cellStyle: CellStyle = .default,
+        apperarance: UICollectionLayoutListConfiguration.Appearance = .plain,
+        isHighlightable: Bool = false,
+        items: [any ListCellConfigurable]
+    ) {
         self.id = id
-        self.items = items()
+        self.items = items
         self.cellStyle = cellStyle
         self.isHighlightable = isHighlightable
         listConfiguration = UICollectionLayoutListConfiguration(appearance: apperarance)
         prepare()
     }
-
+    
     // MARK: Open
 
     open var snapshotItems: [AnyHashable] {
