@@ -112,6 +112,14 @@ open class ComposedCollectionViewController: UIViewController {
 
     open func didSelectItem(_ item: AnyHashable, in section: any Section, at indexPath: IndexPath) {}
 
+    open func deselectSelectedItems(animated: Bool = true) {
+        if let indexPaths = collectionView.indexPathsForSelectedItems {
+            for indexPath in indexPaths {
+                collectionView.deselectItem(at: indexPath, animated: animated)
+            }
+        }
+    }
+
     // MARK: Public
 
     public var collectionView: UICollectionView!
