@@ -35,7 +35,7 @@ open class ListSection: Section {
         listConfiguration = UICollectionLayoutListConfiguration(appearance: apperarance)
         prepare()
     }
-    
+
     // MARK: Open
 
     open var snapshotItems: [AnyHashable] {
