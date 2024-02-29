@@ -5,7 +5,6 @@
 //  Created by Akira Matsuda on 2024/01/21.
 //
 
-import CollectionComposer
 import UIKit
 
 open class TextSection: Section {

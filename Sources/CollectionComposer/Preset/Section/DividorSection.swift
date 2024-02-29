@@ -5,7 +5,6 @@
 //  Created by Akira Matsuda on 2024/02/29.
 //
 
-import Foundation
 import SwiftUI
 
 @available(iOS 16.0, *)

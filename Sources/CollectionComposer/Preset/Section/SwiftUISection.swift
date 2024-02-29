@@ -5,7 +5,6 @@
 //  Created by Akira Matsuda on 2024/01/18.
 //
 
-import Foundation
 import SwiftUI
 
 // MARK: - SwiftUISection

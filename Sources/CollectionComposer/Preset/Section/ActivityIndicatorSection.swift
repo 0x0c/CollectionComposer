@@ -5,8 +5,6 @@
 //  Created by Akira Matsuda on 2024/01/17.
 //
 
-import CollectionComposer
-import Foundation
 import UIKit
 
 open class ActivityIndicatorSection: Section {
