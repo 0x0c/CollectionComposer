@@ -1,6 +1,6 @@
 //
 //  ButtonSection.swift
-//  CollectionComposerExample
+//  CollectionComposer
 //
 //  Created by Akira Matsuda on 2024/01/18.
 //

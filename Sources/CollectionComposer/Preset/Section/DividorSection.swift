@@ -1,6 +1,6 @@
 //
 //  DividorSection.swift
-//  CollectionComposerExample
+//  CollectionComposer
 //
 //  Created by Akira Matsuda on 2024/02/29.
 //

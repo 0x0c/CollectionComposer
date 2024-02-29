@@ -1,6 +1,6 @@
 //
 //  TextSection.swift
-//  TokyoBicycleParkingMap
+//  CollectionComposer
 //
 //  Created by Akira Matsuda on 2024/01/21.
 //
