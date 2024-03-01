@@ -13,6 +13,7 @@
 		E91F15152AD30ED900EEE73C /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F15142AD30ED900EEE73C /* TextCell.swift */; };
 		E91F15172AD317C600EEE73C /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F15162AD317C600EEE73C /* ListItem.swift */; };
 		E91F15192AD3CF2100EEE73C /* TextSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F15182AD3CF2100EEE73C /* TextSupplementaryView.swift */; };
+		E9451B4F2B91A16900EA6202 /* LogInFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9451B4E2B91A16900EA6202 /* LogInFormViewController.swift */; };
 		E98C2A132B90C0F900E185A9 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C2A122B90C0F900E185A9 /* GalleryViewController.swift */; };
 		E9AEE7312ACD438300C23B31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AEE7302ACD438300C23B31 /* AppDelegate.swift */; };
 		E9AEE7332ACD438300C23B31 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AEE7322ACD438300C23B31 /* SceneDelegate.swift */; };
@@ -31,6 +32,7 @@
 		E91F15142AD30ED900EEE73C /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		E91F15162AD317C600EEE73C /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		E91F15182AD3CF2100EEE73C /* TextSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSupplementaryView.swift; sourceTree = "<group>"; };
+		E9451B4E2B91A16900EA6202 /* LogInFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInFormViewController.swift; sourceTree = "<group>"; };
 		E98C2A122B90C0F900E185A9 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		E9AEE72D2ACD438300C23B31 /* CollectionComposerExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollectionComposerExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9AEE7302ACD438300C23B31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				E9AEE73E2ACD438400C23B31 /* Info.plist */,
 				E9C737E72B5628AC002658AF /* ComposedViewController.swift */,
 				E98C2A122B90C0F900E185A9 /* GalleryViewController.swift */,
+				E9451B4E2B91A16900EA6202 /* LogInFormViewController.swift */,
 			);
 			path = CollectionComposerExample;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 				E91F15192AD3CF2100EEE73C /* TextSupplementaryView.swift in Sources */,
 				E9AEE7332ACD438300C23B31 /* SceneDelegate.swift in Sources */,
 				E91F15172AD317C600EEE73C /* ListItem.swift in Sources */,
+				E9451B4F2B91A16900EA6202 /* LogInFormViewController.swift in Sources */,
 				E91F15102AD30C8F00EEE73C /* SupplementaryViewController.swift in Sources */,
 				E91F15152AD30ED900EEE73C /* TextCell.swift in Sources */,
 				E91F150D2AD30C7300EEE73C /* ListViewController.swift in Sources */,

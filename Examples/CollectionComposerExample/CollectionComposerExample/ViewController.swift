@@ -23,6 +23,7 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
             case supplementary
             case composed
             case gallery
+            case login
         }
 
         let kind: Kind
@@ -64,6 +65,7 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
                 Example(.supplementary)
                 Example(.composed)
                 Example(.gallery)
+                Example(.login)
             }
         }
     }
@@ -88,6 +90,8 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
             navigationController?.pushViewController(ComposedViewController(), animated: true)
         case .gallery:
             navigationController?.pushViewController(GalleryViewController(), animated: true)
+        case .login:
+            navigationController?.pushViewController(LogInFormViewController(), animated: true)
         }
     }
 
