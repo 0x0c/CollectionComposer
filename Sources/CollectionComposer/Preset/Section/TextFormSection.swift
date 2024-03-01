@@ -26,8 +26,6 @@ open class TextFormSection: Section {
 
         override public init(frame: CGRect) {
             super.init(frame: frame)
-            layer.cornerRadius = 8
-            backgroundColor = .tertiarySystemGroupedBackground
             label.font = .preferredFont(forTextStyle: .headline)
             textField.delegate = self
             textField.addTarget(
@@ -35,34 +33,42 @@ open class TextFormSection: Section {
                 action: #selector(textDidChange),
                 for: .editingChanged
             )
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            let baseView = UIView(frame: .zero)
+            baseView.backgroundColor = .tertiarySystemGroupedBackground
+            baseView.layer.cornerRadius = 8
+            baseView.translatesAutoresizingMaskIntoConstraints = false
+            baseView.addSubview(textField)
+            NSLayoutConstraint.activate([
+                textField.heightAnchor.constraint(
+                    equalToConstant: TextFormCell.defaultHeight
+                ),
+                textField.topAnchor.constraint(equalTo: baseView.topAnchor),
+                textField.bottomAnchor.constraint(equalTo: baseView.bottomAnchor),
+                textField.trailingAnchor.constraint(
+                    equalTo: baseView.trailingAnchor,
+                    constant: -16
+                ),
+                textField.leadingAnchor.constraint(
+                    equalTo: baseView.leadingAnchor,
+                    constant: 16
+                )
+            ])
             let stackView = UIStackView(arrangedSubviews: [
                 label,
-                textField
+                baseView
             ])
             stackView.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(stackView)
             stackView.axis = .vertical
             stackView.distribution = .fill
+            stackView.spacing = 8
             NSLayoutConstraint.activate([
-                textField.heightAnchor.constraint(
-                    equalToConstant: TextFormCell.defaultHeight
-                ),
-                stackView.topAnchor.constraint(
-                    equalTo: contentView.topAnchor,
-                    constant: 8
-                ),
-                stackView.bottomAnchor.constraint(
-                    equalTo: contentView.bottomAnchor,
-                    constant: -8
-                ),
-                stackView.trailingAnchor.constraint(
-                    equalTo: contentView.trailingAnchor,
-                    constant: -16
-                ),
-                stackView.leadingAnchor.constraint(
-                    equalTo: contentView.leadingAnchor,
-                    constant: 16
-                )
+                baseView.heightAnchor.constraint(equalToConstant: TextFormCell.defaultHeight),
+                stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+                stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+                stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
             ])
         }
 
@@ -94,7 +100,7 @@ open class TextFormSection: Section {
 
         // MARK: Internal
 
-        static let defaultHeight: CGFloat = 32
+        static let defaultHeight: CGFloat = 44
 
         var shouldValidate = false
 
@@ -198,7 +204,7 @@ open class TextFormSection: Section {
             subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 8
+        section.interGroupSpacing = 16
         section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
         return section
     }
