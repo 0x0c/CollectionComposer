@@ -19,15 +19,20 @@ class LogInFormViewController: ComposedCollectionViewController, SectionProvider
 
         provider = self
         store {
-            TextFormSection(id: "login") {
-                TextFormSection.TextForm(label: "Username", placeholder: "Your name")
-                TextFormSection.TextForm(placeholder: "Email").validate { text in
-                    guard let text else {
-                        return false
+            TextFormSection<RoundedTextFormCell>(id: "login") {
+                TextForm(label: "Username", placeholder: "Your name")
+                TextForm(placeholder: "Email")
+                TextForm(placeholder: "Password", isSecureText: true)
+                    .validate { text in
+                        guard let text else {
+                            return .invalid(hint: "Password should not be empty.")
+                        }
+                        if text.count >= 10 {
+                            return .valid
+                        }
+                        return .invalid(hint: "Password should be longer than 10 characters.")
                     }
-                    return text.count >= 10
-                }
-                TextFormSection.TextForm(placeholder: "Password", isSecureText: true)
+                TextForm(placeholder: "Note")
             }
         }
     }
