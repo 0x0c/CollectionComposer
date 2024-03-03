@@ -26,9 +26,9 @@ class GalleryViewController: ComposedCollectionViewController, SectionProvider, 
             DividorSection()
             ActivityIndicatorSection()
             DividorSection()
-            ButtonSection(
+            ButtonSection<BasicButtonCell>(
                 id: "button",
-                configuration: ButtonSection.Configuration(configuration: .filled(), title: "Button")
+                configuration: ButtonConfiguration(configuration: .filled(), title: "Button")
             ) { id in
                 print("button pressed \(id)")
             }
