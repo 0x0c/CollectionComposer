@@ -17,12 +17,39 @@ class GalleryViewController: ComposedCollectionViewController, SectionProvider, 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Gallery"
-
+        let attributedString = NSMutableAttributedString(
+            string: "Hello",
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 24.0),
+                .foregroundColor: UIColor.orange,
+                .strokeColor: UIColor.red,
+                .paragraphStyle: {
+                    let space = NSMutableParagraphStyle()
+                    space.lineSpacing = 20
+                    return space
+                }()
+            ]
+        )
+        attributedString.append(NSAttributedString(
+            string: "World",
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 35.0),
+                .foregroundColor: UIColor.purple,
+                .strokeColor: UIColor.blue,
+                .strokeWidth: -2
+            ]
+        ))
         provider = self
         store {
-            TextSection("Sample Text")
+            TextSection<BasicTextCell>("Sample Text")
             DividorSection()
-            TextSection(.init(text: "Sample Text", textAlignment: .right, font: .boldSystemFont(ofSize: 30)))
+            TextSection<BasicTextCell>(
+                StringConfiguration(
+                    .plain(text: "Bold Text", font: .boldSystemFont(ofSize: 30)),
+                    textAlignment: .right
+                ))
+            DividorSection()
+            TextSection<BasicTextCell>(StringConfiguration(.attributed(text: attributedString)))
             DividorSection()
             ActivityIndicatorSection()
             DividorSection()
