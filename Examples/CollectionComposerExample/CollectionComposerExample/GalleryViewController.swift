@@ -42,17 +42,17 @@ class GalleryViewController: ComposedCollectionViewController, SectionProvider, 
         provider = self
         store {
             TextSection<BasicTextCell>("Sample Text")
-            TextSection()
+            DividerSection()
             TextSection<BasicTextCell>(
                 StringConfiguration(
                     .plain(text: "Bold Text", font: .boldSystemFont(ofSize: 30)),
                     textAlignment: .right
                 ))
-            TextSection()
+            DividerSection()
             TextSection<BasicTextCell>(StringConfiguration(.attributed(text: attributedString)))
-            TextSection()
+            DividerSection()
             ActivityIndicatorSection()
-            TextSection()
+            DividerSection()
             ButtonSection<BasicButtonCell>(
                 id: "button",
                 configuration: ButtonConfiguration(configuration: .filled(), title: "Button")
