@@ -42,24 +42,24 @@ class GalleryViewController: ComposedCollectionViewController, SectionProvider, 
         provider = self
         store {
             TextSection<BasicTextCell>("Sample Text")
-            DividorSection()
+            TextSection()
             TextSection<BasicTextCell>(
                 StringConfiguration(
                     .plain(text: "Bold Text", font: .boldSystemFont(ofSize: 30)),
                     textAlignment: .right
                 ))
-            DividorSection()
+            TextSection()
             TextSection<BasicTextCell>(StringConfiguration(.attributed(text: attributedString)))
-            DividorSection()
+            TextSection()
             ActivityIndicatorSection()
-            DividorSection()
+            TextSection()
             ButtonSection<BasicButtonCell>(
                 id: "button",
                 configuration: ButtonConfiguration(configuration: .filled(), title: "Button")
             ) { id in
                 print("button pressed \(id)")
             }
-            DividorSection()
+            DividerSection()
             SwiftUISection(
                 id: "swift-ui-section",
                 configuration: UIHostingConfiguration {
