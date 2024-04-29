@@ -11,9 +11,10 @@ import SwiftUI
 open class SwiftUICellSection<View: SwiftUICellView & SwiftUI.View>: CollectionComposer.Section {
     // MARK: Lifecycle
 
-    public init(id: String, items: [View.Model]) {
+    public init(id: String, items: [View.Model], isHighlightable: Bool = false) {
         self.id = id
         self.items = items
+        self.isHighlightable = isHighlightable
     }
 
     // MARK: Open
@@ -53,11 +54,12 @@ open class SwiftUICellSection<View: SwiftUICellView & SwiftUI.View>: CollectionC
     }
 
     open func isHighlightable(for index: Int) -> Bool {
-        return false
+        return isHighlightable
     }
 
     // MARK: Public
 
+    private var isHighlightable = false
     public typealias Cell = UICollectionViewCell
     public typealias Item = View.Model
 }
