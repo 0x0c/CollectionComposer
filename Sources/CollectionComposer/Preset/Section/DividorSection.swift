@@ -1,5 +1,5 @@
 //
-//  DividerSection.swift
+//  DividorSection.swift
 //  CollectionComposer
 //
 //  Created by Akira Matsuda on 2024/02/29.

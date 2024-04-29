@@ -24,6 +24,7 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
             case composed
             case gallery
             case login
+            case swiftui
         }
 
         let kind: Kind
@@ -66,6 +67,7 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
                 Example(.composed)
                 Example(.gallery)
                 Example(.login)
+                Example(.swiftui)
             }
         }
     }
@@ -92,6 +94,8 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
             navigationController?.pushViewController(GalleryViewController(), animated: true)
         case .login:
             navigationController?.pushViewController(LogInFormViewController(), animated: true)
+        case .swiftui:
+            navigationController?.pushViewController(SwiftUIViewController(), animated: true)
         }
     }
 
