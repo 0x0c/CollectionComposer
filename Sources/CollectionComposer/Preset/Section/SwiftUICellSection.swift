@@ -22,9 +22,9 @@ open class SwiftUICellSection<View: SwiftUICellView & SwiftUI.View>: CollectionC
     open var id: String
 
     open var cellRegistration: UICollectionView.CellRegistration<
-        UICollectionViewCell,
+        HighlightableCell,
         View.Model
-    >! = UICollectionView.CellRegistration<UICollectionViewCell, View.Model> { cell, _, model in
+    >! = UICollectionView.CellRegistration<HighlightableCell, View.Model> { cell, _, model in
         cell.contentConfiguration = UIHostingConfiguration { View(model) }
     }
 
@@ -60,6 +60,6 @@ open class SwiftUICellSection<View: SwiftUICellView & SwiftUI.View>: CollectionC
     // MARK: Public
 
     private var isHighlightable = false
-    public typealias Cell = UICollectionViewCell
+    public typealias Cell = HighlightableCell
     public typealias Item = View.Model
 }
