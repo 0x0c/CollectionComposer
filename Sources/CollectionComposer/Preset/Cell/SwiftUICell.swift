@@ -27,7 +27,12 @@ open class SwiftUICell<View: SwiftUICellView>: UICollectionViewCell {
         guard let model else {
             return
         }
-        contentConfiguration = UIHostingConfiguration { View(model, isHighlighted: state.isHighlighted) }
+        contentConfiguration = if model.removeMergins {
+            UIHostingConfiguration { View(model, isHighlighted: state.isHighlighted) }.margins(.all, 0)
+        }
+        else {
+            UIHostingConfiguration { View(model, isHighlighted: state.isHighlighted) }
+        }
     }
 
     // MARK: Internal
@@ -44,9 +49,7 @@ public protocol SwiftUICellViewModel: Hashable {
 
 @available(iOS 16.0, *)
 public extension SwiftUICellViewModel {
-    var removeMergins: Bool {
-        return false
-    }
+    var removeMergins: Bool { false }
 }
 
 // MARK: - SwiftUICellView

@@ -36,7 +36,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                     .init(title: "Example2"),
                     .init(title: "Example3")
                 ],
-                configuration: .cellSeparator()
+                configuration: .cellSeparator(highlightable: true)
             )
         }
     }
