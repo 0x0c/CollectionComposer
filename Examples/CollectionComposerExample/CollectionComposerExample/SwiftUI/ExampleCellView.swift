@@ -38,7 +38,6 @@ struct ExampleCellView: SwiftUICellView {
             Spacer()
         }
         .padding()
-        .border(Color.black)
         .background(in: Rectangle())
         .backgroundStyle(isHighlighted ? Color.red : Color.clear)
     }

@@ -26,25 +26,31 @@ final class SeparatorView: UICollectionReusableView {
     static let sectionSeparatorElementKind = String(describing: SeparatorView.self) + "-top"
     static let cellSeparatorElementKind = String(describing: SeparatorView.self) + "-bottom"
 
-    static func sectionSeparator() -> NSCollectionLayoutBoundarySupplementaryItem {
+    static func sectionSeparator(
+        edges: NSDirectionalRectEdge,
+        fractalWidth: CGFloat = 1
+    ) -> NSCollectionLayoutBoundarySupplementaryItem {
         return NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
+                widthDimension: .fractionalWidth(fractalWidth),
                 heightDimension: .absolute(SeparatorView.defaultHeight)
             ),
             elementKind: SeparatorView.sectionSeparatorElementKind,
-            containerAnchor: NSCollectionLayoutAnchor(edges: [.top])
+            containerAnchor: NSCollectionLayoutAnchor(edges: edges)
         )
     }
 
-    static func cellSeparator() -> NSCollectionLayoutSupplementaryItem {
+    static func cellSeparator(
+        edges: NSDirectionalRectEdge,
+        fractalWidth: CGFloat = 1
+    ) -> NSCollectionLayoutSupplementaryItem {
         return NSCollectionLayoutSupplementaryItem(
             layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
+                widthDimension: .fractionalWidth(fractalWidth),
                 heightDimension: .absolute(SeparatorView.defaultHeight)
             ),
             elementKind: SeparatorView.cellSeparatorElementKind,
-            containerAnchor: NSCollectionLayoutAnchor(edges: [.bottom])
+            containerAnchor: NSCollectionLayoutAnchor(edges: edges)
         )
     }
 }
