@@ -8,7 +8,7 @@
 import UIKit
 
 open class HighlightableCell: UICollectionViewCell {
-    open override func updateConfiguration(using state: UICellConfigurationState) {
+    override open func updateConfiguration(using state: UICellConfigurationState) {
         var background = UIBackgroundConfiguration.listPlainCell().updated(for: state)
         if state.isSelected == false {
             background.backgroundColor = .clear
