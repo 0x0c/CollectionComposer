@@ -22,6 +22,12 @@ public protocol SectionProvider: AnyObject {
     ///   - animate: If true, the collection view is being added to the sections using an animation.
     ///   - sections: Sections that will be stored into the data source.
     func store(animate: Bool, @SectionBuilder _ sections: () -> [any Section])
+
+    /// A function to store sections into the data source.
+    /// - Parameters:
+    ///   - animate: If true, the collection view is being added to the sections using an animation.
+    ///   - sections: Sections that will be stored into the data source.
+    func store(animate: Bool, sections: [any Section])
 }
 
 var nonceKey: UInt8 = 0
@@ -49,6 +55,11 @@ public extension SectionProvider {
 
     func store(animate: Bool = true, @SectionBuilder _ sections: () -> [any Section]) {
         sectionDataSource.store(sections())
+        storeSubject.send(animate)
+    }
+    
+    func store(animate: Bool = true, sections: [any Section]) {
+        sectionDataSource.store(sections)
         storeSubject.send(animate)
     }
 }
