@@ -56,6 +56,7 @@ open class SwiftUICellSection<View: SwiftUICellView>: CollectionComposer.Section
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = configuration.showsSectionSeparator ? [SeparatorView.sectionSeparator()] : []
         section.supplementariesFollowContentInsets = false
+        section.contentInsets = configuration.contentInsets
         return section
     }
 
@@ -66,24 +67,57 @@ open class SwiftUICellSection<View: SwiftUICellView>: CollectionComposer.Section
     // MARK: Public
 
     public struct Configuration {
+        public let contentInsets: NSDirectionalEdgeInsets
         public let isHighlightable: Bool
         public let showsCellSeparator: Bool
         public let showsSectionSeparator: Bool
 
-        public static func defaultConfiguration(highlightable: Bool = false) -> Configuration {
-            return Configuration(isHighlightable: highlightable, showsCellSeparator: false, showsSectionSeparator: false)
+        public static func defaultConfiguration(
+            contentInsets: NSDirectionalEdgeInsets = .zero,
+            highlightable: Bool = false
+        ) -> Configuration {
+            return Configuration(
+                contentInsets: contentInsets,
+                isHighlightable: highlightable,
+                showsCellSeparator: false,
+                showsSectionSeparator: false
+            )
         }
 
-        public static func separators(highlightable: Bool = false) -> Configuration {
-            return Configuration(isHighlightable: highlightable, showsCellSeparator: true, showsSectionSeparator: true)
+        public static func separators(
+            contentInsets: NSDirectionalEdgeInsets = .zero,
+            highlightable: Bool = false
+        ) -> Configuration {
+            return Configuration(
+                contentInsets: contentInsets,
+                isHighlightable: highlightable,
+                showsCellSeparator: true,
+                showsSectionSeparator: true
+            )
         }
 
-        public static func cellSeparator(highlightable: Bool = false) -> Configuration {
-            return Configuration(isHighlightable: highlightable, showsCellSeparator: true, showsSectionSeparator: false)
+        public static func cellSeparator(
+            contentInsets: NSDirectionalEdgeInsets = .zero,
+            highlightable: Bool = false
+        ) -> Configuration {
+            return Configuration(
+                contentInsets: contentInsets,
+                isHighlightable: highlightable,
+                showsCellSeparator: true,
+                showsSectionSeparator: false
+            )
         }
 
-        public static func sectionSeparator(highlightable: Bool = false) -> Configuration {
-            return Configuration(isHighlightable: highlightable, showsCellSeparator: false, showsSectionSeparator: true)
+        public static func sectionSeparator(
+            contentInsets: NSDirectionalEdgeInsets = .zero,
+            highlightable: Bool = false
+        ) -> Configuration {
+            return Configuration(
+                contentInsets: contentInsets,
+                isHighlightable: highlightable,
+                showsCellSeparator: false,
+                showsSectionSeparator: true
+            )
         }
     }
 
