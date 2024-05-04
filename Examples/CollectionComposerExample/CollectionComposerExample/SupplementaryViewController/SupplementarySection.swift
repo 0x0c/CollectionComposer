@@ -77,10 +77,6 @@ class SupplementarySection: Section {
         return false
     }
 
-    func isHighlightable(for index: Int) -> Bool {
-        return false
-    }
-
     func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(0.25),

@@ -198,7 +198,8 @@ extension ComposedCollectionViewController: UICollectionViewDelegate {
     }
 
     public func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        guard let section = provider?.sectionDataSource.section(for: indexPath.section) else {
+        guard let section = provider?.sectionDataSource.section(for: indexPath.section),
+              let section = section as? HighlightableSection else {
             return false
         }
         return section.isHighlightable(for: indexPath.row)

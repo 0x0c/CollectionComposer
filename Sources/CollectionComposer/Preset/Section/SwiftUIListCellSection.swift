@@ -8,14 +8,14 @@
 import SwiftUI
 
 @available(iOS 16.0, *)
-open class SwiftUIListCellSection<View: SwiftUIListCellView>: CollectionComposer.IndexTitledSection {
+open class SwiftUIListCellSection<View: SwiftUIListCellView>: ListableSection, HighlightableSection {
     // MARK: Lifecycle
 
     public init(id: String, items: [View.Model], appearance: UICollectionLayoutListConfiguration.Appearance = .plain, configuration: Configuration = .defaultConfiguration()) {
         self.id = id
         self.items = items
         self.configuration = configuration
-        listConfiguration = UICollectionLayoutListConfiguration(appearance: appearance)
+        prepare(appearance: appearance)
         listConfiguration.separatorConfiguration = configuration.separatorConfiguration
     }
 
@@ -30,25 +30,13 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: CollectionComposer
     }
 
     open var items: [View.Model]
-    open var isExpanded = false
-    open var isExpandable = false
+    open var isExpanded = true
 
     open var snapshotItems: [AnyHashable] {
         return items
     }
 
-    open func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-        return NSCollectionLayoutSection.list(
-            using: listConfiguration,
-            layoutEnvironment: environment
-        )
-    }
-
-    open func isHighlightable(for index: Int) -> Bool {
-        return configuration.isHighlightable
-    }
-
-    open func indexTitle(_ title: String) -> any Section {
+    open func indexTitle(_ title: String) -> Self {
         self.title = title
         return self
     }
@@ -76,10 +64,29 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: CollectionComposer
     public typealias Cell = SwiftUIListCell<View>
     public typealias Item = View.Model
 
+    public var listConfiguration: UICollectionLayoutListConfiguration!
+    public var leadingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
+    public var trailingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
+
+    public var header: ListConfiguration.Header?
+    public var footer: ListConfiguration.Footer?
+
+    public var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>!
+    public var headerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
+    public var footerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
+
     public let id: String
+
+    public func isHighlightable(for index: Int) -> Bool {
+        return configuration.isHighlightable
+    }
+
+    public func expand(_ expand: Bool) -> Self {
+        isExpanded = expand
+        return self
+    }
 
     // MARK: Private
 
-    private var listConfiguration: UICollectionLayoutListConfiguration
     private let configuration: Configuration
 }

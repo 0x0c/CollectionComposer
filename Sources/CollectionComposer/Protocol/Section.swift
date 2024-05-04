@@ -40,8 +40,6 @@ public protocol Section {
     /// This function is used to deque cells by dequeueConfiguredReusableCell and UICollectionView.CellRegistration.
     /// See also ``ListSection``.
     func exactItem<T>(for item: AnyHashable, in items: [T]) -> T
-    /// Indicates the section allows to highlight cells.
-    func isHighlightable(for index: Int) -> Bool
 }
 
 public extension Section {
@@ -74,15 +72,4 @@ public extension Section {
         }
         return exactItem
     }
-}
-
-// MARK: - IndexTitledSection
-
-/// IndexTitledSection allows to show index title at the right side of the collection view.
-public protocol IndexTitledSection: Section {
-    /// A title for the section. Each title will be displayed as index titles.
-    var title: String? { get set }
-
-    /// Modifier to assign index title.
-    func indexTitle(_ title: String) -> any Section
 }
