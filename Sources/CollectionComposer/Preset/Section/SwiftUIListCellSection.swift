@@ -59,18 +59,6 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: ListableSection, H
                 separatorConfiguration: separatorConfiguration
             )
         }
-        
-        public static func indexTitle(
-            contentInsets: NSDirectionalEdgeInsets = .zero,
-            highlightable: Bool = false,
-            separatorConfiguration: UIListSeparatorConfiguration = UIListSeparatorConfiguration(listAppearance: .plain)
-        ) -> Configuration {
-            return Configuration(
-                contentInsets: .init(top: contentInsets.top, leading: contentInsets.leading, bottom: contentInsets.bottom, trailing: min(contentInsets.trailing, 16)),
-                isHighlightable: highlightable,
-                separatorConfiguration: separatorConfiguration
-            )
-        }
     }
 
     public func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
