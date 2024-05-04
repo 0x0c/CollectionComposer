@@ -10,26 +10,31 @@ import UIKit
 
 // MARK: - IndexTitlesProvider
 
-public protocol IndexTitlesProvider: AnyObject {
+protocol IndexTitlesProvider: AnyObject {
     var collectionViewIndexTitles: [String]? { get }
 }
 
-public extension IndexTitlesProvider {
+extension IndexTitlesProvider {
     var collectionViewIndexTitles: [String]? { nil }
 }
 
 // MARK: - CollectionComposerDataSource
 
 open class CollectionComposerDataSource<SectionIdentifierType, ItemIdentifierType>: UICollectionViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType> where SectionIdentifierType: Hashable, SectionIdentifierType: Sendable, ItemIdentifierType: Hashable, ItemIdentifierType: Sendable {
+    // MARK: Open
+
     open var indexTitles: [String]?
-    open var provider: IndexTitlesProvider?
 
     override open func indexTitles(for collectionView: UICollectionView) -> [String]? {
         if collectionView.numberOfSections == 0 {
             return nil
         }
-        return provider?.collectionViewIndexTitles
+        return indexTitlesProvider?.collectionViewIndexTitles
     }
+
+    // MARK: Internal
+
+    var indexTitlesProvider: IndexTitlesProvider?
 }
 
 // MARK: - ComposedCollectionViewController
@@ -55,6 +60,7 @@ open class ComposedCollectionViewController: UIViewController {
         ) { [unowned self] _, indexPath, item -> UICollectionViewCell? in
             return cell(for: indexPath, item: item)
         }
+        dataSource.indexTitlesProvider = self
         dataSource.supplementaryViewProvider = { [unowned self] _, kind, indexPath in
             return supplementaryView(for: kind, indexPath: indexPath)
         }
@@ -166,12 +172,6 @@ open class ComposedCollectionViewController: UIViewController {
         }
     }
 
-    public weak var indexTitlesProvider: IndexTitlesProvider? {
-        didSet {
-            dataSource.provider = indexTitlesProvider
-        }
-    }
-
     // MARK: Private
 
     private var cancellable = Set<AnyCancellable>()
@@ -202,5 +202,18 @@ extension ComposedCollectionViewController: UICollectionViewDelegate {
             return false
         }
         return section.isHighlightable(for: indexPath.row)
+    }
+}
+
+// MARK: IndexTitlesProvider
+
+extension ComposedCollectionViewController: IndexTitlesProvider {
+    var collectionViewIndexTitles: [String]? {
+        return provider?
+            .sectionDataSource
+            .sections
+            .compactMap {
+                $0 as? (any IndexTitledSection)
+            }.compactMap(\.title)
     }
 }

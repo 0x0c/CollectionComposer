@@ -37,7 +37,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                     .init(title: "Example3")
                 ],
                 configuration: .defaultConfiguration(highlightable: true)
-            )
+            ).indexTitle("B")
         }
     }
 

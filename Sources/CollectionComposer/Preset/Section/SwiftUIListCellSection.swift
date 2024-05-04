@@ -8,7 +8,7 @@
 import SwiftUI
 
 @available(iOS 16.0, *)
-open class SwiftUIListCellSection<View: SwiftUIListCellView>: CollectionComposer.Section {
+open class SwiftUIListCellSection<View: SwiftUIListCellView>: CollectionComposer.IndexTitledSection {
     // MARK: Lifecycle
 
     public init(id: String, items: [View.Model], appearance: UICollectionLayoutListConfiguration.Appearance = .plain, configuration: Configuration = .defaultConfiguration()) {
@@ -21,8 +21,7 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: CollectionComposer
 
     // MARK: Open
 
-    open var id: String
-
+    open var title: String?
     open var cellRegistration: UICollectionView.CellRegistration<
         Cell,
         View.Model
@@ -49,6 +48,11 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: CollectionComposer
         return configuration.isHighlightable
     }
 
+    open func indexTitle(_ title: String) -> any Section {
+        self.title = title
+        return self
+    }
+
     // MARK: Public
 
     public struct Configuration {
@@ -71,6 +75,8 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: CollectionComposer
 
     public typealias Cell = SwiftUIListCell<View>
     public typealias Item = View.Model
+
+    public let id: String
 
     // MARK: Private
 

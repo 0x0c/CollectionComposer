@@ -9,29 +9,26 @@ import Foundation
 import UIKit
 
 /// `ListSection` provides table layout like UITableView by ``UICollectionLayoutListConfiguration``
-open class ListSection: Section {
+open class ListSection: IndexTitledSection {
     // MARK: Lifecycle
 
     public convenience init(
-        title: String? = nil,
         id: String = UUID().uuidString,
         cellStyle: CellStyle = .default,
         apperarance: UICollectionLayoutListConfiguration.Appearance = .plain,
         isHighlightable: Bool = false,
         @ItemBuilder<any ListCellConfigurable> _ items: () -> [any ListCellConfigurable]
     ) {
-        self.init(title: title, id: id, cellStyle: cellStyle, apperarance: apperarance, isHighlightable: isHighlightable, items: items())
+        self.init(id: id, cellStyle: cellStyle, apperarance: apperarance, isHighlightable: isHighlightable, items: items())
     }
 
     public init(
-        title: String? = nil,
         id: String = UUID().uuidString,
         cellStyle: CellStyle = .default,
         apperarance: UICollectionLayoutListConfiguration.Appearance = .plain,
         isHighlightable: Bool = false,
         items: [any ListCellConfigurable]
     ) {
-        self.title = title
         self.id = id
         self.items = items
         self.cellStyle = cellStyle
@@ -107,7 +104,7 @@ open class ListSection: Section {
 
     public typealias SwipeActionConfigurationProvider = (any ListCellConfigurable) -> UISwipeActionsConfiguration?
 
-    public private(set) var title: String?
+    public var title: String?
 
     public private(set) var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, ListCellConfigurable>!
     public private(set) var items: [any ListCellConfigurable]
@@ -125,6 +122,11 @@ open class ListSection: Section {
         case let .plain(_, isExpandable):
             return isExpandable
         }
+    }
+
+    public func indexTitle(_ title: String) -> any Section {
+        self.title = title
+        return self
     }
 
     public func expand(_ expand: Bool) -> ListSection {
