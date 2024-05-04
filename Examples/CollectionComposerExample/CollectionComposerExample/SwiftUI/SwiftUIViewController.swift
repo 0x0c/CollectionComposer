@@ -36,10 +36,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                     .init(title: "Example1-2"),
                     .init(title: "Example1-3")
                 ],
-                configuration: .defaultConfiguration(
-                    contentInsets: .init(top: 0, leading: 0, bottom: 0, trailing: 16),
-                    highlightable: true
-                )
+                configuration: .defaultConfiguration(highlightable: true)
             ).indexTitle("B")
                 .header(.plain("B"))
             SwiftUIListCellSection<ExampleCellView>(

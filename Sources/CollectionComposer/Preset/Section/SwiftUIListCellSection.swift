@@ -17,6 +17,14 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: ListableSection, H
         self.configuration = configuration
         prepare(appearance: appearance)
         listConfiguration.separatorConfiguration = configuration.separatorConfiguration
+        listConfiguration.itemSeparatorHandler = { _, sectionSeparatorConfiguration in
+            var configuration = sectionSeparatorConfiguration
+            if self.title != nil {
+                configuration.topSeparatorInsets.trailing = max(16, sectionSeparatorConfiguration.topSeparatorInsets.trailing)
+                configuration.bottomSeparatorInsets.trailing = max(16, sectionSeparatorConfiguration.topSeparatorInsets.trailing)
+            }
+            return configuration
+        }
     }
 
     // MARK: Open
