@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - ListableSection
 
-public protocol ListableSection: IndexTitledSection & AnyObject {
+public protocol ListableSection: IndexTitleSection & AnyObject {
     typealias SwipeActionConfigurationProvider = (Item) -> UISwipeActionsConfiguration?
 
     static func cellConfiguration(for style: ListConfiguration.CellStyle) -> UIListContentConfiguration

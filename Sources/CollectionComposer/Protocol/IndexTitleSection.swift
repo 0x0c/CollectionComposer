@@ -1,5 +1,5 @@
 //
-//  IndexTitledSection.swift
+//  IndexTitleSection.swift
 //  CollectionComposer
 //
 //  Created by Akira Matsuda on 2024/05/04.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// IndexTitledSection allows to show index title at the right side of the collection view.
-public protocol IndexTitledSection: Section {
+public protocol IndexTitleSection: Section {
     /// A title for the section. Each title will be displayed as index titles.
     var title: String? { get set }
 

@@ -214,7 +214,7 @@ extension ComposedCollectionViewController: IndexTitlesProvider {
             .sectionDataSource
             .sections
             .compactMap {
-                $0 as? (any IndexTitledSection)
+                $0 as? (any IndexTitleSection)
             }.compactMap(\.title)
     }
 }
