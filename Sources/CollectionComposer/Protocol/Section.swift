@@ -17,6 +17,8 @@ public protocol Section {
 
     var cellRegistration: UICollectionView.CellRegistration<Cell, Item>! { get }
 
+    /// A title for the section. Each title will be displayed as index titles.
+    var title: String? { get }
     /// An identifier for the section. Each section to be displayed on the screen must be assigned a unique identifier.
     var id: String { get }
     /// Items for associating cells.
@@ -45,6 +47,8 @@ public protocol Section {
 }
 
 public extension Section {
+    var title: String? { nil }
+
     var snapshotSection: AnyHashable {
         var hasher = Hasher()
         hasher.combine(id)
