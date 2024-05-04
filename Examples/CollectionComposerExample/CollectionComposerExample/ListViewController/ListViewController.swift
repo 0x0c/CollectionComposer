@@ -9,15 +9,13 @@ import CollectionComposer
 import UIKit
 
 class ListViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource, IndexTitlesProvider {
-    var collectionViewIndexTitles: [String]? {
-        return sections.enumerated().map { index, _ in
-            "\(index)"
-        }
-    }
-
     lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
 
     private(set) var sections = [any Section]()
+
+    var collectionViewIndexTitles: [String]? {
+        return sections.compactMap(\.title)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +24,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
         provider = self
         indexTitlesProvider = self
         store(animate: false) {
-            ListSection(id: "first", apperarance: .plain) {
+            ListSection(title: "A", id: "first", apperarance: .plain) {
                 ListItem(isHighlightable: true, text: "Item 1")
                 ListItem(text: "Item 2")
                 ListItem(text: "Item 3")
@@ -34,7 +32,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                 ListItem(text: "Item 5")
             }.header(.plain("Header"))
                 .footer(.plain("Footer"))
-            ListSection(id: "second", apperarance: .insetGrouped) {
+            ListSection(title: "B", id: "second", apperarance: .insetGrouped) {
                 ListItem(text: "Item 1", secondaryText: "Seconday")
                 ListItem(text: "Item 2", secondaryText: "Seconday")
                 ListItem(text: "Item 3", secondaryText: "Seconday")
@@ -42,7 +40,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                 ListItem(text: "Item 5", secondaryText: "Seconday")
             }.header(.plain("Expandable Header", isExpandable: true))
                 .footer(.plain("Footer"))
-            ListSection(id: "third", apperarance: .insetGrouped) {
+            ListSection(title: "C", id: "third", apperarance: .insetGrouped) {
                 ListItem(text: "Item 1", secondaryText: "Seconday")
                 ListItem(text: "Item 2", secondaryText: "Seconday")
                 ListItem(text: "Item 3", secondaryText: "Seconday")
@@ -50,14 +48,14 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                 ListItem(text: "Item 5", secondaryText: "Seconday")
             }.header(.plain("Expandable Header", isExpandable: true))
                 .expand(false)
-            ListSection(id: "fourth", apperarance: .insetGrouped) {
+            ListSection(title: "D", id: "fourth", apperarance: .insetGrouped) {
                 ListItem(text: "Item 1")
                 ListItem(text: "Item 2")
                 ListItem(text: "Item 3")
                 ListItem(text: "Item 4")
                 ListItem(text: "Item 5")
             }
-            ListSection(id: "fifth", cellStyle: .value) {
+            ListSection(title: "E", id: "fifth", cellStyle: .value) {
                 ListItem(text: "Item 1", secondaryText: "Seconday")
                 ListItem(text: "Item 2", secondaryText: "Seconday")
                 ListItem(text: "Item 3", secondaryText: "Seconday")

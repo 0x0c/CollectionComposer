@@ -13,22 +13,25 @@ open class ListSection: Section {
     // MARK: Lifecycle
 
     public convenience init(
+        title: String? = nil,
         id: String = UUID().uuidString,
         cellStyle: CellStyle = .default,
         apperarance: UICollectionLayoutListConfiguration.Appearance = .plain,
         isHighlightable: Bool = false,
         @ItemBuilder<any ListCellConfigurable> _ items: () -> [any ListCellConfigurable]
     ) {
-        self.init(id: id, cellStyle: cellStyle, apperarance: apperarance, isHighlightable: isHighlightable, items: items())
+        self.init(title: title, id: id, cellStyle: cellStyle, apperarance: apperarance, isHighlightable: isHighlightable, items: items())
     }
 
     public init(
+        title: String? = nil,
         id: String = UUID().uuidString,
         cellStyle: CellStyle = .default,
         apperarance: UICollectionLayoutListConfiguration.Appearance = .plain,
         isHighlightable: Bool = false,
         items: [any ListCellConfigurable]
     ) {
+        self.title = title
         self.id = id
         self.items = items
         self.cellStyle = cellStyle
@@ -103,6 +106,8 @@ open class ListSection: Section {
     }
 
     public typealias SwipeActionConfigurationProvider = (any ListCellConfigurable) -> UISwipeActionsConfiguration?
+
+    public private(set) var title: String?
 
     public private(set) var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, ListCellConfigurable>!
     public private(set) var items: [any ListCellConfigurable]
