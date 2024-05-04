@@ -8,7 +8,13 @@
 import CollectionComposer
 import UIKit
 
-class ListViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
+class ListViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource, IndexTitlesProvider {
+    var collectionViewIndexTitles: [String]? {
+        return sections.enumerated().map { index, _ in
+            "\(index)"
+        }
+    }
+
     lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
 
     private(set) var sections = [any Section]()
@@ -18,6 +24,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
         title = "List"
 
         provider = self
+        indexTitlesProvider = self
         store(animate: false) {
             ListSection(id: "first", apperarance: .plain) {
                 ListItem(isHighlightable: true, text: "Item 1")

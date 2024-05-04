@@ -8,6 +8,30 @@
 import Combine
 import UIKit
 
+// MARK: - IndexTitlesProvider
+
+public protocol IndexTitlesProvider: AnyObject {
+    var collectionViewIndexTitles: [String]? { get }
+}
+
+public extension IndexTitlesProvider {
+    var collectionViewIndexTitles: [String]? { nil }
+}
+
+// MARK: - CollectionComposerDataSource
+
+open class CollectionComposerDataSource<SectionIdentifierType, ItemIdentifierType>: UICollectionViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType> where SectionIdentifierType: Hashable, SectionIdentifierType: Sendable, ItemIdentifierType: Hashable, ItemIdentifierType: Sendable {
+    open var indexTitles: [String]?
+    open var provider: IndexTitlesProvider?
+
+    override open func indexTitles(for collectionView: UICollectionView) -> [String]? {
+        if collectionView.numberOfSections == 0 {
+            return nil
+        }
+        return provider?.collectionViewIndexTitles
+    }
+}
+
 // MARK: - ComposedCollectionViewController
 
 open class ComposedCollectionViewController: UIViewController {
@@ -26,7 +50,7 @@ open class ComposedCollectionViewController: UIViewController {
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
-        dataSource = UICollectionViewDiffableDataSource<AnyHashable, AnyHashable>(
+        dataSource = CollectionComposerDataSource<AnyHashable, AnyHashable>(
             collectionView: collectionView
         ) { [unowned self] _, indexPath, item -> UICollectionViewCell? in
             return cell(for: indexPath, item: item)
@@ -123,7 +147,7 @@ open class ComposedCollectionViewController: UIViewController {
     // MARK: Public
 
     public var collectionView: UICollectionView!
-    public var dataSource: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable>!
+    public var dataSource: CollectionComposerDataSource<AnyHashable, AnyHashable>!
     public var ignoreEmptySection = false
 
     public weak var provider: SectionProvider? {
@@ -139,6 +163,12 @@ open class ComposedCollectionViewController: UIViewController {
                         reloadSections(animate: animate)
                     }.store(in: &cancellable)
             }
+        }
+    }
+
+    public weak var indexTitlesProvider: IndexTitlesProvider? {
+        didSet {
+            dataSource.provider = indexTitlesProvider
         }
     }
 
