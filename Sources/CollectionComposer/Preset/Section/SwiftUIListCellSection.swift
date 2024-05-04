@@ -61,6 +61,15 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: ListableSection, H
         }
     }
 
+    public func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+        let section = NSCollectionLayoutSection.list(
+            using: listConfiguration,
+            layoutEnvironment: environment
+        )
+        section.contentInsets = configuration.contentInsets
+        return section
+    }
+    
     public typealias Cell = SwiftUIListCell<View>
     public typealias Item = View.Model
 
