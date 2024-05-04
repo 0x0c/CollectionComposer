@@ -32,11 +32,14 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
             SwiftUIListCellSection<ExampleCellView>(
                 id: "swift-ui-cell-section",
                 items: [
-                    .init(title: "Example1"),
-                    .init(title: "Example2"),
-                    .init(title: "Example3")
+                    .init(title: "Example1-1"),
+                    .init(title: "Example1-2"),
+                    .init(title: "Example1-3")
                 ],
-                configuration: .defaultConfiguration(highlightable: true)
+                configuration: .defaultConfiguration(
+                    contentInsets: .init(top: 0, leading: 0, bottom: 0, trailing: 16),
+                    highlightable: true
+                )
             ).indexTitle("B")
                 .header(.plain("B"))
             SwiftUIListCellSection<ExampleCellView>(
@@ -49,6 +52,26 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 configuration: .defaultConfiguration(highlightable: true)
             ).indexTitle("C")
                 .header(.plain("C"))
+            SwiftUIListCellSection<ExampleCellView>(
+                id: "swift-ui-cell-section3",
+                items: [
+                    .init(title: "Example3-1"),
+                    .init(title: "Example3-2"),
+                    .init(title: "Example3-3")
+                ],
+                configuration: .defaultConfiguration(highlightable: true)
+            ).indexTitle("D")
+                .header(.plain("D"))
+            SwiftUIListCellSection<ExampleCellView>(
+                id: "swift-ui-cell-section4",
+                items: [
+                    .init(title: "Example4-1"),
+                    .init(title: "Example4-2"),
+                    .init(title: "Example4-3")
+                ],
+                configuration: .defaultConfiguration(highlightable: true)
+            ).indexTitle("D")
+                .header(.plain("D"))
         }
     }
 
