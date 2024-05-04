@@ -18,12 +18,11 @@ struct ExampleData: SwiftUICellViewModel, Hashable {
 
 // MARK: - ExampleCellView
 
-struct ExampleCellView: SwiftUICellView {
+struct ExampleCellView: SwiftUIListCellView {
     // MARK: Lifecycle
 
-    init(_ model: ExampleData, isHighlighted: Bool = false) {
+    init(_ model: ExampleData) {
         self.model = model
-        self.isHighlighted = isHighlighted
     }
 
     // MARK: Internal
@@ -32,19 +31,14 @@ struct ExampleCellView: SwiftUICellView {
 
     var body: some View {
         HStack {
-            Spacer()
             Image(systemName: "list.clipboard")
             Text(model.title)
-            Spacer()
         }
         .padding()
-        .background(in: Rectangle())
-        .backgroundStyle(isHighlighted ? Color.red : Color.clear)
     }
 
     // MARK: Private
 
-    private var isHighlighted: Bool
     private var model: ExampleData
 }
 

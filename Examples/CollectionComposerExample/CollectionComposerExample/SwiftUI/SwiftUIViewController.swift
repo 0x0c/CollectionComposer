@@ -29,25 +29,23 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                     ])
                 }
             )
-            SwiftUICellSection<ExampleCellView>(
+            SwiftUIListCellSection<ExampleCellView>(
                 id: "swift-ui-cell-section",
                 items: [
                     .init(title: "Example1"),
                     .init(title: "Example2"),
                     .init(title: "Example3")
                 ],
-                configuration: .cellSeparator(
-                    separatorInsets: .init(top: 0, leading: 24, bottom: 0, trailing: 0),
-                    highlightable: true
-                )
+                configuration: .defaultConfiguration(highlightable: true)
             )
         }
     }
 
     override func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
-        if section is ListSection, let item = item as? ListItem {
+        if section is SwiftUIListCellSection<ExampleCellView>, let item = item as? ExampleData {
             print(item)
         }
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
 
     func store(_ sections: [any CollectionComposer.Section]) {

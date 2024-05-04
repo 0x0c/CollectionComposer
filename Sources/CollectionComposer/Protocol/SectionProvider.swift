@@ -57,7 +57,7 @@ public extension SectionProvider {
         sectionDataSource.store(sections())
         storeSubject.send(animate)
     }
-    
+
     func store(animate: Bool = true, sections: [any Section]) {
         sectionDataSource.store(sections)
         storeSubject.send(animate)
