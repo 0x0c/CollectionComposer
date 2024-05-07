@@ -19,16 +19,13 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
 
         provider = self
         store(animate: false) {
-            SwiftUISection(
-                id: "swift-ui-section",
-                configuration: UIHostingConfiguration {
-                    ChartView(data: [
-                        .init(type: "Cube", count: 5),
-                        .init(type: "Sphere", count: 4),
-                        .init(type: "Pyramid", count: 4)
-                    ])
-                }
-            )
+            SwiftUISection(id: "swift-ui-section"){
+                ChartView(data: [
+                    .init(type: "Cube", count: 5),
+                    .init(type: "Sphere", count: 4),
+                    .init(type: "Pyramid", count: 4)
+                ])
+            }
             SwiftUIListCellSection<ExampleCellView>(
                 id: "swift-ui-cell-section",
                 items: [
