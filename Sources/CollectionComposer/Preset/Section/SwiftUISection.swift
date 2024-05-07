@@ -12,13 +12,29 @@ import SwiftUI
 open class SwiftUISection: CollectionComposer.Section {
     // MARK: Lifecycle
 
-    public init(id: String, item: ViewConfiguration) {
+    public init(id: String, contentInsets: NSDirectionalEdgeInsets = .zero, item: ViewConfiguration) {
         self.id = id
+        self.contentInsets = contentInsets
         items = [item]
     }
 
-    public convenience init(id: String, configuration: UIContentConfiguration) {
-        self.init(id: id, item: ViewConfiguration(configuration))
+    let contentInsets: NSDirectionalEdgeInsets
+    
+    public convenience init(id: String, contentInsets: NSDirectionalEdgeInsets = .zero, configuration: UIContentConfiguration) {
+        self.init(id: id, contentInsets: contentInsets, item: ViewConfiguration(configuration))
+    }
+
+    @available(iOS 16.0, *)
+    public convenience init(id: String, contentInsets: NSDirectionalEdgeInsets = .zero, @ViewBuilder content: () -> some View) {
+        self.init(
+            id: id,
+            contentInsets: contentInsets,
+            item: ViewConfiguration(
+                UIHostingConfiguration {
+                    content()
+                }
+            )
+        )
     }
 
     // MARK: Open
@@ -54,7 +70,9 @@ open class SwiftUISection: CollectionComposer.Section {
             layoutSize: groupSize,
             subitems: [item]
         )
-        return NSCollectionLayoutSection(group: group)
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = contentInsets
+        return section
     }
 
     open func isHighlightable(for index: Int) -> Bool {
