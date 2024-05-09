@@ -84,8 +84,7 @@ open class SwiftUISection: CollectionComposer.Section {
     public struct Configuration {
         // MARK: Public
 
-        public static let `default` = Configuration(contentInsets: .zero, removeMargins: false)
-        public static let removeMargins = Configuration(contentInsets: .zero, removeMargins: true)
+        public static let `default` = Configuration(contentInsets: .zero, removeMargins: true)
 
         // MARK: Internal
 

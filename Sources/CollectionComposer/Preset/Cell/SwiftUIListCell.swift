@@ -37,7 +37,7 @@ public protocol SwiftUICellViewModel: Hashable {
 
 @available(iOS 16.0, *)
 public extension SwiftUICellViewModel {
-    var removeMargins: Bool { false }
+    var removeMargins: Bool { true }
 }
 
 // MARK: - SwiftUIListCellView
