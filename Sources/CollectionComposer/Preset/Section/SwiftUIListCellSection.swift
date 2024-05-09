@@ -69,15 +69,6 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: ListableSection, H
         }
     }
 
-    public func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-        let section = NSCollectionLayoutSection.list(
-            using: listConfiguration,
-            layoutEnvironment: environment
-        )
-        section.contentInsets = configuration.contentInsets
-        return section
-    }
-    
     public typealias Cell = SwiftUIListCell<View>
     public typealias Item = View.Model
 
@@ -93,6 +84,15 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: ListableSection, H
     public var footerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
 
     public let id: String
+
+    public func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+        let section = NSCollectionLayoutSection.list(
+            using: listConfiguration,
+            layoutEnvironment: environment
+        )
+        section.contentInsets = configuration.contentInsets
+        return section
+    }
 
     public func isHighlightable(for index: Int) -> Bool {
         return configuration.isHighlightable

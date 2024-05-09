@@ -19,7 +19,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
 
         provider = self
         store(animate: false) {
-            SwiftUISection(id: "swift-ui-section"){
+            SwiftUISection(id: "swift-ui-section") {
                 ChartView(data: [
                     .init(type: "Cube", count: 5),
                     .init(type: "Sphere", count: 4),
