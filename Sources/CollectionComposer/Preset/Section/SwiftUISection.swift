@@ -12,28 +12,37 @@ import SwiftUI
 open class SwiftUISection: CollectionComposer.Section {
     // MARK: Lifecycle
 
-    public init(id: String, contentInsets: NSDirectionalEdgeInsets = .zero, item: ViewConfiguration) {
+    public init(id: String, configuration: Configuration = .default, item: ViewConfiguration) {
         self.id = id
-        self.contentInsets = contentInsets
+        self.configuration = configuration
         items = [item]
     }
 
-    let contentInsets: NSDirectionalEdgeInsets
-    
-    public convenience init(id: String, contentInsets: NSDirectionalEdgeInsets = .zero, configuration: UIContentConfiguration) {
-        self.init(id: id, contentInsets: contentInsets, item: ViewConfiguration(configuration))
+    public struct Configuration {
+        let contentInsets: NSDirectionalEdgeInsets
+        let removeMargins: Bool
+
+        public static let `default` = Configuration(contentInsets: .zero, removeMargins: false)
+        public static let `removeMargins` = Configuration(contentInsets: .zero, removeMargins: true)
+    }
+
+    let configuration: Configuration
+
+    public convenience init(id: String, configuration: Configuration = .default, contentConfiguration: UIContentConfiguration) {
+        self.init(id: id, configuration: configuration, item: ViewConfiguration(contentConfiguration))
     }
 
     @available(iOS 16.0, *)
-    public convenience init(id: String, contentInsets: NSDirectionalEdgeInsets = .zero, @ViewBuilder content: () -> some View) {
+    public convenience init(id: String, configuration: Configuration = .default, @ViewBuilder content: () -> some View) {
+        let viewConfiguration: ViewConfiguration = if configuration.removeMargins {
+            ViewConfiguration(UIHostingConfiguration { content() }.margins(.all, 0))
+        } else {
+            ViewConfiguration(UIHostingConfiguration { content() })
+        }
         self.init(
             id: id,
-            contentInsets: contentInsets,
-            item: ViewConfiguration(
-                UIHostingConfiguration {
-                    content()
-                }
-            )
+            configuration: configuration,
+            item: viewConfiguration
         )
     }
 
@@ -71,7 +80,7 @@ open class SwiftUISection: CollectionComposer.Section {
             subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = contentInsets
+        section.contentInsets = configuration.contentInsets
         return section
     }
 

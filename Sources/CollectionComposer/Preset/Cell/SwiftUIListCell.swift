@@ -15,7 +15,7 @@ open class SwiftUIListCell<View: SwiftUIListCellView>: UICollectionViewListCell 
 
     open func configure(_ model: View.Model) {
         self.model = model
-        contentConfiguration = if model.removeMergins {
+        contentConfiguration = if model.removeMargins {
             UIHostingConfiguration { View(model) }.margins(.all, 0)
         }
         else {
@@ -32,12 +32,12 @@ open class SwiftUIListCell<View: SwiftUIListCellView>: UICollectionViewListCell 
 
 @available(iOS 16.0, *)
 public protocol SwiftUICellViewModel: Hashable {
-    var removeMergins: Bool { get }
+    var removeMargins: Bool { get }
 }
 
 @available(iOS 16.0, *)
 public extension SwiftUICellViewModel {
-    var removeMergins: Bool { false }
+    var removeMargins: Bool { false }
 }
 
 // MARK: - SwiftUIListCellView

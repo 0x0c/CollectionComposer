@@ -13,7 +13,7 @@ import SwiftUI
 struct ExampleData: SwiftUICellViewModel, Hashable {
     let title: String
 
-    var removeMergins: Bool { true }
+    var removeMargins: Bool { true }
 }
 
 // MARK: - ExampleCellView

@@ -62,7 +62,7 @@ class GalleryViewController: ComposedCollectionViewController, SectionProvider, 
             DividerSection()
             SwiftUISection(
                 id: "swift-ui-section",
-                configuration: UIHostingConfiguration {
+                contentConfiguration: UIHostingConfiguration {
                     ContentUnavailableView {
                         Label(String(localized: "Not found"), systemImage: "magnifyingglass")
                     } description: {
