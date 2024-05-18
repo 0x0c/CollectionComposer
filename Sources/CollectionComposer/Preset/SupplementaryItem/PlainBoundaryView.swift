@@ -20,8 +20,14 @@ public protocol PlainBoundaryView: SupplementaryView {
 public class PlainHeaderView: PlainBoundaryView & SupplementaryHeaderView {
     // MARK: Lifecycle
 
-    public init(_ text: String, isExpandable: Bool = false, appearance: UICollectionLayoutListConfiguration.Appearance = .plain) {
+    public init(
+        _ text: String,
+        pinToVisibleBounds: Bool = false,
+        isExpandable: Bool = false,
+        appearance: UICollectionLayoutListConfiguration.Appearance = .plain
+    ) {
         self.text = text
+        self.pinToVisibleBounds = pinToVisibleBounds
         self.isExpandable = isExpandable
         self.appearance = appearance
         prepare()
@@ -34,6 +40,7 @@ public class PlainHeaderView: PlainBoundaryView & SupplementaryHeaderView {
     public var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
 
     public let text: String
+    public let pinToVisibleBounds: Bool
     public let isExpandable: Bool
     public let appearance: UICollectionLayoutListConfiguration.Appearance
 
@@ -79,8 +86,15 @@ public class PlainHeaderView: PlainBoundaryView & SupplementaryHeaderView {
 public class PlainFooterView: PlainBoundaryView & SupplementaryFooterView {
     // MARK: Lifecycle
 
-    public init(_ text: String, isExpandable: Bool = false, appearance: UICollectionLayoutListConfiguration.Appearance = .plain) {
+    public init(
+        _ text: String,
+        pinToVisibleBounds: Bool = false,
+        isExpandable: Bool = false,
+        appearance: UICollectionLayoutListConfiguration.Appearance = .plain
+    
+    ) {
         self.text = text
+        self.pinToVisibleBounds = pinToVisibleBounds
         self.isExpandable = isExpandable
         self.appearance = appearance
         prepare()
@@ -93,6 +107,7 @@ public class PlainFooterView: PlainBoundaryView & SupplementaryFooterView {
     public var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
 
     public let text: String
+    public let pinToVisibleBounds: Bool
     public let isExpandable: Bool
     public let appearance: UICollectionLayoutListConfiguration.Appearance
 

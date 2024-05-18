@@ -17,6 +17,7 @@ public protocol SupplementaryView {
     var alignment: NSRectAlignment { get }
     var absoluteOffset: CGPoint { get }
     var registration: UICollectionView.SupplementaryRegistration<View>! { get }
+    var pinToVisibleBounds: Bool { get }
 
     func prepare()
     func dequeueReusableSupplementary(collectionView: UICollectionView, for indexPath: IndexPath) -> UICollectionReusableView
@@ -37,11 +38,13 @@ public extension SupplementaryView {
     }
 
     func boundarySupplementaryItem() -> NSCollectionLayoutBoundarySupplementaryItem {
-        return NSCollectionLayoutBoundarySupplementaryItem(
+        let item = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: layoutSize,
             elementKind: kind,
             alignment: alignment,
             absoluteOffset: absoluteOffset
         )
+        item.pinToVisibleBounds = pinToVisibleBounds
+        return item
     }
 }
