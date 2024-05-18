@@ -35,8 +35,8 @@ class ComposedViewController: ComposedCollectionViewController, SectionProvider,
                 ListItem(text: "Item 3", secondaryText: "Seconday")
                 ListItem(text: "Item 4", secondaryText: "Seconday")
                 ListItem(text: "Item 5", secondaryText: "Seconday")
-            }.header(.plain("Expandable Header", isExpandable: true))
-                .footer(.plain("Footer"))
+            }.header(PlainHeaderView("Expandable Header", isExpandable: true))
+                .footer(PlainFooterView("Footer"))
         }
     }
 

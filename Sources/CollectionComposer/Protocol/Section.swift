@@ -28,6 +28,11 @@ public protocol Section {
     /// Indicates the section allows to expand cells.
     var isExpandable: Bool { get }
 
+    var header: (any SupplementaryHeaderView)? { get set }
+    var footer: (any SupplementaryFooterView)? { get set }
+
+    var boundarySupplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem] { get }
+
     /// A function that returns the specific layout for a cell.
     /// - Parameters:
     ///   - environment: Layout environment for current traits.
@@ -40,9 +45,23 @@ public protocol Section {
     /// This function is used to deque cells by dequeueConfiguredReusableCell and UICollectionView.CellRegistration.
     /// See also ``ListSection``.
     func exactItem<T>(for item: AnyHashable, in items: [T]) -> T
+
+    func header(_ header: any SupplementaryHeaderView) -> Self
+    func footer(_ footer: any SupplementaryFooterView) -> Self
 }
 
 public extension Section {
+    var boundarySupplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem] {
+        var items = [NSCollectionLayoutBoundarySupplementaryItem]()
+        if let header, !(header is PlainHeaderView) {
+            items.append(header.boundarySupplementaryItem())
+        }
+        if let footer, !(footer is PlainFooterView) {
+            items.append(footer.boundarySupplementaryItem())
+        }
+        return items
+    }
+
     var snapshotSection: AnyHashable {
         var hasher = Hasher()
         hasher.combine(id)
@@ -54,6 +73,12 @@ public extension Section {
     }
 
     func supplementaryView(_ collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
+        if let header, header.kind == kind {
+            return header.dequeueReusableSupplementary(collectionView: collectionView, for: indexPath)
+        }
+        if let footer, footer.kind == kind {
+            return footer.dequeueReusableSupplementary(collectionView: collectionView, for: indexPath)
+        }
         return nil
     }
 

@@ -16,6 +16,21 @@ class SupplementarySection: Section {
         self.items = items()
     }
 
+    // MARK: Public
+
+    public var header: (any SupplementaryHeaderView)?
+    public var footer: (any SupplementaryFooterView)?
+
+    public func header(_ header: any SupplementaryHeaderView) -> Self {
+        self.header = header
+        return self
+    }
+
+    public func footer(_ footer: any SupplementaryFooterView) -> Self {
+        self.footer = footer
+        return self
+    }
+
     // MARK: Internal
 
     typealias Cell = TextCell

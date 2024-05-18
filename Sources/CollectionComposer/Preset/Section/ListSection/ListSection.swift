@@ -75,17 +75,33 @@ open class ListSection: ListableSection, HighlightableSection {
     public var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, any ListCellConfigurable>!
     public var title: String?
 
+    public var header: (any SupplementaryHeaderView)?
+    public var footer: (any SupplementaryFooterView)?
+
     public var listConfiguration: UICollectionLayoutListConfiguration!
-    public var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>!
-    public var headerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
-    public var footerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
+    public var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>?
     public var leadingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
     public var trailingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
-    public var header: ListConfiguration.Header?
-    public var footer: ListConfiguration.Footer?
 
     public var snapshotItems: [AnyHashable] {
         return items.map { AnyHashable($0) }
+    }
+
+    public func header(_ header: any SupplementaryHeaderView) -> Self {
+        self.header = header
+        if let header = header as? PlainHeaderView, header.isExpandable {
+            listConfiguration.headerMode = isExpandable ? .firstItemInSection : .supplementary
+        }
+        else {
+            listConfiguration.headerMode = .supplementary
+        }
+        return self
+    }
+
+    public func footer(_ footer: any SupplementaryFooterView) -> Self {
+        self.footer = footer
+        listConfiguration.footerMode = .supplementary
+        return self
     }
 
     public func isHighlightable(for index: Int) -> Bool {
@@ -118,4 +134,23 @@ open class ListSection: ListableSection, HighlightableSection {
     // MARK: Private
 
     private let cellStyle: ListConfiguration.CellStyle
+
+    private static func cellConfiguration(for style: ListConfiguration.CellStyle) -> UIListContentConfiguration {
+        return switch style {
+        case .default:
+            .cell()
+        case .subtitle:
+            .subtitleCell()
+        case .value:
+            .valueCell()
+        case .sidebarCell:
+            .accompaniedSidebarCell()
+        case .sidebarSubtitle:
+            .sidebarSubtitleCell()
+        case .accompaniedSidebar:
+            .accompaniedSidebarCell()
+        case .accompaniedSidebarSubtitle:
+            .accompaniedSidebarSubtitleCell()
+        }
+    }
 }

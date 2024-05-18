@@ -132,5 +132,18 @@ open class ActivityIndicatorSection: Section {
     public typealias Cell = ActivityIndicatorCell
     public typealias Item = IndicatorContent
 
-    public let id: String
+    public var id: String
+
+    public var header: (any SupplementaryHeaderView)?
+    public var footer: (any SupplementaryFooterView)?
+
+    public func header(_ header: any SupplementaryHeaderView) -> Self {
+        self.header = header
+        return self
+    }
+
+    public func footer(_ footer: any SupplementaryFooterView) -> Self {
+        self.footer = footer
+        return self
+    }
 }

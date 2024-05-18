@@ -72,18 +72,27 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: ListableSection, H
     public typealias Cell = SwiftUIListCell<View>
     public typealias Item = View.Model
 
+    public var header: (any SupplementaryHeaderView)?
+    public var footer: (any SupplementaryFooterView)?
+
     public var listConfiguration: UICollectionLayoutListConfiguration!
     public var leadingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
     public var trailingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
 
-    public var header: ListConfiguration.Header?
-    public var footer: ListConfiguration.Footer?
-
-    public var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>!
-    public var headerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
-    public var footerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
-
+    public var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>?
     public let id: String
+
+    public func header(_ header: any SupplementaryHeaderView) -> Self {
+        self.header = header
+        listConfiguration.headerMode = .supplementary
+        return self
+    }
+
+    public func footer(_ footer: any SupplementaryFooterView) -> Self {
+        self.footer = footer
+        listConfiguration.footerMode = .supplementary
+        return self
+    }
 
     public func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let section = NSCollectionLayoutSection.list(

@@ -35,7 +35,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 ],
                 configuration: .defaultConfiguration(highlightable: true)
             ).indexTitle("B")
-                .header(.plain("B"))
+                .header(PlainHeaderView("B"))
             SwiftUIListCellSection<ExampleCellView>(
                 id: "swift-ui-cell-section2",
                 items: [
@@ -45,7 +45,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 ],
                 configuration: .defaultConfiguration(highlightable: true)
             ).indexTitle("C")
-                .header(.plain("C"))
+                .header(PlainHeaderView("C"))
             SwiftUIListCellSection<ExampleCellView>(
                 id: "swift-ui-cell-section3",
                 items: [
@@ -55,7 +55,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 ],
                 configuration: .defaultConfiguration(highlightable: true)
             ).indexTitle("D")
-                .header(.plain("D"))
+                .header(PlainHeaderView("D"))
             SwiftUIListCellSection<ExampleCellView>(
                 id: "swift-ui-cell-section4",
                 items: [
@@ -65,7 +65,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 ],
                 configuration: .defaultConfiguration(highlightable: true)
             ).indexTitle("D")
-                .header(.plain("D"))
+                .header(PlainHeaderView("D"))
         }
     }
 

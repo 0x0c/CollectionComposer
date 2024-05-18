@@ -178,10 +178,14 @@ open class ComposedCollectionViewController: UIViewController {
 
     private func layout(configuration: UICollectionViewCompositionalLayoutConfiguration) -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout(sectionProvider: { [unowned self] sectionIndex, environment -> NSCollectionLayoutSection? in
-            return provider?
+            guard let section = provider?
                 .sectionDataSource
-                .section(for: sectionIndex)
-                .layoutSection(for: environment)
+                .section(for: sectionIndex) else {
+                return nil
+            }
+            let layoutSection = section.layoutSection(for: environment)
+            layoutSection.boundarySupplementaryItems.append(contentsOf: section.boundarySupplementaryItems)
+            return layoutSection
         }, configuration: configuration)
     }
 }
@@ -201,6 +205,13 @@ extension ComposedCollectionViewController: UICollectionViewDelegate {
         guard let section = provider?.sectionDataSource.section(for: indexPath.section),
               let section = section as? HighlightableSection else {
             return false
+        }
+
+        guard let listableSection = section as? any ListableSection else {
+            return section.isHighlightable(for: indexPath.row)
+        }
+        if listableSection.listConfiguration.headerMode == .firstItemInSection {
+            return section.isHighlightable(for: indexPath.row - 1)
         }
         return section.isHighlightable(for: indexPath.row)
     }
