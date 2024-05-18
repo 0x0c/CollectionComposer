@@ -34,7 +34,7 @@
 --wrapcollections before-first
 --xcodeindentation enabled
 --disable redundantReturn, wrapMultilineStatementBraces
---enable isEmpty, markTypes, sortedSwitchCases, wrapConditionalBodies, wrapEnumCases, organizeDeclarations
+--enable isEmpty, markTypes, sortSwitchCases, wrapConditionalBodies, wrapEnumCases, organizeDeclarations
 
 # file options
 --exclude Pods, Carthage, R.generated.swift
