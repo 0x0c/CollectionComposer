@@ -26,7 +26,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                 ListItem(text: "Item 4")
                 ListItem(text: "Item 5")
             }.header(PlainHeaderView("Header"))
-                .footer(PlainFooterView("Footer"))
+                .footer(PlainFooterView("Plain Footer"))
                 .indexTitle("A")
             ListSection(id: "second", apperarance: .insetGrouped) {
                 ListItem(text: "Item 1", secondaryText: "Seconday")
@@ -34,8 +34,8 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                 ListItem(text: "Item 3", secondaryText: "Seconday")
                 ListItem(text: "Item 4", secondaryText: "Seconday")
                 ListItem(text: "Item 5", secondaryText: "Seconday")
-            }.header(PlainHeaderView("Expandable Header", isExpandable: true))
-                .footer(PlainFooterView("Footer"))
+            }.header(PlainHeaderView("Expandable Header", isExpandable: true, appearance: .insetGrouped))
+                .footer(PlainFooterView("Inset Group Footer", appearance: .insetGrouped))
                 .indexTitle("B")
             ListSection(id: "third", apperarance: .insetGrouped) {
                 ListItem(text: "Item 1", secondaryText: "Seconday")
@@ -43,7 +43,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                 ListItem(text: "Item 3", secondaryText: "Seconday")
                 ListItem(text: "Item 4", secondaryText: "Seconday")
                 ListItem(text: "Item 5", secondaryText: "Seconday")
-            }.header(PlainHeaderView("Expandable Header", isExpandable: true))
+            }.header(PlainHeaderView("Expandable Header", isExpandable: true, appearance: .insetGrouped))
                 .expand(false)
                 .indexTitle("C")
             ListSection(id: "fourth", apperarance: .insetGrouped) {
