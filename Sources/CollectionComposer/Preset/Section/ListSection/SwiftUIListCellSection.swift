@@ -72,8 +72,8 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: ListableSection, H
     public typealias Cell = SwiftUIListCell<View>
     public typealias Item = View.Model
 
-    public var header: (any SupplementaryHeaderView)?
-    public var footer: (any SupplementaryFooterView)?
+    public var header: (any BoundarySupplementaryHeaderView)?
+    public var footer: (any BoundarySupplementaryFooterView)?
 
     public var listConfiguration: UICollectionLayoutListConfiguration!
     public var leadingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
@@ -82,16 +82,12 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: ListableSection, H
     public var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>?
     public let id: String
 
-    public func header(_ header: any SupplementaryHeaderView) -> Self {
+    public func storeHeader(_ header: any BoundarySupplementaryHeaderView) {
         self.header = header
-        listConfiguration.headerMode = .supplementary
-        return self
     }
 
-    public func footer(_ footer: any SupplementaryFooterView) -> Self {
+    public func storeFooter(_ footer: any BoundarySupplementaryFooterView) {
         self.footer = footer
-        listConfiguration.footerMode = .supplementary
-        return self
     }
 
     public func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -103,7 +99,7 @@ open class SwiftUIListCellSection<View: SwiftUIListCellView>: ListableSection, H
         return section
     }
 
-    public func isHighlightable(for index: Int) -> Bool {
+    public func isHighlightable(at index: Int) -> Bool {
         return configuration.isHighlightable
     }
 

@@ -15,43 +15,44 @@ public protocol PlainBoundaryView: SupplementaryView {
     var appearance: UICollectionLayoutListConfiguration.Appearance { get }
 }
 
+public extension PlainBoundaryView {
+    typealias View = UICollectionViewListCell
+
+    var layoutSize: NSCollectionLayoutSize { .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(28)) }
+    var absoluteOffset: CGPoint { .zero }
+}
+
 // MARK: - PlainHeaderView
 
-public class PlainHeaderView: PlainBoundaryView & SupplementaryHeaderView {
+public class PlainHeaderView: PlainBoundaryView & BoundarySupplementaryHeaderView {
     // MARK: Lifecycle
 
     public init(
         _ text: String,
         pinToVisibleBounds: Bool = false,
-        isExpandable: Bool = false,
-        appearance: UICollectionLayoutListConfiguration.Appearance = .plain
+        isExpandable: Bool = false
     ) {
         self.text = text
         self.pinToVisibleBounds = pinToVisibleBounds
         self.isExpandable = isExpandable
-        self.appearance = appearance
         prepare()
     }
 
     // MARK: Public
-
-    public typealias View = UICollectionViewListCell
 
     public var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
 
     public let text: String
     public let pinToVisibleBounds: Bool
     public let isExpandable: Bool
-    public let appearance: UICollectionLayoutListConfiguration.Appearance
+    public var appearance: UICollectionLayoutListConfiguration.Appearance = .plain
 
-    public var kind: String { UICollectionView.elementKindSectionHeader }
-    public var layoutSize: NSCollectionLayoutSize { .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)) }
+    public var elementKind: String { UICollectionView.elementKindSectionHeader }
     public var alignment: NSRectAlignment { .top }
-    public var absoluteOffset: CGPoint { .zero }
 
     public func prepare() {
         registration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(
-            elementKind: kind
+            elementKind: elementKind
         ) { [weak self] supplementaryView, _, _ in
             guard let self else {
                 return
@@ -83,42 +84,33 @@ public class PlainHeaderView: PlainBoundaryView & SupplementaryHeaderView {
 
 // MARK: - PlainFooterView
 
-public class PlainFooterView: PlainBoundaryView & SupplementaryFooterView {
+public class PlainFooterView: PlainBoundaryView & BoundarySupplementaryFooterView {
     // MARK: Lifecycle
 
     public init(
         _ text: String,
-        pinToVisibleBounds: Bool = false,
-        isExpandable: Bool = false,
-        appearance: UICollectionLayoutListConfiguration.Appearance = .plain
-    
+        pinToVisibleBounds: Bool = false
     ) {
         self.text = text
         self.pinToVisibleBounds = pinToVisibleBounds
-        self.isExpandable = isExpandable
-        self.appearance = appearance
         prepare()
     }
 
     // MARK: Public
 
-    public typealias View = UICollectionViewListCell
-
     public var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
 
     public let text: String
     public let pinToVisibleBounds: Bool
-    public let isExpandable: Bool
-    public let appearance: UICollectionLayoutListConfiguration.Appearance
+    public var appearance: UICollectionLayoutListConfiguration.Appearance = .plain
 
-    public var kind: String { UICollectionView.elementKindSectionFooter }
-    public var layoutSize: NSCollectionLayoutSize { .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)) }
-    public var alignment: NSRectAlignment { .top }
-    public var absoluteOffset: CGPoint { .zero }
+    public var isExpandable: Bool { false }
+    public var elementKind: String { UICollectionView.elementKindSectionFooter }
+    public var alignment: NSRectAlignment { .bottom }
 
     public func prepare() {
         registration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(
-            elementKind: kind
+            elementKind: elementKind
         ) { [weak self] supplementaryView, _, _ in
             guard let self else {
                 return

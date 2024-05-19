@@ -26,6 +26,19 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                     .init(type: "Pyramid", count: 4)
                 ])
             }
+            SwiftUISection(id: "swift-ui-section2") {
+                ChartView(data: [
+                    .init(type: "Cube", count: 5),
+                    .init(type: "Sphere", count: 4),
+                    .init(type: "Pyramid", count: 4)
+                ])
+            }.header(SwiftUISupllementaryView(
+                elementKind: "swift-ui-header1",
+                configuration: UIHostingConfiguration(content: {
+                    Label(title: { Text("Label") }, icon: { Image(systemName: "42.circle") })
+                })
+            )
+            )
             SwiftUIListCellSection<ExampleCellView>(
                 id: "swift-ui-cell-section",
                 items: [
@@ -55,17 +68,15 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 ],
                 configuration: .defaultConfiguration(highlightable: true)
             ).indexTitle("D")
-                .header(PlainHeaderView("D"))
-            SwiftUIListCellSection<ExampleCellView>(
-                id: "swift-ui-cell-section4",
-                items: [
-                    .init(title: "Example4-1"),
-                    .init(title: "Example4-2"),
-                    .init(title: "Example4-3")
-                ],
-                configuration: .defaultConfiguration(highlightable: true)
-            ).indexTitle("D")
-                .header(PlainHeaderView("D"))
+                .header(
+                    SwiftUISupllementaryView(
+                        elementKind: "swift-ui-header2",
+                        configuration: UIHostingConfiguration(content: {
+                            Label(title: { Text("Label") }, icon: { Image(systemName: "42.circle") })
+                        }),
+                        pinToVisibleBounds: true
+                    )
+                )
         }
     }
 

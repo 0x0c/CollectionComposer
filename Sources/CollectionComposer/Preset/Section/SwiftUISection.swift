@@ -118,17 +118,15 @@ open class SwiftUISection: CollectionComposer.Section {
     public typealias Cell = UICollectionViewCell
     public typealias Item = ViewConfiguration
 
-    public var header: (any SupplementaryHeaderView)?
-    public var footer: (any SupplementaryFooterView)?
+    public var header: (any BoundarySupplementaryHeaderView)?
+    public var footer: (any BoundarySupplementaryFooterView)?
 
-    public func header(_ header: any SupplementaryHeaderView) -> Self {
+    public func storeHeader(_ header: any BoundarySupplementaryHeaderView) {
         self.header = header
-        return self
     }
 
-    public func footer(_ footer: any SupplementaryFooterView) -> Self {
+    public func storeFooter(_ footer: any BoundarySupplementaryFooterView) {
         self.footer = footer
-        return self
     }
 
     // MARK: Internal

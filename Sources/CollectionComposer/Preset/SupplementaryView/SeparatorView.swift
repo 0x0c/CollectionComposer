@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SeparatorView: UICollectionReusableView {
+public final class SeparatorView: UICollectionReusableView {
     // MARK: Lifecycle
 
     override init(frame: CGRect) {

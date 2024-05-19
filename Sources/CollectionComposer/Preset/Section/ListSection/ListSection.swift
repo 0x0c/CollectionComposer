@@ -75,8 +75,8 @@ open class ListSection: ListableSection, HighlightableSection {
     public var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, any ListCellConfigurable>!
     public var title: String?
 
-    public var header: (any SupplementaryHeaderView)?
-    public var footer: (any SupplementaryFooterView)?
+    public var header: (any BoundarySupplementaryHeaderView)?
+    public var footer: (any BoundarySupplementaryFooterView)?
 
     public var listConfiguration: UICollectionLayoutListConfiguration!
     public var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>?
@@ -87,28 +87,19 @@ open class ListSection: ListableSection, HighlightableSection {
         return items.map { AnyHashable($0) }
     }
 
-    public func header(_ header: any SupplementaryHeaderView) -> Self {
+    public func storeHeader(_ header: any BoundarySupplementaryHeaderView) {
         self.header = header
-        if let header = header as? PlainHeaderView, header.isExpandable {
-            listConfiguration.headerMode = isExpandable ? .firstItemInSection : .supplementary
-        }
-        else {
-            listConfiguration.headerMode = .supplementary
-        }
-        return self
     }
 
-    public func footer(_ footer: any SupplementaryFooterView) -> Self {
+    public func storeFooter(_ footer: any BoundarySupplementaryFooterView) {
         self.footer = footer
-        listConfiguration.footerMode = .supplementary
-        return self
     }
 
-    public func isHighlightable(for index: Int) -> Bool {
+    public func isHighlightable(at index: Int) -> Bool {
         if isHighlightable {
             return true
         }
-        return items[index].isHighlightable
+        return items[actualIndex(at: index)].isHighlightable
     }
 
     public func indexTitle(_ title: String) -> Self {

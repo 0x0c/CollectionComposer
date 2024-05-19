@@ -18,6 +18,7 @@ public protocol ListableSection: IndexTitleSection & AnyObject {
     var trailingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider? { get }
 
     func prepare(appearance: UICollectionLayoutListConfiguration.Appearance)
+    func actualIndex(at index: Int) -> Int
 }
 
 // MARK: - ListConfiguration
@@ -41,6 +42,15 @@ public extension ListableSection {
             return false
         }
         return header.isExpandable
+    }
+
+    var headerMode: HeaderMode {
+        switch listConfiguration.headerMode {
+        case .firstItemInSection:
+            return .firstItemInSection
+        case .none, .supplementary:
+            return .supplementary
+        }
     }
 
     func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -67,12 +77,12 @@ public extension ListableSection {
             guard let self else {
                 return
             }
-            var configuration = PlainHeaderView.headerConfiguration(for: appearance)
             if let header = header as? PlainHeaderView, header.isExpandable {
+                var configuration = PlainHeaderView.headerConfiguration(for: appearance)
                 cell.accessories = [.outlineDisclosure()]
                 configuration.text = header.text
+                cell.contentConfiguration = configuration
             }
-            cell.contentConfiguration = configuration
         }
         listConfiguration.leadingSwipeActionsConfigurationProvider = { [weak self] indexPath in
             guard let self, let provider = leadingSwipeActionsConfigurationProvider else {
@@ -88,5 +98,26 @@ public extension ListableSection {
             let item = items[indexPath.row]
             return provider(item)
         }
+    }
+
+    func prepareHeaderView() {
+        if let header = header as? PlainHeaderView {
+            header.appearance = listConfiguration.appearance
+        }
+        listConfiguration.headerMode = isExpandable ? .firstItemInSection : .supplementary
+    }
+
+    func prepareFooterView() {
+        if let footer = footer as? PlainFooterView {
+            footer.appearance = listConfiguration.appearance
+        }
+        listConfiguration.footerMode = .supplementary
+    }
+
+    func actualIndex(at index: Int) -> Int {
+        if listConfiguration.headerMode == .firstItemInSection {
+            return max(0, index - 1)
+        }
+        return index
     }
 }

@@ -28,7 +28,7 @@ class SupplementaryViewController: ComposedCollectionViewController, SectionProv
                 for index in 0 ... 50 {
                     SupplementarySection.Model(title: "\(index)")
                 }
-            }
+            }.header(PlainHeaderView("PlainHeader"))
         }
     }
 

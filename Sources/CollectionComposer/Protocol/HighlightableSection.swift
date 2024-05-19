@@ -9,5 +9,5 @@ import Foundation
 
 public protocol HighlightableSection {
     /// Indicates the section allows to highlight cells.
-    func isHighlightable(for index: Int) -> Bool
+    func isHighlightable(at index: Int) -> Bool
 }

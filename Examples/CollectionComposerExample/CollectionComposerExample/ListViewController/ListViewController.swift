@@ -6,12 +6,13 @@
 //
 
 import CollectionComposer
+import SwiftUI
 import UIKit
 
 class ListViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
     lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
 
-    private(set) var sections = [any Section]()
+    private(set) var sections = [any CollectionComposer.Section]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +35,8 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                 ListItem(text: "Item 3", secondaryText: "Seconday")
                 ListItem(text: "Item 4", secondaryText: "Seconday")
                 ListItem(text: "Item 5", secondaryText: "Seconday")
-            }.header(PlainHeaderView("Expandable Header", isExpandable: true, appearance: .insetGrouped))
-                .footer(PlainFooterView("Inset Group Footer", appearance: .insetGrouped))
+            }.header(PlainHeaderView("Expandable Header", isExpandable: true))
+                .footer(PlainFooterView("Inset Group Footer"))
                 .indexTitle("B")
             ListSection(id: "third", apperarance: .insetGrouped) {
                 ListItem(text: "Item 1", secondaryText: "Seconday")
@@ -43,7 +44,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                 ListItem(text: "Item 3", secondaryText: "Seconday")
                 ListItem(text: "Item 4", secondaryText: "Seconday")
                 ListItem(text: "Item 5", secondaryText: "Seconday")
-            }.header(PlainHeaderView("Expandable Header", isExpandable: true, appearance: .insetGrouped))
+            }.header(PlainHeaderView("Expandable Header", isExpandable: true))
                 .expand(false)
                 .indexTitle("C")
             ListSection(id: "fourth", apperarance: .insetGrouped) {
@@ -71,6 +72,11 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
             }.leadingSwipeActions(swipeActionProvider())
                 .trailingSwipeActions(swipeActionProvider())
                 .indexTitle("E")
+                .header(
+                    SwiftUISupllementaryView(elementKind: "swift-ui-header") {
+                        Label(title: { Text("Label") }, icon: { Image(systemName: "42.circle") })
+                    }
+                )
         }
     }
 
@@ -86,7 +92,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
         }
     }
 
-    override func didSelectItem(_ item: AnyHashable, in section: any Section, at indexPath: IndexPath) {
+    override func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
         if section is ListSection, let item = item as? ListItem {
             print(item)
         }

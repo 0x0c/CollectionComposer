@@ -184,7 +184,14 @@ open class ComposedCollectionViewController: UIViewController {
                 return nil
             }
             let layoutSection = section.layoutSection(for: environment)
-            layoutSection.boundarySupplementaryItems.append(contentsOf: section.boundarySupplementaryItems)
+            if section.shouldOverrideBoundarySupplementaryItem(layoutSection) {
+                if layoutSection.boundarySupplementaryItems.map(\.elementKind).contains(UICollectionView.elementKindSectionHeader) {
+                    layoutSection.boundarySupplementaryItems = section.boundarySupplementaryItems
+                }
+                else {
+                    layoutSection.boundarySupplementaryItems.append(contentsOf: section.boundarySupplementaryItems)
+                }
+            }
             return layoutSection
         }, configuration: configuration)
     }
@@ -206,14 +213,7 @@ extension ComposedCollectionViewController: UICollectionViewDelegate {
               let section = section as? HighlightableSection else {
             return false
         }
-
-        guard let listableSection = section as? any ListableSection else {
-            return section.isHighlightable(for: indexPath.row)
-        }
-        if listableSection.listConfiguration.headerMode == .firstItemInSection {
-            return section.isHighlightable(for: indexPath.row - 1)
-        }
-        return section.isHighlightable(for: indexPath.row)
+        return section.isHighlightable(at: indexPath.row)
     }
 }
 

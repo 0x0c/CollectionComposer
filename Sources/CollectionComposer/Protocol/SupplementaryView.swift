@@ -12,27 +12,33 @@ import UIKit
 public protocol SupplementaryView {
     associatedtype View: UICollectionReusableView
 
-    var kind: String { get }
+    var elementKind: String { get }
     var layoutSize: NSCollectionLayoutSize { get }
     var alignment: NSRectAlignment { get }
     var absoluteOffset: CGPoint { get }
-    var registration: UICollectionView.SupplementaryRegistration<View>! { get }
     var pinToVisibleBounds: Bool { get }
 
     func prepare()
     func dequeueReusableSupplementary(collectionView: UICollectionView, for indexPath: IndexPath) -> UICollectionReusableView
+}
+
+// MARK: - BoundarySupplementaryView
+
+public protocol BoundarySupplementaryView: SupplementaryView {
+    var registration: UICollectionView.SupplementaryRegistration<View>! { get }
+
     func boundarySupplementaryItem() -> NSCollectionLayoutBoundarySupplementaryItem
 }
 
-// MARK: - SupplementaryHeaderView
+// MARK: - BoundarySupplementaryHeaderView
 
-public protocol SupplementaryHeaderView: SupplementaryView {}
+public protocol BoundarySupplementaryHeaderView: BoundarySupplementaryView {}
 
-// MARK: - SupplementaryFooterView
+// MARK: - BoundarySupplementaryFooterView
 
-public protocol SupplementaryFooterView: SupplementaryView {}
+public protocol BoundarySupplementaryFooterView: BoundarySupplementaryView {}
 
-public extension SupplementaryView {
+public extension BoundarySupplementaryView {
     func dequeueReusableSupplementary(collectionView: UICollectionView, for indexPath: IndexPath) -> UICollectionReusableView {
         collectionView.dequeueConfiguredReusableSupplementary(using: registration, for: indexPath)
     }
@@ -40,7 +46,7 @@ public extension SupplementaryView {
     func boundarySupplementaryItem() -> NSCollectionLayoutBoundarySupplementaryItem {
         let item = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: layoutSize,
-            elementKind: kind,
+            elementKind: elementKind,
             alignment: alignment,
             absoluteOffset: absoluteOffset
         )
