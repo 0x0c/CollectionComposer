@@ -32,13 +32,12 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                     .init(type: "Sphere", count: 4),
                     .init(type: "Pyramid", count: 4)
                 ])
-            }.header(SwiftUISupllementaryView(
+            }.header(SwiftUISupllementaryHeaderView(
                 elementKind: "swift-ui-header1",
                 configuration: UIHostingConfiguration(content: {
                     Label(title: { Text("Label") }, icon: { Image(systemName: "42.circle") })
                 })
-            )
-            )
+            ))
             SwiftUIListCellSection<ExampleCellView>(
                 id: "swift-ui-cell-section",
                 items: [
@@ -69,12 +68,29 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 configuration: .defaultConfiguration(highlightable: true)
             ).indexTitle("D")
                 .header(
-                    SwiftUISupllementaryView(
+                    SwiftUISupllementaryHeaderView(
                         elementKind: "swift-ui-header2",
+                        pinToVisibleBounds: true,
                         configuration: UIHostingConfiguration(content: {
                             Label(title: { Text("Label") }, icon: { Image(systemName: "42.circle") })
-                        }),
-                        pinToVisibleBounds: true
+                        })
+                    )
+                )
+            SwiftUIListCellSection<ExampleCellView>(
+                id: "swift-ui-cell-section4",
+                items: [
+                    .init(title: "Example4-1"),
+                    .init(title: "Example4-2"),
+                    .init(title: "Example4-3")
+                ],
+                configuration: .defaultConfiguration(highlightable: true)
+            ).indexTitle("E")
+                .footer(
+                    SwiftUISupllementaryFooterView(
+                        elementKind: "swift-ui-footer",
+                        configuration: UIHostingConfiguration(content: {
+                            Label(title: { Text("Label") }, icon: { Image(systemName: "42.circle") })
+                        })
                     )
                 )
         }

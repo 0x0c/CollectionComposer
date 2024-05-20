@@ -54,6 +54,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                 ListItem(text: "Item 4")
                 ListItem(text: "Item 5")
             }.indexTitle("D")
+                .footer(PlainFooterView("Inset Group Footer"))
             ListSection(id: "fifth", cellStyle: .value) {
                 ListItem(text: "Item 1", secondaryText: "Seconday")
                 ListItem(text: "Item 2", secondaryText: "Seconday")
@@ -73,7 +74,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                 .trailingSwipeActions(swipeActionProvider())
                 .indexTitle("E")
                 .header(
-                    SwiftUISupllementaryView(elementKind: "swift-ui-header") {
+                    SwiftUISupllementaryHeaderView(elementKind: "swift-ui-header") {
                         Label(title: { Text("Label") }, icon: { Image(systemName: "42.circle") })
                     }
                 )

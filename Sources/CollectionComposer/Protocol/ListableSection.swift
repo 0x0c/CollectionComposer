@@ -48,8 +48,10 @@ public extension ListableSection {
         switch listConfiguration.headerMode {
         case .firstItemInSection:
             return .firstItemInSection
-        case .none, .supplementary:
+        case .supplementary:
             return .supplementary
+        case .none:
+            return .none
         }
     }
 

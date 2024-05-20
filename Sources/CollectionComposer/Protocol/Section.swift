@@ -12,6 +12,7 @@ import UIKit
 public enum HeaderMode {
     case firstItemInSection
     case supplementary
+    case none
 }
 
 // MARK: - Section
@@ -63,7 +64,8 @@ public protocol Section {
     func header(_ header: any BoundarySupplementaryHeaderView) -> Self
     func footer(_ footer: any BoundarySupplementaryFooterView) -> Self
 
-    func shouldOverrideBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool
+    func needsToOverrideHeaderBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool
+    func needsToOverrideFooterBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool
 }
 
 public extension Section {
@@ -135,12 +137,24 @@ public extension Section {
         return self
     }
 
-    func shouldOverrideBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool {
+    func needsToOverrideHeaderBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool {
         if let header {
-            return headerMode == .supplementary
+            let hasSectionHeader = layoutSection.boundarySupplementaryItems
+                .map(\.elementKind)
+                .contains(UICollectionView.elementKindSectionHeader)
+            let hasUniqueSectionHeader = (header.elementKind != UICollectionView.elementKindSectionHeader)
+            return hasSectionHeader && hasUniqueSectionHeader
         }
+        return false
+    }
+
+    func needsToOverrideFooterBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool {
         if let footer {
-            return true
+            let hasSectionHeader = layoutSection.boundarySupplementaryItems
+                .map(\.elementKind)
+                .contains(UICollectionView.elementKindSectionFooter)
+            let hasUniqueSectionHeader = (footer.elementKind != UICollectionView.elementKindSectionFooter)
+            return hasSectionHeader && hasUniqueSectionHeader
         }
         return false
     }

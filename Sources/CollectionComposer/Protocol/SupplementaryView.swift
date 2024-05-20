@@ -10,7 +10,7 @@ import UIKit
 // MARK: - SupplementaryView
 
 public protocol SupplementaryView {
-    associatedtype View: UICollectionReusableView
+    associatedtype ContentView: UICollectionReusableView
 
     var elementKind: String { get }
     var layoutSize: NSCollectionLayoutSize { get }
@@ -25,7 +25,7 @@ public protocol SupplementaryView {
 // MARK: - BoundarySupplementaryView
 
 public protocol BoundarySupplementaryView: SupplementaryView {
-    var registration: UICollectionView.SupplementaryRegistration<View>! { get }
+    var registration: UICollectionView.SupplementaryRegistration<ContentView>! { get }
 
     func boundarySupplementaryItem() -> NSCollectionLayoutBoundarySupplementaryItem
 }
@@ -33,10 +33,16 @@ public protocol BoundarySupplementaryView: SupplementaryView {
 // MARK: - BoundarySupplementaryHeaderView
 
 public protocol BoundarySupplementaryHeaderView: BoundarySupplementaryView {}
+public extension BoundarySupplementaryHeaderView {
+    var alignment: NSRectAlignment { .top }
+}
 
 // MARK: - BoundarySupplementaryFooterView
 
 public protocol BoundarySupplementaryFooterView: BoundarySupplementaryView {}
+public extension BoundarySupplementaryFooterView {
+    var alignment: NSRectAlignment { .bottom }
+}
 
 public extension BoundarySupplementaryView {
     func dequeueReusableSupplementary(collectionView: UICollectionView, for indexPath: IndexPath) -> UICollectionReusableView {

@@ -100,6 +100,7 @@ open class ComposedCollectionViewController: UIViewController {
             ) else {
             return nil
         }
+        view.layer.zPosition = 1
         return view
     }
 
@@ -184,13 +185,16 @@ open class ComposedCollectionViewController: UIViewController {
                 return nil
             }
             let layoutSection = section.layoutSection(for: environment)
-            if section.shouldOverrideBoundarySupplementaryItem(layoutSection) {
-                if layoutSection.boundarySupplementaryItems.map(\.elementKind).contains(UICollectionView.elementKindSectionHeader) {
-                    layoutSection.boundarySupplementaryItems = section.boundarySupplementaryItems
-                }
-                else {
-                    layoutSection.boundarySupplementaryItems.append(contentsOf: section.boundarySupplementaryItems)
-                }
+            let layoutElementKinds = layoutSection.boundarySupplementaryItems.map(\.elementKind)
+            let sectionElementKinds = section.boundarySupplementaryItems.map(\.elementKind)
+            let sectionBoundarySupplementaryItems = section.boundarySupplementaryItems.filter {
+                layoutElementKinds.contains($0.elementKind) == false
+            }
+            if section.needsToOverrideHeaderBoundarySupplementaryItem(layoutSection) || section.needsToOverrideFooterBoundarySupplementaryItem(layoutSection) {
+                layoutSection.boundarySupplementaryItems = sectionBoundarySupplementaryItems
+            }
+            else if layoutSection.boundarySupplementaryItems.isEmpty, section.headerMode != .firstItemInSection {
+                layoutSection.boundarySupplementaryItems = sectionBoundarySupplementaryItems
             }
             return layoutSection
         }, configuration: configuration)
