@@ -12,11 +12,11 @@ public class SwiftUISupllementaryFooterView: SwiftUISupllementaryView & Boundary
     // MARK: Lifecycle
 
     @available(iOS 16.0, *)
-    public required init(elementKind: String, pinToVisibleBounds: Bool = false, absoluteOffset: CGPoint = .zero, removeMergins: Bool = true, @ViewBuilder content: () -> some View) {
+    public required init(elementKind: String, pinToVisibleBounds: Bool = false, absoluteOffset: CGPoint = .zero, removeMargins: Bool = true, @ViewBuilder content: () -> some View) {
         self.elementKind = elementKind
         self.absoluteOffset = absoluteOffset
         self.pinToVisibleBounds = pinToVisibleBounds
-        configuration = if removeMergins {
+        configuration = if removeMargins {
             UIHostingConfiguration { content() }.margins(.all, 0)
         }
         else {
