@@ -12,18 +12,18 @@ import SwiftUI
 open class SwiftUISection: CollectionComposer.Section {
     // MARK: Lifecycle
 
-    public init(id: String, configuration: Configuration = .default, item: ViewConfiguration) {
+    public init(id: String, configuration: Configuration = .defaultConfiguration(), item: ViewConfiguration) {
         self.id = id
         self.configuration = configuration
         items = [item]
     }
 
-    public convenience init(id: String, configuration: Configuration = .default, contentConfiguration: UIContentConfiguration) {
+    public convenience init(id: String, configuration: Configuration = .defaultConfiguration(), contentConfiguration: UIContentConfiguration) {
         self.init(id: id, configuration: configuration, item: ViewConfiguration(contentConfiguration))
     }
 
     @available(iOS 16.0, *)
-    public convenience init(id: String, configuration: Configuration = .default, @ViewBuilder content: () -> some View) {
+    public convenience init(id: String, configuration: Configuration = .defaultConfiguration(), @ViewBuilder content: () -> some View) {
         let viewConfiguration = if configuration.removeMargins {
             ViewConfiguration(UIHostingConfiguration { content() }.margins(.all, 0))
         }
@@ -82,10 +82,18 @@ open class SwiftUISection: CollectionComposer.Section {
     // MARK: Public
 
     public struct Configuration {
-        public static let `default` = Configuration(contentInsets: .zero, removeMargins: true)
-
         public let contentInsets: NSDirectionalEdgeInsets
         public let removeMargins: Bool
+
+        public static func defaultConfiguration(
+            contentInsets: NSDirectionalEdgeInsets = .zero,
+            removeMargins: Bool = true
+        ) -> Configuration {
+            return Configuration(
+                contentInsets: contentInsets,
+                removeMargins: removeMargins
+            )
+        }
     }
 
     public struct ViewConfiguration: Hashable {
