@@ -14,7 +14,7 @@ public protocol SwiftUISupllementaryView: BoundarySupplementaryView {
     typealias ContentView = UICollectionViewListCell
 
     @available(iOS 16.0, *)
-    init(elementKind: String, pinToVisibleBounds: Bool, absoluteOffset: CGPoint, @ViewBuilder content: () -> some View)
+    init(elementKind: String, pinToVisibleBounds: Bool, absoluteOffset: CGPoint, removeMergins: Bool, @ViewBuilder content: () -> some View)
     init(elementKind: String, pinToVisibleBounds: Bool, absoluteOffset: CGPoint, configuration: UIContentConfiguration)
     static func boundarySupplementaryItems(alignment: NSRectAlignment, fractalWidth: CGFloat, absoluteOffset: CGPoint) -> NSCollectionLayoutBoundarySupplementaryItem
 }

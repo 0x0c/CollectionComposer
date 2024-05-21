@@ -12,11 +12,16 @@ public class SwiftUISupllementaryHeaderView: SwiftUISupllementaryView & Boundary
     // MARK: Lifecycle
 
     @available(iOS 16.0, *)
-    public required init(elementKind: String, pinToVisibleBounds: Bool = false, absoluteOffset: CGPoint = .zero, @ViewBuilder content: () -> some View) {
+    public required init(elementKind: String, pinToVisibleBounds: Bool = false, absoluteOffset: CGPoint = .zero, removeMergins: Bool = true, @ViewBuilder content: () -> some View) {
         self.elementKind = elementKind
         self.absoluteOffset = absoluteOffset
         self.pinToVisibleBounds = pinToVisibleBounds
-        configuration = UIHostingConfiguration { content() }
+        configuration = if removeMergins {
+            UIHostingConfiguration { content() }.margins(.all, 0)
+        }
+        else {
+            UIHostingConfiguration { content() }
+        }
         prepare()
     }
 
