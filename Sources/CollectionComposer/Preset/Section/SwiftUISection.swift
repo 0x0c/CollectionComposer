@@ -82,14 +82,10 @@ open class SwiftUISection: CollectionComposer.Section {
     // MARK: Public
 
     public struct Configuration {
-        // MARK: Public
-
         public static let `default` = Configuration(contentInsets: .zero, removeMargins: true)
 
-        // MARK: Internal
-
-        let contentInsets: NSDirectionalEdgeInsets
-        let removeMargins: Bool
+        public let contentInsets: NSDirectionalEdgeInsets
+        public let removeMargins: Bool
     }
 
     public struct ViewConfiguration: Hashable {
