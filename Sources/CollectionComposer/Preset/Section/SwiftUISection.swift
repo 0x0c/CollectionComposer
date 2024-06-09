@@ -78,9 +78,6 @@ open class SwiftUISection: CollectionComposer.Section {
         )
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = configuration.contentInsets
-        if decorations.isEmpty == false {
-            section.decorationItems = decorations.map(\.item)
-        }
         return section
     }
 

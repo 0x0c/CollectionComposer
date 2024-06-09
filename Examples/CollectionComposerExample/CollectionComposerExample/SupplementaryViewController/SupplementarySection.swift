@@ -128,9 +128,7 @@ class SupplementarySection: Section {
         )
         sectionFooter.pinToVisibleBounds = true
         section.boundarySupplementaryItems = [sectionHeader, sectionFooter]
-        if decorations.isEmpty == false {
-            section.decorationItems = decorations.map(\.item)
-        }
+        registerDecorationItems(section)
         return section
     }
 

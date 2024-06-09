@@ -81,6 +81,7 @@ public protocol Section {
     func storeHeader(_ header: any BoundarySupplementaryHeaderView)
     func storeFooter(_ footer: any BoundarySupplementaryFooterView)
     func decorations(_ decorations: [Decoration]) -> Self
+    func registerDecorationItems(_ section: NSCollectionLayoutSection)
     func registerDecorationView(to layout: UICollectionViewCompositionalLayout)
 
     func needsToOverrideHeaderBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool
@@ -105,6 +106,12 @@ public extension Section {
         var hasher = Hasher()
         hasher.combine(id)
         return hasher.finalize()
+    }
+
+    func registerDecorationItems(_ section: NSCollectionLayoutSection) {
+        if decorations.isEmpty == false {
+            section.decorationItems = decorations.map(\.item)
+        }
     }
 
     func cell(for indexPath: IndexPath, in collectionView: UICollectionView, item: AnyHashable) -> UICollectionViewCell {

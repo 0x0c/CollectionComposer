@@ -66,9 +66,6 @@ open class ButtonSection<T: ButtonCell>: Section {
         )
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = context.configuration.contentInsets
-        if decorations.isEmpty == false {
-            section.decorationItems = decorations.map(\.item)
-        }
         return section
     }
 

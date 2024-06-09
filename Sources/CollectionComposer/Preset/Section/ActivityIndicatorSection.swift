@@ -99,9 +99,6 @@ open class ActivityIndicatorSection: Section {
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        if decorations.isEmpty == false {
-            section.decorationItems = decorations.map(\.item)
-        }
         return section
     }
 

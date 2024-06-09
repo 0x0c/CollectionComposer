@@ -70,9 +70,6 @@ open class TextFormSection<T: TextFormCell>: Section {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 8
         section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
-        if decorations.isEmpty == false {
-            section.decorationItems = decorations.map(\.item)
-        }
         return section
     }
 

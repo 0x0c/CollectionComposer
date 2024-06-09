@@ -60,9 +60,6 @@ public extension ListableSection {
             using: listConfiguration,
             layoutEnvironment: environment
         )
-        if decorations.isEmpty == false {
-            section.decorationItems = decorations.map(\.item)
-        }
         return section
     }
 

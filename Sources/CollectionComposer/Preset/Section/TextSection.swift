@@ -158,9 +158,6 @@ open class TextSection<T: TextCell>: Section {
             subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: group)
-        if decorations.isEmpty == false {
-            section.decorationItems = decorations.map(\.item)
-        }
         return section
     }
 
