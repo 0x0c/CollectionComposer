@@ -128,7 +128,6 @@ class SupplementarySection: Section {
         )
         sectionFooter.pinToVisibleBounds = true
         section.boundarySupplementaryItems = [sectionHeader, sectionFooter]
-        registerDecorationItems(section)
         return section
     }
 
