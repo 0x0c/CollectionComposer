@@ -1,5 +1,5 @@
 //
-//  SwiftUIListCellSection.swift
+//  SwiftUIListSection.swift
 //  CollectionComposer
 //
 //  Created by Akira Matsuda on 2024/04/29.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @available(iOS 16.0, *)
-open class SwiftUIListCellSection<View: SwiftUIListCellView>: ListableSection, HighlightableSection {
+open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, HighlightableSection {
     // MARK: Lifecycle
 
     public init(id: String, items: [View.Model], appearance: UICollectionLayoutListConfiguration.Appearance = .plain, configuration: Configuration = .defaultConfiguration()) {

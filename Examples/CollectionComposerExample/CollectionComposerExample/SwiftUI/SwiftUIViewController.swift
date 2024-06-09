@@ -38,7 +38,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                     Label(title: { Text("Label") }, icon: { Image(systemName: "42.circle") })
                 })
             ))
-            SwiftUIListCellSection<ExampleCellView>(
+            SwiftUIListSection<ExampleCellView>(
                 id: "swift-ui-cell-section",
                 items: [
                     .init(title: "Example1-1"),
@@ -48,7 +48,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 configuration: .defaultConfiguration(highlightable: true)
             ).indexTitle("B")
                 .header(PlainHeaderView("B"))
-            SwiftUIListCellSection<ExampleCellView>(
+            SwiftUIListSection<ExampleCellView>(
                 id: "swift-ui-cell-section2",
                 items: [
                     .init(title: "Example2-1"),
@@ -58,7 +58,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 configuration: .defaultConfiguration(highlightable: true)
             ).indexTitle("C")
                 .header(PlainHeaderView("C"))
-            SwiftUIListCellSection<ExampleCellView>(
+            SwiftUIListSection<ExampleCellView>(
                 id: "swift-ui-cell-section3",
                 items: [
                     .init(title: "Example3-1"),
@@ -76,7 +76,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                         })
                     )
                 )
-            SwiftUIListCellSection<ExampleCellView>(
+            SwiftUIListSection<ExampleCellView>(
                 id: "swift-ui-cell-section4",
                 items: [
                     .init(title: "Example4-1"),
@@ -97,7 +97,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
     }
 
     override func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
-        if section is SwiftUIListCellSection<ExampleCellView>, let item = item as? ExampleData {
+        if section is SwiftUIListSection<ExampleCellView>, let item = item as? ExampleData {
             print(item)
         }
         collectionView.deselectItem(at: indexPath, animated: true)
