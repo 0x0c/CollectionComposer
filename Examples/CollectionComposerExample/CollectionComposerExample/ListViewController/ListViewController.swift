@@ -9,6 +9,33 @@ import CollectionComposer
 import SwiftUI
 import UIKit
 
+// MARK: - BackgroundDecorationView
+
+open class BackgroundDecorationView: UICollectionReusableView {
+    // MARK: Lifecycle
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .red
+    }
+
+    @available(*, unavailable)
+    public required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Public
+
+    public static func decoration() -> Decoration {
+        return Decoration(
+            viewClass: BackgroundDecorationView.self,
+            item: .background(elementKind: String(describing: BackgroundDecorationView.self))
+        )
+    }
+}
+
+// MARK: - ListViewController
+
 class ListViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
     lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
 
@@ -55,6 +82,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                 ListItem(text: "Item 5")
             }.indexTitle("D")
                 .footer(PlainFooterView("Inset Group Footer"))
+                .decorations([BackgroundDecorationView.decoration()])
             ListSection(id: "fifth", cellStyle: .value) {
                 ListItem(text: "Item 1", secondaryText: "Seconday")
                 ListItem(text: "Item 2", secondaryText: "Seconday")

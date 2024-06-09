@@ -29,6 +29,7 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
 
     // MARK: Open
 
+    open var decorations = [Decoration]()
     open var title: String?
     open var cellRegistration: UICollectionView.CellRegistration<
         Cell,
@@ -42,6 +43,11 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
 
     open var snapshotItems: [AnyHashable] {
         return items
+    }
+
+    open func decorations(_ decorations: [Decoration]) -> Self {
+        self.decorations = decorations
+        return self
     }
 
     open func indexTitle(_ title: String) -> Self {

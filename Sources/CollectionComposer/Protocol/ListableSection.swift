@@ -56,10 +56,14 @@ public extension ListableSection {
     }
 
     func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-        return NSCollectionLayoutSection.list(
+        let section = NSCollectionLayoutSection.list(
             using: listConfiguration,
             layoutEnvironment: environment
         )
+        if decorations.isEmpty == false {
+            section.decorationItems = decorations.map(\.item)
+        }
+        return section
     }
 
     func cell(for indexPath: IndexPath, in collectionView: UICollectionView, item: AnyHashable) -> UICollectionViewCell {

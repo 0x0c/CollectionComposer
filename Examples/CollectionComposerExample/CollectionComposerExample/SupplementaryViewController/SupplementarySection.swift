@@ -16,6 +16,15 @@ class SupplementarySection: Section {
         self.items = items()
     }
 
+    // MARK: Open
+
+    open var decorations = [Decoration]()
+
+    open func decorations(_ decorations: [Decoration]) -> Self {
+        self.decorations = decorations
+        return self
+    }
+
     // MARK: Public
 
     public var header: (any BoundarySupplementaryHeaderView)?
@@ -119,7 +128,9 @@ class SupplementarySection: Section {
         )
         sectionFooter.pinToVisibleBounds = true
         section.boundarySupplementaryItems = [sectionHeader, sectionFooter]
-
+        if decorations.isEmpty == false {
+            section.decorationItems = decorations.map(\.item)
+        }
         return section
     }
 

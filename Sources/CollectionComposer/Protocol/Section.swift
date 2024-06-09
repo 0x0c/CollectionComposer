@@ -15,6 +15,22 @@ public enum HeaderMode {
     case none
 }
 
+// MARK: - Decoration
+
+public struct Decoration {
+    // MARK: Lifecycle
+
+    public init(viewClass: AnyClass?, item: NSCollectionLayoutDecorationItem) {
+        self.viewClass = viewClass
+        self.item = item
+    }
+
+    // MARK: Public
+
+    public let viewClass: AnyClass?
+    public let item: NSCollectionLayoutDecorationItem
+}
+
 // MARK: - Section
 
 /// Section is a protocol that abstracts the NSCollectionLayoutSection.
@@ -41,6 +57,7 @@ public protocol Section {
     var footer: (any BoundarySupplementaryFooterView)? { get set }
 
     var boundarySupplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem] { get }
+    var decorations: [Decoration] { get }
 
     /// A function that returns the specific layout for a cell.
     /// - Parameters:
@@ -59,10 +76,11 @@ public protocol Section {
 
     func prepareHeaderView()
     func prepareFooterView()
-    func storeHeader(_ header: any BoundarySupplementaryHeaderView)
-    func storeFooter(_ footer: any BoundarySupplementaryFooterView)
     func header(_ header: any BoundarySupplementaryHeaderView) -> Self
     func footer(_ footer: any BoundarySupplementaryFooterView) -> Self
+    func storeHeader(_ header: any BoundarySupplementaryHeaderView)
+    func storeFooter(_ footer: any BoundarySupplementaryFooterView)
+    func decorations(_ decorations: [Decoration]) -> Self
     func registerDecorationView(to layout: UICollectionViewCompositionalLayout)
 
     func needsToOverrideHeaderBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool
@@ -137,8 +155,12 @@ public extension Section {
         prepareFooterView()
         return self
     }
-    
-    func registerDecorationView(to layout: UICollectionViewCompositionalLayout) {}
+
+    func registerDecorationView(to layout: UICollectionViewCompositionalLayout) {
+        for decoration in decorations {
+            layout.register(decoration.viewClass, forDecorationViewOfKind: decoration.item.elementKind)
+        }
+    }
 
     func needsToOverrideHeaderBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool {
         if let header {

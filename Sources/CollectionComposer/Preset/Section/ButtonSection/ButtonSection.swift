@@ -28,6 +28,7 @@ open class ButtonSection<T: ButtonCell>: Section {
 
     // MARK: Open
 
+    open var decorations = [Decoration]()
     open var cellRegistration: UICollectionView.CellRegistration<
         T, ButtonSectionContext
     >! = UICollectionView.CellRegistration<T, ButtonSectionContext> { cell, _, model in
@@ -42,6 +43,11 @@ open class ButtonSection<T: ButtonCell>: Section {
 
     open var snapshotItems: [AnyHashable] {
         return items.map { AnyHashable($0.id) }
+    }
+
+    open func decorations(_ decorations: [Decoration]) -> Self {
+        self.decorations = decorations
+        return self
     }
 
     open func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -60,6 +66,9 @@ open class ButtonSection<T: ButtonCell>: Section {
         )
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = context.configuration.contentInsets
+        if decorations.isEmpty == false {
+            section.decorationItems = decorations.map(\.item)
+        }
         return section
     }
 

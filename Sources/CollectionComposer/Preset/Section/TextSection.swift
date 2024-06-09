@@ -115,6 +115,7 @@ open class TextSection<T: TextCell>: Section {
 
     // MARK: Open
 
+    open var decorations = [Decoration]()
     open var cellRegistration: UICollectionView.CellRegistration<
         T, StringConfiguration
     >! = UICollectionView.CellRegistration<T, StringConfiguration> { cell, _, model in
@@ -137,6 +138,11 @@ open class TextSection<T: TextCell>: Section {
         return items
     }
 
+    open func decorations(_ decorations: [Decoration]) -> Self {
+        self.decorations = decorations
+        return self
+    }
+
     open func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -152,7 +158,9 @@ open class TextSection<T: TextCell>: Section {
             subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: group)
-
+        if decorations.isEmpty == false {
+            section.decorationItems = decorations.map(\.item)
+        }
         return section
     }
 

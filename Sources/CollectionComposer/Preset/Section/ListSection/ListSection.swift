@@ -63,6 +63,15 @@ open class ListSection: ListableSection, HighlightableSection {
         prepare(appearance: apperarance)
     }
 
+    // MARK: Open
+
+    open var decorations = [Decoration]()
+
+    open func decorations(_ decorations: [Decoration]) -> Self {
+        self.decorations = decorations
+        return self
+    }
+
     // MARK: Public
 
     public typealias Cell = UICollectionViewListCell
@@ -77,6 +86,8 @@ open class ListSection: ListableSection, HighlightableSection {
 
     public var header: (any BoundarySupplementaryHeaderView)?
     public var footer: (any BoundarySupplementaryFooterView)?
+
+    public private(set) var decorationItems = [NSCollectionLayoutDecorationItem]()
 
     public var listConfiguration: UICollectionLayoutListConfiguration!
     public var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>?

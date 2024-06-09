@@ -39,6 +39,7 @@ open class SwiftUISection: CollectionComposer.Section {
 
     // MARK: Open
 
+    open var decorations = [Decoration]()
     open var id: String
 
     open var cellRegistration: UICollectionView.CellRegistration<
@@ -54,6 +55,11 @@ open class SwiftUISection: CollectionComposer.Section {
 
     open var snapshotItems: [AnyHashable] {
         return items.map { AnyHashable($0) }
+    }
+
+    open func decorations(_ decorations: [Decoration]) -> Self {
+        self.decorations = decorations
+        return self
     }
 
     open func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -72,6 +78,9 @@ open class SwiftUISection: CollectionComposer.Section {
         )
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = configuration.contentInsets
+        if decorations.isEmpty == false {
+            section.decorationItems = decorations.map(\.item)
+        }
         return section
     }
 

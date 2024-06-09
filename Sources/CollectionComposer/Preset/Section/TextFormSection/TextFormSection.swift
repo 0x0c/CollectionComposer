@@ -30,6 +30,7 @@ open class TextFormSection<T: TextFormCell>: Section {
 
     // MARK: Open
 
+    open var decorations = [Decoration]()
     open var cellRegistration: UICollectionView.CellRegistration<
         T, TextForm
     >! = UICollectionView.CellRegistration<T, TextForm> { cell, _, model in
@@ -45,6 +46,11 @@ open class TextFormSection<T: TextFormCell>: Section {
 
     open var snapshotItems: [AnyHashable] {
         return items
+    }
+
+    open func decorations(_ decorations: [Decoration]) -> Self {
+        self.decorations = decorations
+        return self
     }
 
     open func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -64,6 +70,9 @@ open class TextFormSection<T: TextFormCell>: Section {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 8
         section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
+        if decorations.isEmpty == false {
+            section.decorationItems = decorations.map(\.item)
+        }
         return section
     }
 

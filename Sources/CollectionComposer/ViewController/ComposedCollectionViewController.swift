@@ -103,7 +103,7 @@ open class ComposedCollectionViewController: UIViewController {
         view.layer.zPosition = 1
         return view
     }
-    
+
     open func registerDecorationView(on layout: UICollectionViewCompositionalLayout) {
         guard let sections = provider?.sectionDataSource.sections else {
             return

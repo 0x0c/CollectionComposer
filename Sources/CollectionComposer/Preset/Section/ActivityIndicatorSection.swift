@@ -65,6 +65,7 @@ open class ActivityIndicatorSection: Section {
         }()
     }
 
+    open var decorations = [Decoration]()
     open var cellRegistration: UICollectionView.CellRegistration<
         ActivityIndicatorCell,
         IndicatorContent
@@ -81,6 +82,11 @@ open class ActivityIndicatorSection: Section {
         return items.map { AnyHashable($0) }
     }
 
+    open func decorations(_ decorations: [Decoration]) -> Self {
+        self.decorations = decorations
+        return self
+    }
+
     open func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
@@ -92,7 +98,11 @@ open class ActivityIndicatorSection: Section {
             heightDimension: .estimated(20)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        return NSCollectionLayoutSection(group: group)
+        let section = NSCollectionLayoutSection(group: group)
+        if decorations.isEmpty == false {
+            section.decorationItems = decorations.map(\.item)
+        }
+        return section
     }
 
     open func isHighlightable(for index: Int) -> Bool {
