@@ -118,6 +118,8 @@ open class ComposedCollectionViewController: UIViewController {
     }
 
     open func updateDataSource(_ sections: [any Section], animateWhenUpdate: Bool = true) {
+        let layout = collectionView.collectionViewLayout as! UICollectionViewCompositionalLayout
+        registerDecorationView(on: layout)
         var snapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashable>()
         let appendSections = sections.filter {
             if ignoreEmptySection {
@@ -187,7 +189,7 @@ open class ComposedCollectionViewController: UIViewController {
     private var cancellable = Set<AnyCancellable>()
 
     private func layout(configuration: UICollectionViewCompositionalLayoutConfiguration) -> UICollectionViewCompositionalLayout {
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: { [unowned self] sectionIndex, environment -> NSCollectionLayoutSection? in
+        return UICollectionViewCompositionalLayout(sectionProvider: { [unowned self] sectionIndex, environment -> NSCollectionLayoutSection? in
             guard let section = provider?
                 .sectionDataSource
                 .section(for: sectionIndex) else {
@@ -207,8 +209,6 @@ open class ComposedCollectionViewController: UIViewController {
             }
             return layoutSection
         }, configuration: configuration)
-        registerDecorationView(on: layout)
-        return layout
     }
 }
 
