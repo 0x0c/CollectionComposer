@@ -103,6 +103,15 @@ open class ComposedCollectionViewController: UIViewController {
         view.layer.zPosition = 1
         return view
     }
+    
+    open func registerDecorationView(on layout: UICollectionViewCompositionalLayout) {
+        guard let sections = provider?.sectionDataSource.sections else {
+            return
+        }
+        for section in sections {
+            section.registerDecorationView(to: layout)
+        }
+    }
 
     open func layoutConfiguration() -> UICollectionViewCompositionalLayoutConfiguration {
         return UICollectionViewCompositionalLayoutConfiguration()
@@ -178,7 +187,7 @@ open class ComposedCollectionViewController: UIViewController {
     private var cancellable = Set<AnyCancellable>()
 
     private func layout(configuration: UICollectionViewCompositionalLayoutConfiguration) -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout(sectionProvider: { [unowned self] sectionIndex, environment -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: { [unowned self] sectionIndex, environment -> NSCollectionLayoutSection? in
             guard let section = provider?
                 .sectionDataSource
                 .section(for: sectionIndex) else {
@@ -198,6 +207,8 @@ open class ComposedCollectionViewController: UIViewController {
             }
             return layoutSection
         }, configuration: configuration)
+        registerDecorationView(on: layout)
+        return layout
     }
 }
 

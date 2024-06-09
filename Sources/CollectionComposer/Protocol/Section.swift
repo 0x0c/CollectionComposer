@@ -63,6 +63,7 @@ public protocol Section {
     func storeFooter(_ footer: any BoundarySupplementaryFooterView)
     func header(_ header: any BoundarySupplementaryHeaderView) -> Self
     func footer(_ footer: any BoundarySupplementaryFooterView) -> Self
+    func registerDecorationView(to layout: UICollectionViewCompositionalLayout)
 
     func needsToOverrideHeaderBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool
     func needsToOverrideFooterBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool
@@ -136,6 +137,8 @@ public extension Section {
         prepareFooterView()
         return self
     }
+    
+    func registerDecorationView(to layout: UICollectionViewCompositionalLayout) {}
 
     func needsToOverrideHeaderBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool {
         if let header {
