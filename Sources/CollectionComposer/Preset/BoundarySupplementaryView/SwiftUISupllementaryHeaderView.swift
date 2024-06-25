@@ -12,10 +12,18 @@ open class SwiftUISupllementaryHeaderView: SwiftUISupllementaryView & BoundarySu
     // MARK: Lifecycle
 
     @available(iOS 16.0, *)
-    public required init(elementKind: String, pinToVisibleBounds: Bool = false, absoluteOffset: CGPoint = .zero, removeMargins: Bool = true, @ViewBuilder content: () -> some View) {
+    public required init(
+        elementKind: String,
+        pinToVisibleBounds: Bool = false,
+        absoluteOffset: CGPoint = .zero,
+        removeMargins: Bool = true,
+        extendsBoundary: Bool = true,
+        @ViewBuilder content: () -> some View
+    ) {
         self.elementKind = elementKind
         self.absoluteOffset = absoluteOffset
         self.pinToVisibleBounds = pinToVisibleBounds
+        self.extendsBoundary = extendsBoundary
         configuration = if removeMargins {
             UIHostingConfiguration { content() }.margins(.all, 0)
         }
@@ -25,15 +33,24 @@ open class SwiftUISupllementaryHeaderView: SwiftUISupllementaryView & BoundarySu
         prepare()
     }
 
-    public required init(elementKind: String, pinToVisibleBounds: Bool = false, absoluteOffset: CGPoint = .zero, configuration: UIContentConfiguration) {
+    public required init(
+        elementKind: String,
+        pinToVisibleBounds: Bool = false,
+        absoluteOffset: CGPoint = .zero,
+        extendsBoundary: Bool = true,
+        configuration: UIContentConfiguration
+    ) {
         self.elementKind = elementKind
         self.absoluteOffset = absoluteOffset
         self.configuration = configuration
         self.pinToVisibleBounds = pinToVisibleBounds
+        self.extendsBoundary = extendsBoundary
         prepare()
     }
 
     // MARK: Public
+
+    public let extendsBoundary: Bool
 
     public var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
     public let pinToVisibleBounds: Bool

@@ -12,14 +12,18 @@ open class PlainFooterView: PlainBoundaryView & BoundarySupplementaryFooterView 
 
     public init(
         _ text: String,
-        pinToVisibleBounds: Bool = false
+        pinToVisibleBounds: Bool = false,
+        extendsBoundary: Bool = true
     ) {
         self.text = text
         self.pinToVisibleBounds = pinToVisibleBounds
+        self.extendsBoundary = extendsBoundary
         prepare()
     }
 
     // MARK: Public
+
+    public let extendsBoundary: Bool
 
     public var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
 

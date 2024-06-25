@@ -13,15 +13,19 @@ open class PlainHeaderView: PlainBoundaryView & BoundarySupplementaryHeaderView 
     public init(
         _ text: String,
         pinToVisibleBounds: Bool = true,
-        isExpandable: Bool = false
+        isExpandable: Bool = false,
+        extendsBoundary: Bool = true
     ) {
         self.text = text
         self.pinToVisibleBounds = pinToVisibleBounds
         self.isExpandable = isExpandable
+        self.extendsBoundary = extendsBoundary
         prepare()
     }
 
     // MARK: Public
+
+    public let extendsBoundary: Bool
 
     public var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
 

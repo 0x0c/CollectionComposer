@@ -14,27 +14,10 @@ public protocol SwiftUISupllementaryView: BoundarySupplementaryView {
     typealias ContentView = UICollectionViewListCell
 
     @available(iOS 16.0, *)
-    init(elementKind: String, pinToVisibleBounds: Bool, absoluteOffset: CGPoint, removeMargins: Bool, @ViewBuilder content: () -> some View)
-    init(elementKind: String, pinToVisibleBounds: Bool, absoluteOffset: CGPoint, configuration: UIContentConfiguration)
-    static func boundarySupplementaryItems(alignment: NSRectAlignment, fractalWidth: CGFloat, absoluteOffset: CGPoint) -> NSCollectionLayoutBoundarySupplementaryItem
+    init(elementKind: String, pinToVisibleBounds: Bool, absoluteOffset: CGPoint, removeMargins: Bool, extendsBoundary: Bool, @ViewBuilder content: () -> some View)
+    init(elementKind: String, pinToVisibleBounds: Bool, absoluteOffset: CGPoint, extendsBoundary: Bool, configuration: UIContentConfiguration)
 }
 
 public extension SwiftUISupllementaryView {
     var layoutSize: NSCollectionLayoutSize { .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)) }
-
-    static func boundarySupplementaryItems(
-        alignment: NSRectAlignment,
-        fractalWidth: CGFloat = 1,
-        absoluteOffset: CGPoint
-    ) -> NSCollectionLayoutBoundarySupplementaryItem {
-        return NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(fractalWidth),
-                heightDimension: .estimated(44)
-            ),
-            elementKind: String(describing: self),
-            alignment: alignment,
-            absoluteOffset: absoluteOffset
-        )
-    }
 }

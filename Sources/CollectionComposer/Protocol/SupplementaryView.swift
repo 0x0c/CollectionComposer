@@ -17,6 +17,7 @@ public protocol SupplementaryView {
     var alignment: NSRectAlignment { get }
     var absoluteOffset: CGPoint { get }
     var pinToVisibleBounds: Bool { get }
+    var extendsBoundary: Bool { get }
 
     func prepare()
     func dequeueReusableSupplementary(collectionView: UICollectionView, for indexPath: IndexPath) -> UICollectionReusableView
@@ -57,6 +58,7 @@ public extension BoundarySupplementaryView {
             absoluteOffset: absoluteOffset
         )
         item.pinToVisibleBounds = pinToVisibleBounds
+        item.extendsBoundary = extendsBoundary
         return item
     }
 }
