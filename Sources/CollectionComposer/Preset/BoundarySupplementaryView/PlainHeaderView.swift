@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class PlainHeaderView: PlainBoundaryView & BoundarySupplementaryHeaderView {
+open class PlainHeaderView: PlainBoundaryView & BoundarySupplementaryHeaderView {
     // MARK: Lifecycle
 
     public init(

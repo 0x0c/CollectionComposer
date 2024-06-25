@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class PlainFooterView: PlainBoundaryView & BoundarySupplementaryFooterView {
+open class PlainFooterView: PlainBoundaryView & BoundarySupplementaryFooterView {
     // MARK: Lifecycle
 
     public init(
