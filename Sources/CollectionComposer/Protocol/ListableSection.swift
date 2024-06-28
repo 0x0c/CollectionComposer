@@ -84,6 +84,9 @@ public extension ListableSection {
 
     func prepare(appearance: UICollectionLayoutListConfiguration.Appearance) {
         listConfiguration = UICollectionLayoutListConfiguration(appearance: appearance)
+        if #available(iOS 15.0, *) {
+            listConfiguration.headerTopPadding = 0
+        }
         expandableHeaderRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Void> { [weak self] cell, _, _ in
             guard let self else {
                 return
