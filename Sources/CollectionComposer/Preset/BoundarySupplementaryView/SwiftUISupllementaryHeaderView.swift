@@ -61,8 +61,6 @@ open class SwiftUISupllementaryHeaderView: SwiftUISupllementaryView & BoundarySu
     public func prepare() {
         registration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(elementKind: elementKind) {
             supplementaryView, _, _ in
-            supplementaryView.layer.borderWidth = 1
-            supplementaryView.layer.borderColor = UIColor.red.cgColor
             supplementaryView.contentConfiguration = self.configuration
         }
     }
