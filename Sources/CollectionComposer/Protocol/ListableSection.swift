@@ -19,6 +19,8 @@ public protocol ListableSection: IndexTitleSection & AnyObject {
 
     func prepare(appearance: UICollectionLayoutListConfiguration.Appearance)
     func actualIndex(at index: Int) -> Int
+    @available(iOS 15.0, *)
+    func headerTopPadding(_ padding: CGFloat?) -> Self
 }
 
 // MARK: - ListConfiguration
@@ -53,6 +55,12 @@ public extension ListableSection {
         case .none:
             return .none
         }
+    }
+
+    @available(iOS 15.0, *)
+    func headerTopPadding(_ padding: CGFloat?) -> Self {
+        listConfiguration.headerTopPadding = padding
+        return self
     }
 
     func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {

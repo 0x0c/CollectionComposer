@@ -85,14 +85,20 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 ],
                 configuration: .defaultConfiguration(highlightable: true)
             ).indexTitle("E")
+                .header(SwiftUISupllementaryHeaderView(
+                    elementKind: "swift-ui-header",
+                    configuration: UIHostingConfiguration(content: {
+                        Label(title: { Text("Header") }, icon: { Image(systemName: "42.circle") })
+                    })
+                ))
                 .footer(
                     SwiftUISupllementaryFooterView(
                         elementKind: "swift-ui-footer",
                         configuration: UIHostingConfiguration(content: {
-                            Label(title: { Text("Label") }, icon: { Image(systemName: "42.circle") })
+                            Label(title: { Text("Footer") }, icon: { Image(systemName: "42.circle") })
                         })
                     )
-                )
+                ).headerTopPadding(0)
         }
     }
 
