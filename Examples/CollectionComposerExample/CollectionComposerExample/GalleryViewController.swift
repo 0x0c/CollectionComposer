@@ -12,7 +12,7 @@ import UIKit
 class GalleryViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
     private(set) var sections = [any CollectionComposer.Section]()
 
-    lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
+    var sectionDataSource: CollectionComposer.SectionDataSource { self }
 
     override func viewDidLoad() {
         super.viewDidLoad()

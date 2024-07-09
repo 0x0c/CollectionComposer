@@ -37,7 +37,7 @@ open class BackgroundDecorationView: UICollectionReusableView {
 // MARK: - ListViewController
 
 class ListViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
-    lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
+    var sectionDataSource: CollectionComposer.SectionDataSource { self }
 
     private(set) var sections = [any CollectionComposer.Section]()
 

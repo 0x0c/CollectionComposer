@@ -11,7 +11,7 @@ import UIKit
 class SupplementaryViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
     private(set) var sections = [any Section]()
 
-    lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
+    var sectionDataSource: CollectionComposer.SectionDataSource { self }
 
     override func viewDidLoad() {
         super.viewDidLoad()
