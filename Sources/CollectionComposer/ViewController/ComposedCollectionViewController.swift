@@ -34,7 +34,7 @@ open class CollectionComposerDataSource<SectionIdentifierType, ItemIdentifierTyp
 
     // MARK: Internal
 
-    var indexTitlesProvider: IndexTitlesProvider?
+    weak var indexTitlesProvider: IndexTitlesProvider?
 }
 
 // MARK: - ComposedCollectionViewController
