@@ -38,7 +38,7 @@ open class SwiftUISupllementaryFooterView: SwiftUISupllementaryView & BoundarySu
         pinToVisibleBounds: Bool = false,
         absoluteOffset: CGPoint = .zero,
         extendsBoundary: Bool = true,
-        configuration: UIContentConfiguration?
+        configuration: (any UIContentConfiguration)? = nil
     ) {
         self.elementKind = elementKind
         self.absoluteOffset = absoluteOffset

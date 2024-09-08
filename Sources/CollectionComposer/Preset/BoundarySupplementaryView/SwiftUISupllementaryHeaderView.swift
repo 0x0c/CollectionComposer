@@ -38,7 +38,7 @@ open class SwiftUISupllementaryHeaderView: SwiftUISupllementaryView & BoundarySu
         pinToVisibleBounds: Bool = false,
         absoluteOffset: CGPoint = .zero,
         extendsBoundary: Bool = true,
-        configuration: UIContentConfiguration? = nil
+        configuration: (any UIContentConfiguration)? = nil
     ) {
         self.elementKind = elementKind
         self.absoluteOffset = absoluteOffset

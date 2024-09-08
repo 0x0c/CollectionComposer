@@ -15,7 +15,7 @@ public protocol SwiftUISupllementaryView: BoundarySupplementaryView {
 
     @available(iOS 16.0, *)
     init(elementKind: String, pinToVisibleBounds: Bool, absoluteOffset: CGPoint, removeMargins: Bool, extendsBoundary: Bool, @ViewBuilder content: () -> some View)
-    init(elementKind: String, pinToVisibleBounds: Bool, absoluteOffset: CGPoint, extendsBoundary: Bool, configuration: UIContentConfiguration?)
+    init(elementKind: String, pinToVisibleBounds: Bool, absoluteOffset: CGPoint, extendsBoundary: Bool, configuration: (any UIContentConfiguration)?)
 }
 
 public extension SwiftUISupllementaryView {
