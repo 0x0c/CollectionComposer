@@ -99,11 +99,11 @@ open class ListSection: ListableSection, HighlightableSection {
         return items.map { AnyHashable($0) }
     }
 
-    public func storeHeader(_ header: any BoundarySupplementaryHeaderView) {
+    public func storeHeader(_ header: (any BoundarySupplementaryHeaderView)?) {
         self.header = header
     }
 
-    public func storeFooter(_ footer: any BoundarySupplementaryFooterView) {
+    public func storeFooter(_ footer: (any BoundarySupplementaryFooterView)?) {
         self.footer = footer
     }
 

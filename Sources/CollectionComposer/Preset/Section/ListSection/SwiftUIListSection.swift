@@ -57,11 +57,11 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
         return self
     }
 
-    open func storeHeader(_ header: any BoundarySupplementaryHeaderView) {
+    open func storeHeader(_ header: (any BoundarySupplementaryHeaderView)?) {
         self.header = header
     }
 
-    open func storeFooter(_ footer: any BoundarySupplementaryFooterView) {
+    open func storeFooter(_ footer: (any BoundarySupplementaryFooterView)?) {
         self.footer = footer
     }
 

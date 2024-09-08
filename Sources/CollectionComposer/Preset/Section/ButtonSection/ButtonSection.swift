@@ -79,11 +79,11 @@ open class ButtonSection<T: ButtonCell>: Section {
     public var header: (any BoundarySupplementaryHeaderView)?
     public var footer: (any BoundarySupplementaryFooterView)?
 
-    public func storeHeader(_ header: any BoundarySupplementaryHeaderView) {
+    public func storeHeader(_ header: (any BoundarySupplementaryHeaderView)?) {
         self.header = header
     }
 
-    public func storeFooter(_ footer: any BoundarySupplementaryFooterView) {
+    public func storeFooter(_ footer: (any BoundarySupplementaryFooterView)?) {
         self.footer = footer
     }
 
