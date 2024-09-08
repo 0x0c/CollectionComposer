@@ -76,10 +76,13 @@ public protocol Section {
 
     func prepareHeaderView()
     func prepareFooterView()
+    @discardableResult
     func header(_ header: any BoundarySupplementaryHeaderView) -> Self
-    func footer(_ footer: any BoundarySupplementaryFooterView) -> Self
     func storeHeader(_ header: any BoundarySupplementaryHeaderView)
+    @discardableResult
+    func footer(_ footer: any BoundarySupplementaryFooterView) -> Self
     func storeFooter(_ footer: any BoundarySupplementaryFooterView)
+    @discardableResult
     func decorations(_ decorations: [Decoration]) -> Self
     func registerDecorationItems(_ section: NSCollectionLayoutSection)
     func registerDecorationView(to layout: UICollectionViewCompositionalLayout)
@@ -151,12 +154,14 @@ public extension Section {
     func prepareHeaderView() {}
     func prepareFooterView() {}
 
+    @discardableResult
     func header(_ header: any BoundarySupplementaryHeaderView) -> Self {
         storeHeader(header)
         prepareHeaderView()
         return self
     }
 
+    @discardableResult
     func footer(_ footer: any BoundarySupplementaryFooterView) -> Self {
         storeFooter(footer)
         prepareFooterView()
