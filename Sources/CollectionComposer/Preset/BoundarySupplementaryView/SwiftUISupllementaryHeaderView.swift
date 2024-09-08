@@ -71,14 +71,12 @@ open class SwiftUISupllementaryHeaderView: SwiftUISupllementaryView & BoundarySu
     public let elementKind: String
     public let absoluteOffset: CGPoint
 
+    public var configuration: UIContentConfiguration?
+
     public func prepare() {
         registration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(elementKind: elementKind) {
             supplementaryView, _, _ in
             supplementaryView.contentConfiguration = self.configuration
         }
     }
-
-    // MARK: Internal
-
-    public var configuration: UIContentConfiguration?
 }
