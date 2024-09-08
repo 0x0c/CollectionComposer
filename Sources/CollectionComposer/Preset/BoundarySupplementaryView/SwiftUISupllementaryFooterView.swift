@@ -38,24 +38,11 @@ open class SwiftUISupllementaryFooterView: SwiftUISupllementaryView & BoundarySu
         pinToVisibleBounds: Bool = false,
         absoluteOffset: CGPoint = .zero,
         extendsBoundary: Bool = true,
-        configuration: UIContentConfiguration
+        configuration: UIContentConfiguration?
     ) {
         self.elementKind = elementKind
         self.absoluteOffset = absoluteOffset
         self.configuration = configuration
-        self.pinToVisibleBounds = pinToVisibleBounds
-        self.extendsBoundary = extendsBoundary
-        prepare()
-    }
-
-    public required init(
-        elementKind: String,
-        pinToVisibleBounds: Bool = false,
-        absoluteOffset: CGPoint = .zero,
-        extendsBoundary: Bool = true
-    ) {
-        self.elementKind = elementKind
-        self.absoluteOffset = absoluteOffset
         self.pinToVisibleBounds = pinToVisibleBounds
         self.extendsBoundary = extendsBoundary
         prepare()
