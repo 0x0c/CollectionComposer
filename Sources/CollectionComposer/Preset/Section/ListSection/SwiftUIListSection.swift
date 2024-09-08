@@ -55,6 +55,32 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
         return self
     }
 
+    open func storeHeader(_ header: any BoundarySupplementaryHeaderView) {
+        self.header = header
+    }
+
+    open func storeFooter(_ footer: any BoundarySupplementaryFooterView) {
+        self.footer = footer
+    }
+
+    open func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+        let section = NSCollectionLayoutSection.list(
+            using: listConfiguration,
+            layoutEnvironment: environment
+        )
+        section.contentInsets = configuration.contentInsets
+        return section
+    }
+
+    open func isHighlightable(at index: Int) -> Bool {
+        return configuration.isHighlightable
+    }
+
+    open func expand(_ expand: Bool) -> Self {
+        isExpanded = expand
+        return self
+    }
+
     // MARK: Public
 
     public struct Configuration {
@@ -87,32 +113,6 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
 
     public var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>?
     public let id: String
-
-    public func storeHeader(_ header: any BoundarySupplementaryHeaderView) {
-        self.header = header
-    }
-
-    public func storeFooter(_ footer: any BoundarySupplementaryFooterView) {
-        self.footer = footer
-    }
-
-    public func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-        let section = NSCollectionLayoutSection.list(
-            using: listConfiguration,
-            layoutEnvironment: environment
-        )
-        section.contentInsets = configuration.contentInsets
-        return section
-    }
-
-    public func isHighlightable(at index: Int) -> Bool {
-        return configuration.isHighlightable
-    }
-
-    public func expand(_ expand: Bool) -> Self {
-        isExpanded = expand
-        return self
-    }
 
     // MARK: Private
 

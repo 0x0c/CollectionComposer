@@ -85,6 +85,14 @@ open class SwiftUISection: CollectionComposer.Section {
         return false
     }
 
+    open func storeHeader(_ header: any BoundarySupplementaryHeaderView) {
+        self.header = header
+    }
+
+    open func storeFooter(_ footer: any BoundarySupplementaryFooterView) {
+        self.footer = footer
+    }
+
     // MARK: Public
 
     public struct Configuration {
@@ -131,15 +139,7 @@ open class SwiftUISection: CollectionComposer.Section {
     public var header: (any BoundarySupplementaryHeaderView)?
     public var footer: (any BoundarySupplementaryFooterView)?
 
-    public func storeHeader(_ header: any BoundarySupplementaryHeaderView) {
-        self.header = header
-    }
+    // MARK: Private
 
-    public func storeFooter(_ footer: any BoundarySupplementaryFooterView) {
-        self.footer = footer
-    }
-
-    // MARK: Internal
-
-    let configuration: Configuration
+    private let configuration: Configuration
 }
