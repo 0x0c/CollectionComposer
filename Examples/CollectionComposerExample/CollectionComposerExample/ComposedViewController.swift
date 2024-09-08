@@ -9,9 +9,9 @@ import CollectionComposer
 import UIKit
 
 class ComposedViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
-    var sectionDataSource: CollectionComposer.SectionDataSource { self }
-
     private(set) var sections = [any Section]()
+
+    var sectionDataSource: CollectionComposer.SectionDataSource { self }
 
     override func viewDidLoad() {
         super.viewDidLoad()
