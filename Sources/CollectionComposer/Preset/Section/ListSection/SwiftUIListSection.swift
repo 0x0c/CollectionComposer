@@ -45,11 +45,13 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
         return items
     }
 
+    @discardableResult
     open func decorations(_ decorations: [Decoration]) -> Self {
         self.decorations = decorations
         return self
     }
 
+    @discardableResult
     open func indexTitle(_ title: String) -> Self {
         self.title = title
         return self
@@ -76,6 +78,7 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
         return configuration.isHighlightable
     }
 
+    @discardableResult
     open func expand(_ expand: Bool) -> Self {
         isExpanded = expand
         return self

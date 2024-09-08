@@ -45,6 +45,7 @@ open class ButtonSection<T: ButtonCell>: Section {
         return items.map { AnyHashable($0.id) }
     }
 
+    @discardableResult
     open func decorations(_ decorations: [Decoration]) -> Self {
         self.decorations = decorations
         return self

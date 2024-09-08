@@ -67,6 +67,7 @@ open class ListSection: ListableSection, HighlightableSection {
 
     open var decorations = [Decoration]()
 
+    @discardableResult
     open func decorations(_ decorations: [Decoration]) -> Self {
         self.decorations = decorations
         return self
@@ -113,6 +114,7 @@ open class ListSection: ListableSection, HighlightableSection {
         return items[actualIndex(at: index)].isHighlightable
     }
 
+    @discardableResult
     public func indexTitle(_ title: String) -> Self {
         self.title = title
         return self
@@ -123,11 +125,13 @@ open class ListSection: ListableSection, HighlightableSection {
         return self
     }
 
+    @discardableResult
     public func leadingSwipeActions(_ provider: @escaping SwipeActionConfigurationProvider) -> Self {
         leadingSwipeActionsConfigurationProvider = provider
         return self
     }
 
+    @discardableResult
     public func trailingSwipeActions(_ provider: @escaping SwipeActionConfigurationProvider) -> Self {
         trailingSwipeActionsConfigurationProvider = provider
         return self

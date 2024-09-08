@@ -57,6 +57,7 @@ open class SwiftUISection: CollectionComposer.Section {
         return items.map { AnyHashable($0) }
     }
 
+    @discardableResult
     open func decorations(_ decorations: [Decoration]) -> Self {
         self.decorations = decorations
         return self

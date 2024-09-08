@@ -48,6 +48,7 @@ open class TextFormSection<T: TextFormCell>: Section {
         return items
     }
 
+    @discardableResult
     open func decorations(_ decorations: [Decoration]) -> Self {
         self.decorations = decorations
         return self

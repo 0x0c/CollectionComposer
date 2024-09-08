@@ -20,6 +20,7 @@ class SupplementarySection: Section {
 
     open var decorations = [Decoration]()
 
+    @discardableResult
     open func decorations(_ decorations: [Decoration]) -> Self {
         self.decorations = decorations
         return self
