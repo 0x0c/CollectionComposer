@@ -80,5 +80,5 @@ open class SwiftUISupllementaryFooterView: SwiftUISupllementaryView & BoundarySu
 
     // MARK: Internal
 
-    var configuration: UIContentConfiguration?
+    public var configuration: UIContentConfiguration?
 }
