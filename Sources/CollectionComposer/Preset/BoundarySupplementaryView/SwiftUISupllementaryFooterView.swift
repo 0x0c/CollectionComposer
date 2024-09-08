@@ -48,6 +48,19 @@ open class SwiftUISupllementaryFooterView: SwiftUISupllementaryView & BoundarySu
         prepare()
     }
 
+    public required init(
+        elementKind: String,
+        pinToVisibleBounds: Bool = false,
+        absoluteOffset: CGPoint = .zero,
+        extendsBoundary: Bool = true
+    ) {
+        self.elementKind = elementKind
+        self.absoluteOffset = absoluteOffset
+        self.pinToVisibleBounds = pinToVisibleBounds
+        self.extendsBoundary = extendsBoundary
+        prepare()
+    }
+
     // MARK: Public
 
     public let extendsBoundary: Bool
@@ -65,7 +78,7 @@ open class SwiftUISupllementaryFooterView: SwiftUISupllementaryView & BoundarySu
         }
     }
 
-    // MARK: Private
+    // MARK: Internal
 
-    private let configuration: UIContentConfiguration
+    var configuration: UIContentConfiguration?
 }
