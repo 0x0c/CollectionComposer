@@ -140,7 +140,5 @@ open class SwiftUISection: CollectionComposer.Section {
     public var header: (any BoundarySupplementaryHeaderView)?
     public var footer: (any BoundarySupplementaryFooterView)?
 
-    // MARK: Private
-
-    private let configuration: Configuration
+    public let configuration: Configuration
 }
