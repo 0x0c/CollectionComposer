@@ -35,6 +35,7 @@ public struct Decoration {
 
 /// Section is a protocol that abstracts the NSCollectionLayoutSection.
 /// Section associates the data to be displayed on the screen with the corresponding cells and their layouts.
+@MainActor
 public protocol Section {
     associatedtype Cell: UICollectionViewCell
     associatedtype Item
