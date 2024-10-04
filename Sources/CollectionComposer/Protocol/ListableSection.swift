@@ -9,6 +9,7 @@ import UIKit
 
 // MARK: - ListableSection
 
+@MainActor
 public protocol ListableSection: IndexTitleSection & AnyObject {
     typealias SwipeActionConfigurationProvider = (Item) -> UISwipeActionsConfiguration?
 

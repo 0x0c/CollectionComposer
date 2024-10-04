@@ -9,6 +9,7 @@ import UIKit
 
 // MARK: - SupplementaryView
 
+@MainActor
 public protocol SupplementaryView {
     associatedtype ContentView: UICollectionReusableView
 
@@ -25,6 +26,7 @@ public protocol SupplementaryView {
 
 // MARK: - BoundarySupplementaryView
 
+@MainActor
 public protocol BoundarySupplementaryView: SupplementaryView {
     var registration: UICollectionView.SupplementaryRegistration<ContentView>! { get }
 
@@ -33,6 +35,7 @@ public protocol BoundarySupplementaryView: SupplementaryView {
 
 // MARK: - BoundarySupplementaryHeaderView
 
+@MainActor
 public protocol BoundarySupplementaryHeaderView: BoundarySupplementaryView {}
 public extension BoundarySupplementaryHeaderView {
     var alignment: NSRectAlignment { .top }
@@ -40,6 +43,7 @@ public extension BoundarySupplementaryHeaderView {
 
 // MARK: - BoundarySupplementaryFooterView
 
+@MainActor
 public protocol BoundarySupplementaryFooterView: BoundarySupplementaryView {}
 public extension BoundarySupplementaryFooterView {
     var alignment: NSRectAlignment { .bottom }

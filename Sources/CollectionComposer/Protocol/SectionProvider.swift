@@ -11,6 +11,7 @@ import Foundation
 // MARK: - SectionProvider
 
 /// `SectionProvider` is a protocol to store sections in SectionDataSource and notify changes of data soruce.
+@MainActor
 public protocol SectionProvider: AnyObject {
     /// A data source for sections.
     var sectionDataSource: SectionDataSource { get }

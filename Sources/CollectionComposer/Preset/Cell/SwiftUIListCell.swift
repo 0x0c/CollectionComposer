@@ -43,6 +43,7 @@ public extension SwiftUICellViewModel {
 // MARK: - SwiftUIListCellView
 
 @available(iOS 16.0, *)
+@MainActor
 public protocol SwiftUIListCellView: View {
     associatedtype Model: SwiftUICellViewModel
 

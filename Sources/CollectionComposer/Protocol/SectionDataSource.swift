@@ -10,6 +10,7 @@ import Foundation
 // MARK: - SectionDataSource
 
 /// `SectionDataSource` is a protocol for specifically holding and managing sections.
+@MainActor
 public protocol SectionDataSource: AnyObject {
     /// An array for storing sections.
     var sections: [any Section] { get }
