@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-open class SwiftUISupllementaryHeaderView: SwiftUISupllementaryView & BoundarySupplementaryHeaderView {
+open class SwiftUISupllementaryHeaderView: SwiftUISupllementaryView, BoundarySupplementaryHeaderView {
     // MARK: Lifecycle
 
     @available(iOS 16.0, *)

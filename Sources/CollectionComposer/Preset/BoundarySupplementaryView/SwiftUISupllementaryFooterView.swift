@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-open class SwiftUISupllementaryFooterView: SwiftUISupllementaryView & BoundarySupplementaryFooterView {
+open class SwiftUISupllementaryFooterView: SwiftUISupllementaryView, BoundarySupplementaryFooterView {
     // MARK: Lifecycle
 
     @available(iOS 16.0, *)
