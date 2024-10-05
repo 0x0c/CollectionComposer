@@ -1,5 +1,5 @@
 //
-//  ListAppearanceSupplementaryView.swift
+//  ListAppearanceHeader.swift
 //  CollectionComposer
 //
 //  Created by Akira Matsuda on 2024/10/05.
