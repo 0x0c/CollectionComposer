@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class PlainFooterView: PlainBoundaryView & BoundarySupplementaryFooterView {
+open class PlainFooterView: PlainBoundaryView, BoundarySupplementaryFooterView, ListAppearanceSupplementaryView {
     // MARK: Lifecycle
 
     public init(
@@ -41,7 +41,7 @@ open class PlainFooterView: PlainBoundaryView & BoundarySupplementaryFooterView 
             guard let self else {
                 return
             }
-            var configuration = Self.footerConfiguration(for: appearance)
+            var configuration = footerConfiguration()
             configuration.text = text
             supplementaryView.contentConfiguration = configuration
         }
@@ -49,7 +49,7 @@ open class PlainFooterView: PlainBoundaryView & BoundarySupplementaryFooterView 
 
     // MARK: Internal
 
-    static func footerConfiguration(for appearance: UICollectionLayoutListConfiguration.Appearance) -> UIListContentConfiguration {
+    func footerConfiguration() -> UIListContentConfiguration {
         switch appearance {
         case .grouped, .insetGrouped, .sidebar:
             return .groupedFooter()

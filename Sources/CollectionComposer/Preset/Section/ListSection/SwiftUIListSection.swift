@@ -114,7 +114,7 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
     public var leadingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
     public var trailingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
 
-    public var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>?
+    public var expandableHeaderRegistration: UICollectionView.CellRegistration<ExpandableHeaderListCell, Void>?
     public let id: String
 
     // MARK: Private

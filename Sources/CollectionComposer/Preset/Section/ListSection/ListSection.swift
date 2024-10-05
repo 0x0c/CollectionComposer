@@ -91,7 +91,7 @@ open class ListSection: ListableSection, HighlightableSection {
     public private(set) var decorationItems = [NSCollectionLayoutDecorationItem]()
 
     public var listConfiguration: UICollectionLayoutListConfiguration!
-    public var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>?
+    public var expandableHeaderRegistration: UICollectionView.CellRegistration<ExpandableHeaderListCell, Void>?
     public var leadingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
     public var trailingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
 

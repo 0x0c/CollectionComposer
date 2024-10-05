@@ -7,6 +7,30 @@
 
 import UIKit
 
+// MARK: - ExpandableHeaderListCell
+
+public class ExpandableHeaderListCell: UICollectionViewListCell {
+    // MARK: Public
+
+    override public func updateConfiguration(using state: UICellConfigurationState) {
+        super.updateConfiguration(using: state)
+        contentConfiguration = expandableHeader?.update(using: state)
+    }
+
+    // MARK: Internal
+
+    func updateExpandableHeader(_ expandableHeader: any ExpandableHeader) {
+        self.expandableHeader = expandableHeader
+        var configuration = expandableHeader.headerConfiguration()
+        accessories = expandableHeader.accessories
+        contentConfiguration = configuration
+    }
+
+    // MARK: Private
+
+    private var expandableHeader: (any ExpandableHeader)?
+}
+
 // MARK: - ListableSection
 
 @MainActor
@@ -14,7 +38,7 @@ public protocol ListableSection: IndexTitleSection & AnyObject {
     typealias SwipeActionConfigurationProvider = (Item) -> UISwipeActionsConfiguration?
 
     var listConfiguration: UICollectionLayoutListConfiguration! { get set }
-    var expandableHeaderRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Void>? { get set }
+    var expandableHeaderRegistration: UICollectionView.CellRegistration<ExpandableHeaderListCell, Void>? { get set }
     var leadingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider? { get }
     var trailingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider? { get }
 
@@ -42,7 +66,7 @@ public enum ListConfiguration {
 public extension ListableSection {
     var isExpandable: Bool {
         guard let header,
-              let header = header as? PlainHeaderView else {
+              let header = header as? ExpandableHeader else {
             return false
         }
         return header.isExpandable
@@ -87,15 +111,12 @@ public extension ListableSection {
 
     func prepare(appearance: UICollectionLayoutListConfiguration.Appearance) {
         listConfiguration = UICollectionLayoutListConfiguration(appearance: appearance)
-        expandableHeaderRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Void> { [weak self] cell, _, _ in
+        expandableHeaderRegistration = UICollectionView.CellRegistration<ExpandableHeaderListCell, Void> { [weak self] cell, _, _ in
             guard let self else {
                 return
             }
-            if let header = header as? PlainHeaderView, header.isExpandable {
-                var configuration = PlainHeaderView.headerConfiguration(for: appearance)
-                cell.accessories = [.outlineDisclosure()]
-                configuration.text = header.text
-                cell.contentConfiguration = configuration
+            if let header = header as? ExpandableHeader, header.isExpandable {
+                cell.updateExpandableHeader(header)
             }
         }
         listConfiguration.leadingSwipeActionsConfigurationProvider = { [weak self] indexPath in
@@ -115,14 +136,19 @@ public extension ListableSection {
     }
 
     func prepareHeaderView() {
-        if let header = header as? PlainHeaderView {
+        if var header = header as? ListAppearanceSupplementaryView {
             header.appearance = listConfiguration.appearance
         }
-        listConfiguration.headerMode = isExpandable ? .firstItemInSection : .supplementary
+        if let header = header as? ExpandableHeader {
+            listConfiguration.headerMode = header.headerMode
+        }
+        else {
+            listConfiguration.headerMode = .supplementary
+        }
     }
 
     func prepareFooterView() {
-        if let footer = footer as? PlainFooterView {
+        if var footer = footer as? ListAppearanceSupplementaryView {
             footer.appearance = listConfiguration.appearance
         }
         listConfiguration.footerMode = .supplementary

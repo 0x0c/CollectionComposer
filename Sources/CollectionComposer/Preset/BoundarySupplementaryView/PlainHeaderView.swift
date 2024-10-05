@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class PlainHeaderView: PlainBoundaryView & BoundarySupplementaryHeaderView {
+open class PlainHeaderView: PlainBoundaryHeaderView, BoundarySupplementaryHeaderView, ListAppearanceSupplementaryView {
     // MARK: Lifecycle
 
     public init(
@@ -26,15 +26,18 @@ open class PlainHeaderView: PlainBoundaryView & BoundarySupplementaryHeaderView 
     // MARK: Public
 
     public let extendsBoundary: Bool
-
     public var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
-
     public let text: String
     public let pinToVisibleBounds: Bool
     public let isExpandable: Bool
+    public var isExpanded: Bool = false
     public var appearance: UICollectionLayoutListConfiguration.Appearance = .plain
 
+    public var headerMode: UICollectionLayoutListConfiguration.HeaderMode { .firstItemInSection }
+
     public var elementKind: String { UICollectionView.elementKindSectionHeader }
+
+    public var accessories: [UICellAccessory] { [.outlineDisclosure()] }
 
     public func prepare() {
         registration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(
@@ -43,7 +46,7 @@ open class PlainHeaderView: PlainBoundaryView & BoundarySupplementaryHeaderView 
             guard let self else {
                 return
             }
-            var configuration = Self.headerConfiguration(for: appearance)
+            var configuration = headerConfiguration() as! UIListContentConfiguration
             configuration.text = text
             if isExpandable {
                 supplementaryView.accessories = [.outlineDisclosure()]
@@ -52,18 +55,24 @@ open class PlainHeaderView: PlainBoundaryView & BoundarySupplementaryHeaderView 
         }
     }
 
-    // MARK: Internal
+    public func headerConfiguration() -> (any UIContentConfiguration)? {
+        var configuration: UIListContentConfiguration = {
+            switch appearance {
+            case .grouped, .insetGrouped, .sidebar:
+                return .groupedHeader()
+            case .plain:
+                return .plainHeader()
+            case .sidebarPlain:
+                return .sidebarHeader()
+            @unknown default:
+                return .plainHeader()
+            }
+        }()
+        configuration.text = text
+        return configuration
+    }
 
-    static func headerConfiguration(for appearance: UICollectionLayoutListConfiguration.Appearance) -> UIListContentConfiguration {
-        switch appearance {
-        case .grouped, .insetGrouped, .sidebar:
-            return .groupedHeader()
-        case .plain:
-            return .plainHeader()
-        case .sidebarPlain:
-            return .sidebarHeader()
-        @unknown default:
-            return .plainHeader()
-        }
+    public func update(using state: UICellConfigurationState) -> (any UIContentConfiguration)? {
+        return headerConfiguration()
     }
 }

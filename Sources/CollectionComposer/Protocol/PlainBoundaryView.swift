@@ -11,9 +11,12 @@ import UIKit
 
 public protocol PlainBoundaryView: SupplementaryView {
     var text: String { get }
-    var isExpandable: Bool { get }
     var appearance: UICollectionLayoutListConfiguration.Appearance { get }
 }
+
+// MARK: - PlainBoundaryHeaderView
+
+public protocol PlainBoundaryHeaderView: PlainBoundaryView, ExpandableHeader {}
 
 public extension PlainBoundaryView {
     typealias ContentView = UICollectionViewListCell
@@ -21,7 +24,3 @@ public extension PlainBoundaryView {
     var layoutSize: NSCollectionLayoutSize { .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(28)) }
     var absoluteOffset: CGPoint { .zero }
 }
-
-// MARK: - PlainHeaderView
-
-// MARK: - PlainFooterView
