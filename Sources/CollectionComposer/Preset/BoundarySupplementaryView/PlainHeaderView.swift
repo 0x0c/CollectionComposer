@@ -42,7 +42,7 @@ open class PlainHeaderView: PlainBoundaryHeaderView, BoundarySupplementaryHeader
             guard let self else {
                 return
             }
-            var configuration = headerConfiguration() as! UIListContentConfiguration
+            var configuration = headerConfiguration(isExpanded: isExpanded) as! UIListContentConfiguration
             configuration.text = text
             if isExpandable {
                 supplementaryView.accessories = [.outlineDisclosure()]
@@ -58,7 +58,7 @@ open class PlainHeaderView: PlainBoundaryHeaderView, BoundarySupplementaryHeader
     public let pinToVisibleBounds: Bool
     public let isExpandable: Bool
 
-    public func headerConfiguration() -> (any UIContentConfiguration)? {
+    public func headerConfiguration(isExpanded: Bool) -> (any UIContentConfiguration)? {
         var configuration: UIListContentConfiguration = {
             switch appearance {
             case .grouped, .insetGrouped, .sidebar:
@@ -76,6 +76,6 @@ open class PlainHeaderView: PlainBoundaryHeaderView, BoundarySupplementaryHeader
     }
 
     public func update(using state: UICellConfigurationState) -> (any UIContentConfiguration)? {
-        return headerConfiguration()
+        return headerConfiguration(isExpanded: state.isExpanded)
     }
 }

@@ -14,25 +14,32 @@ open class ListSection: ListableSection, HighlightableSection {
 
     public convenience init(
         id: String = UUID().uuidString,
-        cellStyle: ListConfiguration.CellStyle = .default,
+        cellStyle: CellConfiguration.CellStyle = .default,
         apperarance: UICollectionLayoutListConfiguration.Appearance = .plain,
-        isHighlightable: Bool = false,
+        configuration: CellConfiguration = .default(),
         @ItemBuilder<any ListCellConfigurable> _ items: () -> [any ListCellConfigurable]
     ) {
-        self.init(id: id, cellStyle: cellStyle, apperarance: apperarance, isHighlightable: isHighlightable, items: items())
+        self.init(
+            id: id,
+            cellStyle: cellStyle,
+            apperarance: apperarance,
+            configuration: configuration,
+            items: items()
+        )
     }
 
     public init(
         id: String = UUID().uuidString,
-        cellStyle: ListConfiguration.CellStyle = .default,
+        cellStyle: CellConfiguration.CellStyle = .default,
         apperarance: UICollectionLayoutListConfiguration.Appearance = .plain,
-        isHighlightable: Bool = false,
+        configuration: CellConfiguration = .default(),
         items: [any ListCellConfigurable]
     ) {
         self.id = id
         self.items = items
         self.cellStyle = cellStyle
-        self.isHighlightable = isHighlightable
+        self.configuration = configuration
+        prepare(appearance: apperarance)
         cellRegistration = UICollectionView.CellRegistration<
             UICollectionViewListCell,
             any ListCellConfigurable
@@ -60,7 +67,19 @@ open class ListSection: ListableSection, HighlightableSection {
                 cell.accessories = accessories
             }
         }
-        prepare(appearance: apperarance)
+        listConfiguration.separatorConfiguration = configuration.separatorConfiguration
+        listConfiguration.itemSeparatorHandler = { [weak self] indexPath, sectionSeparatorConfiguration in
+            var configuration = sectionSeparatorConfiguration
+            if self?.title != nil {
+                configuration.topSeparatorInsets.trailing = max(16, sectionSeparatorConfiguration.topSeparatorInsets.trailing)
+                configuration.bottomSeparatorInsets.trailing = max(16, sectionSeparatorConfiguration.topSeparatorInsets.trailing)
+            }
+            if let header = self?.header as? ExpandableHeader, indexPath.row == 0 {
+                configuration.topSeparatorVisibility = header.topSeparatorVisibility
+                configuration.bottomSeparatorVisibility = header.bottomSeparatorVisibility
+            }
+            return configuration
+        }
     }
 
     // MARK: Open
@@ -80,7 +99,6 @@ open class ListSection: ListableSection, HighlightableSection {
 
     public let id: String
     public private(set) var items: [any ListCellConfigurable]
-    public var isHighlightable: Bool
     public var isExpanded = true
     public var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, any ListCellConfigurable>!
     public var title: String?
@@ -95,6 +113,8 @@ open class ListSection: ListableSection, HighlightableSection {
     public var leadingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
     public var trailingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider?
 
+    public let configuration: CellConfiguration
+
     public var snapshotItems: [AnyHashable] {
         return items.map { AnyHashable($0) }
     }
@@ -108,7 +128,7 @@ open class ListSection: ListableSection, HighlightableSection {
     }
 
     public func isHighlightable(at index: Int) -> Bool {
-        if isHighlightable {
+        if configuration.isHighlightable {
             return true
         }
         return items[actualIndex(at: index)].isHighlightable
@@ -139,9 +159,9 @@ open class ListSection: ListableSection, HighlightableSection {
 
     // MARK: Private
 
-    private let cellStyle: ListConfiguration.CellStyle
+    private let cellStyle: CellConfiguration.CellStyle
 
-    private static func cellConfiguration(for style: ListConfiguration.CellStyle) -> UIListContentConfiguration {
+    private static func cellConfiguration(for style: CellConfiguration.CellStyle) -> UIListContentConfiguration {
         return switch style {
         case .default:
             .cell()

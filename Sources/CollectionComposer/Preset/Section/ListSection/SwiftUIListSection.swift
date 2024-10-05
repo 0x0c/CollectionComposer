@@ -11,7 +11,12 @@ import SwiftUI
 open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, HighlightableSection {
     // MARK: Lifecycle
 
-    public init(id: String, items: [View.Model], appearance: UICollectionLayoutListConfiguration.Appearance = .plain, configuration: Configuration = .defaultConfiguration()) {
+    public init(
+        id: String,
+        items: [View.Model],
+        appearance: UICollectionLayoutListConfiguration.Appearance = .plain,
+        configuration: CellConfiguration = .default()
+    ) {
         self.id = id
         self.items = items
         self.configuration = configuration
@@ -86,27 +91,10 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
 
     // MARK: Public
 
-    public struct Configuration {
-        public let contentInsets: NSDirectionalEdgeInsets
-        public let isHighlightable: Bool
-        public let separatorConfiguration: UIListSeparatorConfiguration
-
-        public static func defaultConfiguration(
-            contentInsets: NSDirectionalEdgeInsets = .zero,
-            highlightable: Bool = false,
-            separatorConfiguration: UIListSeparatorConfiguration = UIListSeparatorConfiguration(listAppearance: .plain)
-        ) -> Configuration {
-            return Configuration(
-                contentInsets: contentInsets,
-                isHighlightable: highlightable,
-                separatorConfiguration: separatorConfiguration
-            )
-        }
-    }
-
     public typealias Cell = SwiftUIListCell<View>
     public typealias Item = View.Model
 
+    public private(set) var configuration: CellConfiguration
     public var header: (any BoundarySupplementaryHeaderView)?
     public var footer: (any BoundarySupplementaryFooterView)?
 
@@ -116,8 +104,4 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
 
     public var expandableHeaderRegistration: UICollectionView.CellRegistration<ExpandableHeaderListCell, Void>?
     public let id: String
-
-    // MARK: Private
-
-    private let configuration: Configuration
 }

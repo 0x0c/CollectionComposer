@@ -19,9 +19,9 @@ public class ExpandableHeaderListCell: UICollectionViewListCell {
 
     // MARK: Internal
 
-    func updateExpandableHeader(_ expandableHeader: any ExpandableHeader) {
+    func updateExpandableHeader(_ expandableHeader: any ExpandableHeader, isExpanded: Bool) {
         self.expandableHeader = expandableHeader
-        var configuration = expandableHeader.headerConfiguration()
+        var configuration = expandableHeader.headerConfiguration(isExpanded: isExpanded)
         accessories = expandableHeader.accessories
         contentConfiguration = configuration
     }
@@ -31,27 +31,9 @@ public class ExpandableHeaderListCell: UICollectionViewListCell {
     private var expandableHeader: (any ExpandableHeader)?
 }
 
-// MARK: - ListableSection
+// MARK: - CellConfiguration
 
-@MainActor
-public protocol ListableSection: IndexTitleSection & AnyObject {
-    typealias SwipeActionConfigurationProvider = (Item) -> UISwipeActionsConfiguration?
-
-    var listConfiguration: UICollectionLayoutListConfiguration! { get set }
-    var expandableHeaderRegistration: UICollectionView.CellRegistration<ExpandableHeaderListCell, Void>? { get set }
-    var leadingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider? { get }
-    var trailingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider? { get }
-
-    func prepare(appearance: UICollectionLayoutListConfiguration.Appearance)
-    func actualIndex(at index: Int) -> Int
-    @discardableResult
-    @available(iOS 15.0, *)
-    func headerTopPadding(_ padding: CGFloat?) -> Self
-}
-
-// MARK: - ListConfiguration
-
-public enum ListConfiguration {
+public struct CellConfiguration {
     public enum CellStyle {
         case `default`
         case subtitle
@@ -61,7 +43,74 @@ public enum ListConfiguration {
         case accompaniedSidebar
         case accompaniedSidebarSubtitle
     }
+
+    public struct SeparatorEdge: OptionSet {
+        // MARK: Lifecycle
+
+        public init(rawValue: UInt) {
+            self.rawValue = rawValue
+        }
+
+        // MARK: Public
+
+        public static let top = SeparatorEdge(rawValue: 1 << 0)
+        public static let bottom = SeparatorEdge(rawValue: 1 << 1)
+        public static let all: SeparatorEdge = [.top, .bottom]
+
+        public let rawValue: UInt
+    }
+
+    public let contentInsets: NSDirectionalEdgeInsets
+    public let isHighlightable: Bool
+    public let separatorConfiguration: UIListSeparatorConfiguration
+
+    public static func `default`(
+        contentInsets: NSDirectionalEdgeInsets = .zero,
+        highlightable: Bool = false,
+        separatorConfiguration: UIListSeparatorConfiguration = UIListSeparatorConfiguration(listAppearance: .plain)
+    ) -> CellConfiguration {
+        return CellConfiguration(
+            contentInsets: contentInsets,
+            isHighlightable: highlightable,
+            separatorConfiguration: separatorConfiguration
+        )
+    }
+
+    public static func hidden(
+        _ hiddenEdges: SeparatorEdge = .all,
+        contentInsets: NSDirectionalEdgeInsets = .zero,
+        highlightable: Bool = false
+    ) -> CellConfiguration {
+        var separatorConfiguration = UIListSeparatorConfiguration(listAppearance: .plain)
+        separatorConfiguration.topSeparatorVisibility = hiddenEdges.contains(.top) ? .hidden : .visible
+        separatorConfiguration.bottomSeparatorVisibility = hiddenEdges.contains(.bottom) ? .hidden : .visible
+        return CellConfiguration(
+            contentInsets: contentInsets,
+            isHighlightable: highlightable,
+            separatorConfiguration: separatorConfiguration
+        )
+    }
 }
+
+// MARK: - ListableSection
+
+@MainActor
+public protocol ListableSection: IndexTitleSection & AnyObject {
+    typealias SwipeActionConfigurationProvider = (Item) -> UISwipeActionsConfiguration?
+
+    var configuration: CellConfiguration { get }
+    var listConfiguration: UICollectionLayoutListConfiguration! { get set }
+    var expandableHeaderRegistration: UICollectionView.CellRegistration<ExpandableHeaderListCell, Void>? { get set }
+    var leadingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider? { get }
+    var trailingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider? { get }
+
+    func prepare(appearance: UICollectionLayoutListConfiguration.Appearance)
+    func actualIndex(at index: Int) -> Int
+    @discardableResult
+    func headerTopPadding(_ padding: CGFloat?) -> Self
+}
+
+// MARK: - ListConfiguration
 
 public extension ListableSection {
     var isExpandable: Bool {
@@ -84,7 +133,6 @@ public extension ListableSection {
     }
 
     @discardableResult
-    @available(iOS 15.0, *)
     func headerTopPadding(_ padding: CGFloat?) -> Self {
         listConfiguration.headerTopPadding = padding
         return self
@@ -116,7 +164,7 @@ public extension ListableSection {
                 return
             }
             if let header = header as? ExpandableHeader, header.isExpandable {
-                cell.updateExpandableHeader(header)
+                cell.updateExpandableHeader(header, isExpanded: isExpanded)
             }
         }
         listConfiguration.leadingSwipeActionsConfigurationProvider = { [weak self] indexPath in
