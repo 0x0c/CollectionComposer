@@ -14,17 +14,24 @@ class ExpandableHeaderView: SwiftUISupllementaryHeaderView, ExpandableHeader {
     // MARK: Lifecycle
 
     init() {
-        super.init(elementKind: "ExpandableHeaderView") { EmptyView() }
+        super.init(elementKind: "ExpandableHeaderView", content: { EmptyView().frame(height: 0) })
     }
 
     @available(*, unavailable)
-    @MainActor required init(elementKind: String, pinToVisibleBounds: Bool = false, absoluteOffset: CGPoint = .zero, removeMargins: Bool = true, extendsBoundary: Bool = true, @ViewBuilder content: () -> some View) {
-        fatalError("init(elementKind:pinToVisibleBounds:absoluteOffset:removeMargins:extendsBoundary:content:) has not been implemented")
+    required init(
+        elementKind: String,
+        pinToVisibleBounds: Bool = false,
+        absoluteOffset: CGPoint = .zero,
+        removeMargins: Bool = true,
+        extendsBoundary: Bool = true,
+        @ViewBuilder content: () -> some View
+    ) {
+        fatalError()
     }
 
     @available(*, unavailable)
-    @MainActor required init(elementKind: String, pinToVisibleBounds: Bool = false, absoluteOffset: CGPoint = .zero, extendsBoundary: Bool = true, configuration: (any UIContentConfiguration)? = nil) {
-        fatalError("init(elementKind:pinToVisibleBounds:absoluteOffset:extendsBoundary:configuration:) has not been implemented")
+    required init(elementKind: String, pinToVisibleBounds: Bool = false, absoluteOffset: CGPoint = .zero, extendsBoundary: Bool = true, configuration: (any UIContentConfiguration)? = nil) {
+        fatalError()
     }
 
     // MARK: Public
@@ -38,9 +45,12 @@ class ExpandableHeaderView: SwiftUISupllementaryHeaderView, ExpandableHeader {
         [.outlineDisclosure(options: UICellAccessory.OutlineDisclosureOptions(style: .header, tintColor: .clear))]
     }
 
-    nonisolated func headerConfiguration() -> (any UIContentConfiguration)? {
+    nonisolated var topSeparatorVisibility: UIListSeparatorConfiguration.Visibility { .hidden }
+    nonisolated var bottomSeparatorVisibility: UIListSeparatorConfiguration.Visibility { .hidden }
+
+    nonisolated func headerConfiguration(isExpanded: Bool) -> (any UIContentConfiguration)? {
         return UIHostingConfiguration {
-            ExpandableHeaderInnerView(isExpanded: false)
+            ExpandableHeaderInnerView(isExpanded: isExpanded)
         }
     }
 
@@ -49,11 +59,17 @@ class ExpandableHeaderView: SwiftUISupllementaryHeaderView, ExpandableHeader {
             ExpandableHeaderInnerView(isExpanded: state.isExpanded)
         }
     }
+
+    // MARK: Private
+
+    private var headerConfiguration: (any UIContentConfiguration)?
 }
 
 // MARK: - ExpandableHeaderInnerView
 
 struct ExpandableHeaderInnerView: View {
+    // MARK: Internal
+
     var isExpanded: Bool
 
     var body: some View {
@@ -61,13 +77,16 @@ struct ExpandableHeaderInnerView: View {
             Image(systemName: "chevron.right")
                 .rotationEffect(.degrees(isExpanded ? 90 : 0))
                 .animation(.easeInOut(duration: 0.25), value: isExpanded)
-            VStack {
-                Text("Hello, World!")
-                Text("Hello, World!")
-                Text("Hello, World!")
+                .padding()
+            Toggle(isOn: $isOn) {
+                Text("SwiftUI expandable header")
             }
         }
     }
+
+    // MARK: Private
+
+    @State private var isOn = false
 }
 
 #Preview {

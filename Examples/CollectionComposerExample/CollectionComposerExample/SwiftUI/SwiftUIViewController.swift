@@ -15,7 +15,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "List"
+        title = "SwiftUI"
 
         provider = self
         store(animate: false) {
@@ -45,7 +45,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                     .init(title: "Example1-2"),
                     .init(title: "Example1-3")
                 ],
-                configuration: .defaultConfiguration(highlightable: true)
+                configuration: .default(highlightable: true)
             ).indexTitle("B")
                 .header(PlainHeaderView("B"))
             SwiftUIListSection<ExampleCellView>(
@@ -55,7 +55,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                     .init(title: "Example2-2"),
                     .init(title: "Example2-3")
                 ],
-                configuration: .defaultConfiguration(highlightable: true)
+                configuration: .default(highlightable: true)
             ).indexTitle("C")
                 .header(PlainHeaderView("C"))
             SwiftUIListSection<ExampleCellView>(
@@ -65,7 +65,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                     .init(title: "Example3-2"),
                     .init(title: "Example3-3")
                 ],
-                configuration: .defaultConfiguration(highlightable: true)
+                configuration: .default(highlightable: true)
             ).indexTitle("D")
                 .header(
                     SwiftUISupllementaryHeaderView(
@@ -83,7 +83,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                     .init(title: "Example4-2"),
                     .init(title: "Example4-3")
                 ],
-                configuration: .defaultConfiguration(highlightable: true)
+                configuration: .default(highlightable: true)
             ).indexTitle("E")
                 .header(SwiftUISupllementaryHeaderView(
                     elementKind: "swift-ui-header",
@@ -99,15 +99,6 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                         })
                     )
                 ).headerTopPadding(0)
-            SwiftUIListSection<ExampleCellView>(
-                id: "swift-ui-cell-section5",
-                items: [
-                    .init(title: "Example5-1"),
-                    .init(title: "Example5-2"),
-                    .init(title: "Example5-3")
-                ],
-                configuration: .defaultConfiguration(highlightable: true)
-            ).header(ExpandableHeaderView())
         }
     }
 
