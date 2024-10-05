@@ -22,11 +22,15 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
         self.configuration = configuration
         prepare(appearance: appearance)
         listConfiguration.separatorConfiguration = configuration.separatorConfiguration
-        listConfiguration.itemSeparatorHandler = { _, sectionSeparatorConfiguration in
+        listConfiguration.itemSeparatorHandler = { [weak self] indexPath, sectionSeparatorConfiguration in
             var configuration = sectionSeparatorConfiguration
-            if self.title != nil {
+            if self?.title != nil {
                 configuration.topSeparatorInsets.trailing = max(16, sectionSeparatorConfiguration.topSeparatorInsets.trailing)
                 configuration.bottomSeparatorInsets.trailing = max(16, sectionSeparatorConfiguration.topSeparatorInsets.trailing)
+            }
+            if let header = self?.header as? ExpandableHeader, indexPath.row == 0 {
+                configuration.topSeparatorVisibility = header.topSeparatorVisibility
+                configuration.bottomSeparatorVisibility = header.bottomSeparatorVisibility
             }
             return configuration
         }
