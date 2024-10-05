@@ -30,7 +30,13 @@ class ExpandableHeaderView: SwiftUISupllementaryHeaderView, ExpandableHeader {
     }
 
     @available(*, unavailable)
-    required init(elementKind: String, pinToVisibleBounds: Bool = false, absoluteOffset: CGPoint = .zero, extendsBoundary: Bool = true, configuration: (any UIContentConfiguration)? = nil) {
+    required init(
+        elementKind: String,
+        pinToVisibleBounds: Bool = false,
+        absoluteOffset: CGPoint = .zero,
+        extendsBoundary: Bool = true,
+        configuration: (any UIContentConfiguration)? = nil
+    ) {
         fatalError()
     }
 
