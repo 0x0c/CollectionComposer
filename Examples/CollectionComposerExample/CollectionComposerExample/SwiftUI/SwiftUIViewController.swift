@@ -99,6 +99,15 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                         })
                     )
                 ).headerTopPadding(0)
+            SwiftUIListSection<ExampleCellView>(
+                id: "swift-ui-cell-section5",
+                items: [
+                    .init(title: "Example5-1"),
+                    .init(title: "Example5-2"),
+                    .init(title: "Example5-3")
+                ],
+                configuration: .defaultConfiguration(highlightable: true)
+            ).header(ExpandableHeaderView())
         }
     }
 

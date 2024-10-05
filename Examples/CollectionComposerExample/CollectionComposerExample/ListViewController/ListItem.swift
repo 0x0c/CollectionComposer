@@ -11,9 +11,9 @@ import UIKit
 public struct ListItem: ListCellConfigurable {
     // MARK: Lifecycle
 
-    public init(id: String = UUID().uuidString, isHighlightable: Bool = false, image: UIImage? = nil, text: String? = nil, attributedText: NSAttributedString? = nil, secondaryText: String? = nil, secondaryAttributedText: NSAttributedString? = nil, accessories: [UICellAccessory]? = nil) {
+    public init(id: String = UUID().uuidString, highlightable: Bool = false, image: UIImage? = nil, text: String? = nil, attributedText: NSAttributedString? = nil, secondaryText: String? = nil, secondaryAttributedText: NSAttributedString? = nil, accessories: [UICellAccessory]? = nil) {
         self.id = id
-        self.isHighlightable = isHighlightable
+        isHighlightable = highlightable
         self.image = image
         self.text = text
         self.attributedText = attributedText

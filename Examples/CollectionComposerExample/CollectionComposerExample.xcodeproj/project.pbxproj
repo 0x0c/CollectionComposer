@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E90D9A802CB14A83009E550E /* ExpandableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90D9A7F2CB14A83009E550E /* ExpandableHeaderView.swift */; };
 		E91F150D2AD30C7300EEE73C /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F150B2AD30C7300EEE73C /* ListViewController.swift */; };
 		E91F15102AD30C8F00EEE73C /* SupplementaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F150F2AD30C8F00EEE73C /* SupplementaryViewController.swift */; };
 		E91F15122AD30CA700EEE73C /* SupplementarySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F15112AD30CA700EEE73C /* SupplementarySection.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E90D9A7F2CB14A83009E550E /* ExpandableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableHeaderView.swift; sourceTree = "<group>"; };
 		E91F150B2AD30C7300EEE73C /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		E91F150F2AD30C8F00EEE73C /* SupplementaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryViewController.swift; sourceTree = "<group>"; };
 		E91F15112AD30CA700EEE73C /* SupplementarySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementarySection.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			children = (
 				E91F15162AD317C600EEE73C /* ListItem.swift */,
 				E91F150B2AD30C7300EEE73C /* ListViewController.swift */,
+				E90D9A7F2CB14A83009E550E /* ExpandableHeaderView.swift */,
 			);
 			path = ListViewController;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 				E91F15172AD317C600EEE73C /* ListItem.swift in Sources */,
 				E9451B4F2B91A16900EA6202 /* LogInFormViewController.swift in Sources */,
 				E91F15102AD30C8F00EEE73C /* SupplementaryViewController.swift in Sources */,
+				E90D9A802CB14A83009E550E /* ExpandableHeaderView.swift in Sources */,
 				E91F15152AD30ED900EEE73C /* TextCell.swift in Sources */,
 				E91F150D2AD30C7300EEE73C /* ListViewController.swift in Sources */,
 			);

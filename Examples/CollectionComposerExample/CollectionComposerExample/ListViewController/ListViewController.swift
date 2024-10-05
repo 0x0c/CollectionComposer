@@ -48,7 +48,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
         provider = self
         store(animate: false) {
             ListSection(id: "first", apperarance: .plain) {
-                ListItem(isHighlightable: true, text: "Item 1")
+                ListItem(highlightable: true, text: "Item 1")
                 ListItem(text: "Item 2")
                 ListItem(text: "Item 3")
                 ListItem(text: "Item 4")
@@ -74,13 +74,14 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
             }.header(PlainHeaderView("Expandable Header", isExpandable: true))
                 .expand(false)
                 .indexTitle("C")
-            ListSection(id: "fourth", apperarance: .insetGrouped) {
+            ListSection(id: "fourth", apperarance: .plain) {
                 ListItem(text: "Item 1")
                 ListItem(text: "Item 2")
                 ListItem(text: "Item 3")
                 ListItem(text: "Item 4")
                 ListItem(text: "Item 5")
             }.indexTitle("D")
+                .header(ExpandableHeaderView())
                 .footer(PlainFooterView("Inset Group Footer"))
                 .decorations([BackgroundDecorationView.decoration()])
             ListSection(id: "fifth", cellStyle: .value) {
@@ -109,6 +110,12 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
         }
     }
 
+    override func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
+        if section is ListSection, let item = item as? ListItem {
+            print(item)
+        }
+    }
+
     func swipeActionProvider() -> ListSection.SwipeActionConfigurationProvider {
         return { _ in
             let starAction = UIContextualAction(style: .normal, title: nil) { _, _, completion in
@@ -118,12 +125,6 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
             starAction.image = UIImage(systemName: "star.slash")
             starAction.backgroundColor = .systemBlue
             return UISwipeActionsConfiguration(actions: [starAction])
-        }
-    }
-
-    override func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
-        if section is ListSection, let item = item as? ListItem {
-            print(item)
         }
     }
 

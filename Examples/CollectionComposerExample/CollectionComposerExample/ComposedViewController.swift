@@ -23,7 +23,7 @@ class ComposedViewController: ComposedCollectionViewController, SectionProvider,
                 ListItem(text: "Item 1", secondaryText: "Seconday")
                 ListItem(text: "Item 2", secondaryText: "Seconday")
                 ListItem(text: "Item 3", secondaryText: "Seconday")
-            }
+            }.header(ExpandableHeaderView())
             SupplementarySection(id: "first-supplementary") {
                 for index in 0 ... 4 {
                     SupplementarySection.Model(title: "\(index)")
