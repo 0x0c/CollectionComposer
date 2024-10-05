@@ -9,9 +9,22 @@ import SwiftUI
 
 @available(iOS 16.0, *)
 open class SpacerSection: SwiftUISection {
-    let height: CGFloat
+    // MARK: Lifecycle
 
-    open override func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+    public init(height: CGFloat) {
+        self.height = height
+        super.init(
+            id: UUID().uuidString,
+            configuration: .defaultConfiguration(removeMargins: true),
+            item: SwiftUISection.ViewConfiguration(
+                UIHostingConfiguration { Rectangle().foregroundStyle(.clear) }
+            )
+        )
+    }
+
+    // MARK: Open
+
+    override open func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .absolute(height)
@@ -30,14 +43,7 @@ open class SpacerSection: SwiftUISection {
         return section
     }
 
-    public init(height: CGFloat) {
-        self.height = height
-        super.init(
-            id: UUID().uuidString,
-            configuration: .defaultConfiguration(removeMargins: true),
-            item: SwiftUISection.ViewConfiguration(
-                UIHostingConfiguration { Rectangle().foregroundStyle(.clear) }
-            )
-        )
-    }
+    // MARK: Internal
+
+    let height: CGFloat
 }
