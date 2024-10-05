@@ -16,12 +16,12 @@ class ExpandableHeaderView: SwiftUISupllementaryHeaderView, ExpandableHeader {
     init() {
         super.init(elementKind: "ExpandableHeaderView") { EmptyView() }
     }
-    
+
     @available(*, unavailable)
     @MainActor required init(elementKind: String, pinToVisibleBounds: Bool = false, absoluteOffset: CGPoint = .zero, removeMargins: Bool = true, extendsBoundary: Bool = true, @ViewBuilder content: () -> some View) {
         fatalError("init(elementKind:pinToVisibleBounds:absoluteOffset:removeMargins:extendsBoundary:content:) has not been implemented")
     }
-    
+
     @available(*, unavailable)
     @MainActor required init(elementKind: String, pinToVisibleBounds: Bool = false, absoluteOffset: CGPoint = .zero, extendsBoundary: Bool = true, configuration: (any UIContentConfiguration)? = nil) {
         fatalError("init(elementKind:pinToVisibleBounds:absoluteOffset:extendsBoundary:configuration:) has not been implemented")
