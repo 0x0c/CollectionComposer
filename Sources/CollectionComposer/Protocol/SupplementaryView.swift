@@ -36,7 +36,10 @@ public protocol BoundarySupplementaryView: SupplementaryView {
 // MARK: - BoundarySupplementaryHeaderView
 
 @MainActor
-public protocol BoundarySupplementaryHeaderView: BoundarySupplementaryView {}
+public protocol BoundarySupplementaryHeaderView: BoundarySupplementaryView {
+    var headerMode: UICollectionLayoutListConfiguration.HeaderMode { get }
+}
+
 public extension BoundarySupplementaryHeaderView {
     var alignment: NSRectAlignment { .top }
 }
@@ -44,7 +47,10 @@ public extension BoundarySupplementaryHeaderView {
 // MARK: - BoundarySupplementaryFooterView
 
 @MainActor
-public protocol BoundarySupplementaryFooterView: BoundarySupplementaryView {}
+public protocol BoundarySupplementaryFooterView: BoundarySupplementaryView {
+    var footerMode: UICollectionLayoutListConfiguration.FooterMode { get }
+}
+
 public extension BoundarySupplementaryFooterView {
     var alignment: NSRectAlignment { .bottom }
 }

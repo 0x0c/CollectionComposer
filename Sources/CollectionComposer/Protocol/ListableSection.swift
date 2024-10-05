@@ -139,7 +139,7 @@ public extension ListableSection {
         if var header = header as? ListAppearanceSupplementaryView {
             header.appearance = listConfiguration.appearance
         }
-        if let header = header as? ExpandableHeader {
+        if let header {
             listConfiguration.headerMode = header.headerMode
         }
         else {
@@ -151,10 +151,18 @@ public extension ListableSection {
         if var footer = footer as? ListAppearanceSupplementaryView {
             footer.appearance = listConfiguration.appearance
         }
-        listConfiguration.footerMode = .supplementary
+        if let footer {
+            listConfiguration.footerMode = footer.footerMode
+        }
+        else {
+            listConfiguration.footerMode = .none
+        }
     }
 
     func actualIndex(at index: Int) -> Int {
+        if header is ExpandableHeader {
+            return max(0, index - 1)
+        }
         if listConfiguration.headerMode == .firstItemInSection {
             return max(0, index - 1)
         }

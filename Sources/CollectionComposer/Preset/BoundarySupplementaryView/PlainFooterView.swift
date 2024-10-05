@@ -21,20 +21,18 @@ open class PlainFooterView: PlainBoundaryView, BoundarySupplementaryFooterView, 
         prepare()
     }
 
-    // MARK: Public
+    // MARK: Open
 
-    public let extendsBoundary: Bool
+    open var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
 
-    public var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
+    open var appearance: UICollectionLayoutListConfiguration.Appearance = .plain
 
-    public let text: String
-    public let pinToVisibleBounds: Bool
-    public var appearance: UICollectionLayoutListConfiguration.Appearance = .plain
+    open var isExpandable: Bool { false }
+    open var elementKind: String { UICollectionView.elementKindSectionFooter }
 
-    public var isExpandable: Bool { false }
-    public var elementKind: String { UICollectionView.elementKindSectionFooter }
+    open var footerMode: UICollectionLayoutListConfiguration.FooterMode { .none }
 
-    public func prepare() {
+    open func prepare() {
         registration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(
             elementKind: elementKind
         ) { [weak self] supplementaryView, _, _ in
@@ -46,6 +44,13 @@ open class PlainFooterView: PlainBoundaryView, BoundarySupplementaryFooterView, 
             supplementaryView.contentConfiguration = configuration
         }
     }
+
+    // MARK: Public
+
+    public let extendsBoundary: Bool
+
+    public let text: String
+    public let pinToVisibleBounds: Bool
 
     // MARK: Internal
 

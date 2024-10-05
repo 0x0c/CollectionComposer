@@ -48,22 +48,26 @@ open class SwiftUISupllementaryHeaderView: SwiftUISupllementaryView, BoundarySup
         prepare()
     }
 
-    // MARK: Public
+    // MARK: Open
 
-    public let extendsBoundary: Bool
+    open var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
+    open var configuration: UIContentConfiguration?
 
-    public var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
-    public let pinToVisibleBounds: Bool
+    open var headerMode: UICollectionLayoutListConfiguration.HeaderMode { .supplementary }
 
-    public let elementKind: String
-    public let absoluteOffset: CGPoint
-
-    public var configuration: UIContentConfiguration?
-
-    public func prepare() {
+    open func prepare() {
         registration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(elementKind: elementKind) {
             supplementaryView, _, _ in
             supplementaryView.contentConfiguration = self.configuration
         }
     }
+
+    // MARK: Public
+
+    public let extendsBoundary: Bool
+
+    public let pinToVisibleBounds: Bool
+
+    public let elementKind: String
+    public let absoluteOffset: CGPoint
 }

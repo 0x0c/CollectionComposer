@@ -23,23 +23,19 @@ open class PlainHeaderView: PlainBoundaryHeaderView, BoundarySupplementaryHeader
         prepare()
     }
 
-    // MARK: Public
+    // MARK: Open
 
-    public let extendsBoundary: Bool
-    public var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
-    public let text: String
-    public let pinToVisibleBounds: Bool
-    public let isExpandable: Bool
-    public var isExpanded: Bool = false
-    public var appearance: UICollectionLayoutListConfiguration.Appearance = .plain
+    open var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
+    open var isExpanded: Bool = false
+    open var appearance: UICollectionLayoutListConfiguration.Appearance = .plain
 
-    public var headerMode: UICollectionLayoutListConfiguration.HeaderMode { .firstItemInSection }
+    open var headerMode: UICollectionLayoutListConfiguration.HeaderMode { isExpandable ? .firstItemInSection : .none }
 
-    public var elementKind: String { UICollectionView.elementKindSectionHeader }
+    open var elementKind: String { UICollectionView.elementKindSectionHeader }
 
-    public var accessories: [UICellAccessory] { [.outlineDisclosure()] }
+    open var accessories: [UICellAccessory] { [.outlineDisclosure()] }
 
-    public func prepare() {
+    open func prepare() {
         registration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(
             elementKind: elementKind
         ) { [weak self] supplementaryView, _, _ in
@@ -54,6 +50,13 @@ open class PlainHeaderView: PlainBoundaryHeaderView, BoundarySupplementaryHeader
             supplementaryView.contentConfiguration = configuration
         }
     }
+
+    // MARK: Public
+
+    public let extendsBoundary: Bool
+    public let text: String
+    public let pinToVisibleBounds: Bool
+    public let isExpandable: Bool
 
     public func headerConfiguration() -> (any UIContentConfiguration)? {
         var configuration: UIListContentConfiguration = {

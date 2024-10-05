@@ -48,6 +48,10 @@ open class SwiftUISupllementaryFooterView: SwiftUISupllementaryView, BoundarySup
         prepare()
     }
 
+    // MARK: Open
+
+    open var footerMode: UICollectionLayoutListConfiguration.FooterMode { .supplementary }
+
     // MARK: Public
 
     public let extendsBoundary: Bool
