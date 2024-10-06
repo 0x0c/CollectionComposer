@@ -66,6 +66,13 @@ open class ListSection: ListableSection, HighlightableSection {
             if let accessories = item.accessories {
                 cell.accessories = accessories
             }
+            if let width = item.indentationWidth {
+                cell.indentationWidth = width
+            }
+            if let level = item.indentationLevel {
+                cell.indentationLevel = level
+            }
+            cell.indentsAccessories = item.indentsAccessories
         }
         listConfiguration.separatorConfiguration = configuration.separatorConfiguration
         listConfiguration.itemSeparatorHandler = { [weak self] indexPath, sectionSeparatorConfiguration in

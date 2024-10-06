@@ -19,6 +19,10 @@ public protocol ListCellConfigurable: Hashable {
     var isHighlightable: Bool { get }
 
     var accessories: [UICellAccessory]? { get }
+
+    var indentationWidth: CGFloat? { get }
+    var indentationLevel: Int? { get }
+    var indentsAccessories: Bool { get }
 }
 
 public extension ListCellConfigurable {
@@ -38,4 +42,8 @@ public extension ListCellConfigurable {
             hasher.combine($0.accessoryType.hashValue)
         }
     }
+
+    var indentationWidth: CGFloat? { nil }
+    var indentationLevel: Int? { nil }
+    var indentsAccessories: Bool { true }
 }

@@ -21,6 +21,13 @@ open class SwiftUIListCell<View: SwiftUIListCellView>: UICollectionViewListCell 
         else {
             UIHostingConfiguration { View(model) }
         }
+        if let width = model.indentationWidth {
+            indentationWidth = width
+        }
+        if let level = model.indentationLevel {
+            indentationLevel = level
+        }
+        indentsAccessories = model.indentsAccessories
     }
 
     // MARK: Internal
@@ -32,11 +39,17 @@ open class SwiftUIListCell<View: SwiftUIListCellView>: UICollectionViewListCell 
 
 @available(iOS 16.0, *)
 public protocol SwiftUICellViewModel: Hashable {
+    var indentationWidth: CGFloat? { get }
+    var indentationLevel: Int? { get }
+    var indentsAccessories: Bool { get }
     var removeMargins: Bool { get }
 }
 
 @available(iOS 16.0, *)
 public extension SwiftUICellViewModel {
+    var indentationWidth: CGFloat? { nil }
+    var indentationLevel: Int? { nil }
+    var indentsAccessories: Bool { true }
     var removeMargins: Bool { true }
 }
 
