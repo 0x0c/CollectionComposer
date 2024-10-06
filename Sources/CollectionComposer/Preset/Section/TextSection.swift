@@ -60,6 +60,7 @@ open class BasicTextCell: UICollectionViewCell, TextCell {
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
         NSLayoutConstraint.activate([
@@ -103,13 +104,14 @@ open class TextSection<T: TextCell>: Section {
     }
 
     public convenience init(_ string: String) {
-        self.init(StringConfiguration(
-            .plain(
-                text: string,
-                font: UIFont.systemFont(ofSize: UIFont.labelFontSize)
-            ),
-            textAlignment: .center
-        )
+        self.init(
+            StringConfiguration(
+                .plain(
+                    text: string,
+                    font: UIFont.systemFont(ofSize: UIFont.labelFontSize)
+                ),
+                textAlignment: .center
+            )
         )
     }
 
