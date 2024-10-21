@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-public class TextForm: Hashable {
+open class TextForm: Hashable {
     // MARK: Lifecycle
 
     public init(
@@ -61,13 +61,13 @@ public class TextForm: Hashable {
     }
 
     @discardableResult
-    public func validate(_ handler: @escaping (String?) -> ValidationResult) -> Self {
+    open func validate(_ handler: @escaping (String?) -> ValidationResult) -> Self {
         validationHandler = handler
         return self
     }
 
     @discardableResult
-    public func focuseNext() -> Bool {
+    open func focuseNext() -> Bool {
         guard let next else {
             return false
         }
@@ -76,7 +76,7 @@ public class TextForm: Hashable {
     }
 
     @discardableResult
-    public func focusePrevious() -> Bool {
+    open func focusePrevious() -> Bool {
         guard let previous else {
             return false
         }
