@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-open class SwiftUISupllementaryHeaderView: SwiftUISupllementaryView, BoundarySupplementaryHeaderView {
+open class SwiftUISupllementaryHeaderView<T: UICollectionViewCell>: SwiftUISupllementaryView, BoundarySupplementaryHeaderView {
     // MARK: Lifecycle
 
     @available(iOS 16.0, *)
@@ -50,19 +50,21 @@ open class SwiftUISupllementaryHeaderView: SwiftUISupllementaryView, BoundarySup
 
     // MARK: Open
 
-    open var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
+    open var registration: UICollectionView.SupplementaryRegistration<T>!
     open var configuration: UIContentConfiguration?
 
     open var headerMode: UICollectionLayoutListConfiguration.HeaderMode { .supplementary }
 
     open func prepare() {
-        registration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(elementKind: elementKind) {
+        registration = UICollectionView.SupplementaryRegistration<T>(elementKind: elementKind) {
             supplementaryView, _, _ in
             supplementaryView.contentConfiguration = self.configuration
         }
     }
 
     // MARK: Public
+
+    public typealias ContentView = T
 
     public let extendsBoundary: Bool
 

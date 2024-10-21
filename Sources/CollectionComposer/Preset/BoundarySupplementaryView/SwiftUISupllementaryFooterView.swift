@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-open class SwiftUISupllementaryFooterView: SwiftUISupllementaryView, BoundarySupplementaryFooterView {
+open class SwiftUISupllementaryFooterView<T: UICollectionViewCell>: SwiftUISupllementaryView, BoundarySupplementaryFooterView {
     // MARK: Lifecycle
 
     @available(iOS 16.0, *)
@@ -54,9 +54,11 @@ open class SwiftUISupllementaryFooterView: SwiftUISupllementaryView, BoundarySup
 
     // MARK: Public
 
+    public typealias ContentView = T
+
     public let extendsBoundary: Bool
 
-    public var registration: UICollectionView.SupplementaryRegistration<UICollectionViewListCell>!
+    public var registration: UICollectionView.SupplementaryRegistration<T>!
     public let pinToVisibleBounds: Bool
 
     public let elementKind: String
@@ -65,7 +67,7 @@ open class SwiftUISupllementaryFooterView: SwiftUISupllementaryView, BoundarySup
     public var configuration: UIContentConfiguration?
 
     public func prepare() {
-        registration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(elementKind: elementKind) {
+        registration = UICollectionView.SupplementaryRegistration<T>(elementKind: elementKind) {
             supplementaryView, _, _ in
             supplementaryView.contentConfiguration = self.configuration
         }

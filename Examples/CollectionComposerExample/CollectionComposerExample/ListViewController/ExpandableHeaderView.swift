@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: - ExpandableHeaderView
 
-class ExpandableHeaderView: SwiftUISupllementaryHeaderView, ExpandableHeader {
+class ExpandableHeaderView: SwiftUISupllementaryHeaderView<UICollectionViewListCell>, ExpandableHeader {
     // MARK: Lifecycle
 
     init() {

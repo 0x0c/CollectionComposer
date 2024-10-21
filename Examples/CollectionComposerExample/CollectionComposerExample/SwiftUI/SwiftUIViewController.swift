@@ -68,7 +68,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 configuration: .default(highlightable: true)
             ).indexTitle("D")
                 .header(
-                    SwiftUISupllementaryHeaderView(
+                    SwiftUISupllementaryHeaderView<UICollectionViewListCell>(
                         elementKind: "swift-ui-header2",
                         pinToVisibleBounds: true,
                         configuration: UIHostingConfiguration(content: {
