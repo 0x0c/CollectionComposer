@@ -33,6 +33,32 @@ open class TextForm: Hashable {
         self.contentType = contentType
     }
 
+    // MARK: Open
+
+    @discardableResult
+    open func validate(_ handler: @escaping (String?) -> ValidationResult) -> Self {
+        validationHandler = handler
+        return self
+    }
+
+    @discardableResult
+    open func focuseNext() -> Bool {
+        guard let next else {
+            return false
+        }
+        next._shouldFocusTextFieldSubject.send(())
+        return true
+    }
+
+    @discardableResult
+    open func focusePrevious() -> Bool {
+        guard let previous else {
+            return false
+        }
+        previous._shouldFocusTextFieldSubject.send(())
+        return true
+    }
+
     // MARK: Public
 
     public enum ValidationResult {
@@ -58,30 +84,6 @@ open class TextForm: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-    }
-
-    @discardableResult
-    open func validate(_ handler: @escaping (String?) -> ValidationResult) -> Self {
-        validationHandler = handler
-        return self
-    }
-
-    @discardableResult
-    open func focuseNext() -> Bool {
-        guard let next else {
-            return false
-        }
-        next._shouldFocusTextFieldSubject.send(())
-        return true
-    }
-
-    @discardableResult
-    open func focusePrevious() -> Bool {
-        guard let previous else {
-            return false
-        }
-        previous._shouldFocusTextFieldSubject.send(())
-        return true
     }
 
     // MARK: Internal

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="InputFieldCell" customModule="CollectionComposerExample" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRQ-IF-Rlr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <color key="textColor" systemColor="systemPinkColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vQJ-Er-Roq">
+                        <rect key="frame" x="0.0" y="21" width="320" height="39"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="QRQ-IF-Rlr" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="CRN-OV-GxQ"/>
+                <constraint firstAttribute="trailing" secondItem="QRQ-IF-Rlr" secondAttribute="trailing" id="EGm-jU-i3A"/>
+                <constraint firstItem="vQJ-Er-Roq" firstAttribute="top" secondItem="QRQ-IF-Rlr" secondAttribute="bottom" id="L51-bP-2vS"/>
+                <constraint firstItem="QRQ-IF-Rlr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="RTv-aI-hlF"/>
+                <constraint firstAttribute="bottom" secondItem="vQJ-Er-Roq" secondAttribute="bottom" id="m6c-jJ-T4D"/>
+                <constraint firstItem="vQJ-Er-Roq" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="s4y-ad-xpU"/>
+                <constraint firstAttribute="trailing" secondItem="vQJ-Er-Roq" secondAttribute="trailing" id="uEe-p1-xMb"/>
+            </constraints>
+            <connections>
+                <outlet property="label" destination="QRQ-IF-Rlr" id="aWp-wD-4Qw"/>
+                <outlet property="textField" destination="vQJ-Er-Roq" id="N6n-hT-C5I"/>
+            </connections>
+            <point key="canvasLocation" x="577" y="-14"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

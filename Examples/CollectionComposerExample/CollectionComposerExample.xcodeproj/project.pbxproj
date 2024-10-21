@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		54DD33632CC661BD00AFB09F /* InputFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DD33612CC661BD00AFB09F /* InputFieldCell.swift */; };
+		54DD33642CC661BD00AFB09F /* InputFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54DD33622CC661BD00AFB09F /* InputFieldCell.xib */; };
 		E90D9A802CB14A83009E550E /* ExpandableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90D9A7F2CB14A83009E550E /* ExpandableHeaderView.swift */; };
 		E91F150D2AD30C7300EEE73C /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F150B2AD30C7300EEE73C /* ListViewController.swift */; };
 		E91F15102AD30C8F00EEE73C /* SupplementaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F150F2AD30C8F00EEE73C /* SupplementaryViewController.swift */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		54DD33612CC661BD00AFB09F /* InputFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldCell.swift; sourceTree = "<group>"; };
+		54DD33622CC661BD00AFB09F /* InputFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputFieldCell.xib; sourceTree = "<group>"; };
 		E90D9A7F2CB14A83009E550E /* ExpandableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableHeaderView.swift; sourceTree = "<group>"; };
 		E91F150B2AD30C7300EEE73C /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		E91F150F2AD30C8F00EEE73C /* SupplementaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +69,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		54DD33602CC661B300AFB09F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				54DD33612CC661BD00AFB09F /* InputFieldCell.swift */,
+				54DD33622CC661BD00AFB09F /* InputFieldCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		E91F15092AD30C7300EEE73C /* ListViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +118,7 @@
 		E9AEE72F2ACD438300C23B31 /* CollectionComposerExample */ = {
 			isa = PBXGroup;
 			children = (
+				54DD33602CC661B300AFB09F /* Cell */,
 				E9BC12AB2BDF54D00057AF57 /* SwiftUI */,
 				E91F150E2AD30C8300EEE73C /* SupplementaryViewController */,
 				E91F15092AD30C7300EEE73C /* ListViewController */,
@@ -199,6 +213,7 @@
 				E9AEE73D2ACD438400C23B31 /* LaunchScreen.storyboard in Resources */,
 				E9AEE73A2ACD438400C23B31 /* Assets.xcassets in Resources */,
 				E9AEE7382ACD438300C23B31 /* Main.storyboard in Resources */,
+				54DD33642CC661BD00AFB09F /* InputFieldCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +230,7 @@
 				E9BC12B12BDF56CC0057AF57 /* ExampleCellView.swift in Sources */,
 				E9BC12AF2BDF560C0057AF57 /* ChartView.swift in Sources */,
 				E9AEE7352ACD438300C23B31 /* ViewController.swift in Sources */,
+				54DD33632CC661BD00AFB09F /* InputFieldCell.swift in Sources */,
 				E9AEE7312ACD438300C23B31 /* AppDelegate.swift in Sources */,
 				E91F15192AD3CF2100EEE73C /* TextSupplementaryView.swift in Sources */,
 				E9AEE7332ACD438300C23B31 /* SceneDelegate.swift in Sources */,

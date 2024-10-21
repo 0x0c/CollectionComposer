@@ -34,6 +34,21 @@ class LogInFormViewController: ComposedCollectionViewController, SectionProvider
                     }
                 TextForm(placeholder: "Note")
             }
+            TextFormSection<InputFieldCell>(id: "login2", type: .nib(UINib(nibName: "InputFieldCell", bundle: nil))) {
+                TextForm(label: "Username", placeholder: "Your name")
+                TextForm(label: "Email", placeholder: "Email")
+                TextForm(label: "Password", placeholder: "Password", isSecureText: true)
+                    .validate { text in
+                        guard let text else {
+                            return .invalid(hint: "Password should not be empty.")
+                        }
+                        if text.count >= 10 {
+                            return .valid
+                        }
+                        return .invalid(hint: "Password should be longer than 10 characters.")
+                    }
+                TextForm(label: "Note", placeholder: "Note")
+            }
         }
     }
 

@@ -22,20 +22,18 @@ public protocol TextFormCell: UICollectionViewCell {
 open class TextFormSection<T: TextFormCell>: Section {
     // MARK: Lifecycle
 
-    public init(id: String, @ItemBuilder<TextForm> _ items: () -> [TextForm]) {
+    public init(id: String, type: CellType = .class, @ItemBuilder<TextForm> _ items: () -> [TextForm]) {
         self.id = id
+        self.type = type
         self.items = items()
         self.items.linkForms()
+        cellRegistration = makeCellRegistration()
     }
 
     // MARK: Open
 
     open var decorations = [Decoration]()
-    open var cellRegistration: UICollectionView.CellRegistration<
-        T, TextForm
-    >! = UICollectionView.CellRegistration<T, TextForm> { cell, _, model in
-        cell.configure(model)
-    }
+    open var cellRegistration: UICollectionView.CellRegistration<T, TextForm>!
 
     open var isExpanded = false
     open var isExpandable = false
@@ -46,6 +44,19 @@ open class TextFormSection<T: TextFormCell>: Section {
 
     open var snapshotItems: [AnyHashable] {
         return items
+    }
+
+    open func makeCellRegistration() -> UICollectionView.CellRegistration<T, TextForm> {
+        switch type {
+        case let .nib(nib):
+            return UICollectionView.CellRegistration<T, TextForm>(cellNib: nib) { cell, _, model in
+                cell.configure(model)
+            }
+        case .class:
+            return UICollectionView.CellRegistration<T, TextForm> { cell, _, model in
+                cell.configure(model)
+            }
+        }
     }
 
     @discardableResult
@@ -80,6 +91,11 @@ open class TextFormSection<T: TextFormCell>: Section {
 
     // MARK: Public
 
+    public enum CellType {
+        case nib(UINib)
+        case `class`
+    }
+
     public var header: (any BoundarySupplementaryHeaderView)?
     public var footer: (any BoundarySupplementaryFooterView)?
 
@@ -90,6 +106,10 @@ open class TextFormSection<T: TextFormCell>: Section {
     public func storeFooter(_ footer: (any BoundarySupplementaryFooterView)?) {
         self.footer = footer
     }
+
+    // MARK: Private
+
+    private let type: CellType
 }
 
 extension [TextForm] {
