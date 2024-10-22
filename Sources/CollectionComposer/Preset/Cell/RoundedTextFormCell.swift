@@ -111,21 +111,13 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
     public func configure(_ form: TextForm) {
         cancellable.removeAll()
         self.form = form
-        form.$text
-            .assign(to: \UITextField.text, on: textField)
-            .store(in: &cancellable)
 
         label.isHidden = form.label == nil
         if let labelText = form.label, labelText.isEmpty {
             label.isHidden = true
         }
         label.text = form.label
-        textField.isSecureTextEntry = form.isSecureText
-        textField.placeholder = form.placeholder
-        textField.keyboardType = form.keyboardType
-        textField.spellCheckingType = form.spellCheckingType
-        textField.autocorrectionType = form.autocorrectionType
-        textField.autocapitalizationType = form.autocapitalizationType
+        textField.configure(form: form).store(in: &cancellable)
         form.shouldFocusTextFieldPublisher.sink { [weak self] _ in
             guard let self else {
                 return
@@ -197,7 +189,7 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
         if shouldValidate,
            let form,
            let handler = form.validationHandler {
-            switch handler(textField.text) {
+            switch handler(form.currentInput) {
             case .valid:
                 validationHintlabel.isHidden = true
                 validationHintlabel.alpha = 0

@@ -22,7 +22,7 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell {
     func configure(_ form: CollectionComposer.TextForm) {
         cancellable.removeAll()
         self.form = form
-        form.$text
+        form.$currentInput.map { $0?.toString() }
             .assign(to: \UITextField.text, on: textField)
             .store(in: &cancellable)
 
@@ -31,12 +31,7 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell {
             label.isHidden = true
         }
         label.text = form.label
-        textField.isSecureTextEntry = form.isSecureText
-        textField.placeholder = form.placeholder
-        textField.keyboardType = form.keyboardType
-        textField.spellCheckingType = form.spellCheckingType
-        textField.autocorrectionType = form.autocorrectionType
-        textField.autocapitalizationType = form.autocapitalizationType
+        textField.configure(form: form).store(in: &cancellable)
         form.shouldFocusTextFieldPublisher.sink { [weak self] _ in
             guard let self else {
                 return

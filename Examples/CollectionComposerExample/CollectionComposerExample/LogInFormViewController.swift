@@ -23,11 +23,13 @@ class LogInFormViewController: ComposedCollectionViewController, SectionProvider
                 TextForm(label: "Username", placeholder: "Your name")
                 TextForm(placeholder: "Email")
                 TextForm(placeholder: "Password", isSecureText: true)
-                    .validate { text in
-                        guard let text else {
+                    .validate { input in
+                        guard let input else {
                             return .invalid(hint: "Password should not be empty.")
                         }
-                        if text.count >= 10 {
+                        if case let .text(text) = input,
+                           let text,
+                           text.count >= 10 {
                             return .valid
                         }
                         return .invalid(hint: "Password should be longer than 10 characters.")
@@ -38,11 +40,13 @@ class LogInFormViewController: ComposedCollectionViewController, SectionProvider
                 TextForm(label: "Username", placeholder: "Your name")
                 TextForm(label: "Email", placeholder: "Email")
                 TextForm(label: "Password", placeholder: "Password", isSecureText: true)
-                    .validate { text in
-                        guard let text else {
+                    .validate { input in
+                        guard let input else {
                             return .invalid(hint: "Password should not be empty.")
                         }
-                        if text.count >= 10 {
+                        if case let .text(text) = input,
+                           let text,
+                           text.count >= 10 {
                             return .valid
                         }
                         return .invalid(hint: "Password should be longer than 10 characters.")
