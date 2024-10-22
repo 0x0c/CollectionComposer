@@ -96,7 +96,7 @@ open class TextForm: NSObject {
 
     public enum InputStyle {
         case text(String?, TextInputContext)
-        case datePicker(Date, UIDatePicker.Mode, DateFormatter?)
+        case datePicker(Date?, UIDatePicker.Mode, DateFormatter?)
         case picker(PickerContext)
     }
 
@@ -157,7 +157,7 @@ open class TextForm: NSObject {
 
     public enum Input: Sendable {
         case text(String?)
-        case date(Date, DateFormatter?)
+        case date(Date?, DateFormatter?)
 
         // MARK: Public
 
@@ -166,7 +166,10 @@ open class TextForm: NSObject {
             case let .text(string):
                 return string
             case let .date(date, formatter):
-                return formatter?.string(from: date) ?? date.description
+                if let date {
+                    return formatter?.string(from: date) ?? date.description
+                }
+                return nil
             }
         }
     }
@@ -186,7 +189,9 @@ open class TextForm: NSObject {
             }
             else {
                 let picker = UIDatePicker()
-                picker.date = initialDate
+                if let initialDate {
+                    picker.date = initialDate
+                }
                 picker.addTarget(self, action: #selector(didDatePickerValueChange), for: .valueChanged)
                 picker.preferredDatePickerStyle = .wheels
                 picker.datePickerMode = mode
