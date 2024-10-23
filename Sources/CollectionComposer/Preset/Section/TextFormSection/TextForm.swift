@@ -95,6 +95,22 @@ open class TextForm: NSObject {
             if let form, let handler = form.focusedHandler {
                 handler(form)
             }
+            if let form {
+                switch form.inputStyle {
+                case let .datePicker(context):
+                    if case let .date(date, _) = form.currentInput, date == nil {
+                        form.currentInput = .date(form.currentDatePicker()?.date, context.formatter)
+                    }
+                case let .picker(context):
+                    if form.currentInput == nil,
+                       let index = form.currentPickerView()?.selectedRow(inComponent: 0),
+                       index < context.titles.count {
+                        form.currentInput = .text(context.titles[index])
+                    }
+                default:
+                    break
+                }
+            }
             return super.becomeFirstResponder()
         }
 
