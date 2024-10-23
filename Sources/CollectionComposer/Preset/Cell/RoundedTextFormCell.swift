@@ -91,7 +91,12 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
     // MARK: Open
 
     override open var canBecomeFirstResponder: Bool {
-        return true
+        switch form?.inputStyle {
+        case nil, .text:
+            return false
+        case .datePicker, .picker:
+            return true
+        }
     }
 
     override open var inputView: UIView? {
