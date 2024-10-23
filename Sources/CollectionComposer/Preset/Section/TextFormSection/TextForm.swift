@@ -71,11 +71,15 @@ open class TextForm: NSObject {
 
         @discardableResult
         override open func becomeFirstResponder() -> Bool {
-            coverView.isHidden = if let form, form.inputStyle.isKindOfPicker {
-                false
+            if let form, form.inputStyle.isKindOfPicker {
+                coverView.isHidden = false
             }
             else {
-                true
+                coverView.isHidden = true
+            }
+
+            if let form, let handler = form.focusedHandler {
+                handler(form)
             }
             return super.becomeFirstResponder()
         }
@@ -83,6 +87,9 @@ open class TextForm: NSObject {
         @discardableResult
         override open func resignFirstResponder() -> Bool {
             coverView.isHidden = true
+            if let form, let handler = form.resignedHandler {
+                handler(form)
+            }
             return super.resignFirstResponder()
         }
 
@@ -327,6 +334,8 @@ open class TextForm: NSObject {
     @Published public var currentInput: Input?
     public var placeholder: String?
     public var validationHandler: ((Input?) -> ValidationResult)?
+    public var focusedHandler: ((TextForm) -> Void)?
+    public var resignedHandler: ((TextForm) -> Void)?
 
     public func bind(_ cell: TextFormCell) -> AnyCancellable {
         cell.inputField.form = self
@@ -343,9 +352,20 @@ open class TextForm: NSObject {
         case .datePicker:
             cell.inputField.inputView = currentDatePicker()
         }
-        return $currentInput
-            .map { $0?.toString() }
-            .assign(to: \UITextField.text, on: cell.inputField)
+        return $currentInput.sink { [weak cell] input in
+            guard let cell else { return }
+            cell.inputField.text = input?.toString()
+        }
+    }
+    
+    public func onFocused(_ handler: @escaping (TextForm) -> Void) -> TextForm {
+        focusedHandler = handler
+        return self
+    }
+    
+    public func onResigned(_ handler: @escaping (TextForm) -> Void) -> TextForm {
+        resignedHandler = handler
+        return self
     }
 
     public func currentDatePicker() -> UIDatePicker? {

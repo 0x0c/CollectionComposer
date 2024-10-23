@@ -53,7 +53,11 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
                 TextForm(
                     placeholder: "Picker",
                     inputStyle: .picker(TextForm.PickerContext(titles: ["A", "B", "C"]))
-                )
+                ).onFocused {
+                    print("focused \($0.label ?? "")")
+                }.onResigned {
+                    print("resigned \($0.label ?? "")")
+                }
                 TextForm(
                     placeholder: "Picker",
                     inputStyle: .picker(
