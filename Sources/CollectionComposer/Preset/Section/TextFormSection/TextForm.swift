@@ -165,6 +165,10 @@ open class TextForm: NSObject {
             }
         }
 
+        public var isEmpty: Bool {
+            return count == 0
+        }
+
         public func toString() -> String? {
             switch self {
             case let .text(string):
