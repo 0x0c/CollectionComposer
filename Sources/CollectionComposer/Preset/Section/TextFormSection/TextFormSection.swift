@@ -14,6 +14,9 @@ public protocol TextFormCell: UICollectionViewCell {
     static var defaultTextFieldHeight: CGFloat { get }
     static var defaultHeight: CGFloat { get }
 
+    var textField: UITextField { get }
+    var pickerValueLabel: UILabel { get }
+
     func configure(_ form: TextForm)
 }
 

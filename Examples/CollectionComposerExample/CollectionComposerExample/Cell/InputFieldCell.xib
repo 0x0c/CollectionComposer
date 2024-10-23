@@ -41,8 +41,8 @@
                 <constraint firstAttribute="trailing" secondItem="vQJ-Er-Roq" secondAttribute="trailing" id="uEe-p1-xMb"/>
             </constraints>
             <connections>
+                <outlet property="inputTextField" destination="vQJ-Er-Roq" id="N6n-hT-C5I"/>
                 <outlet property="label" destination="QRQ-IF-Rlr" id="aWp-wD-4Qw"/>
-                <outlet property="textField" destination="vQJ-Er-Roq" id="N6n-hT-C5I"/>
             </connections>
             <point key="canvasLocation" x="577" y="-14"/>
         </collectionViewCell>

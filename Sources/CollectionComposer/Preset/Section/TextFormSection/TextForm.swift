@@ -8,27 +8,6 @@
 import Combine
 import UIKit
 
-public extension UITextField {
-    func configure(form: TextForm) -> AnyCancellable {
-        placeholder = form.placeholder
-        switch form.inputStyle {
-        case let .text(_, context):
-            isSecureTextEntry = context.isSecureText
-            keyboardType = context.keyboardType
-            spellCheckingType = context.spellCheckingType
-            autocorrectionType = context.autocorrectionType
-            autocapitalizationType = context.autocapitalizationType
-        case let .datePicker:
-            inputView = form.currentDatePicker()
-        case let .picker:
-            inputView = form.currentPickerView()
-        }
-        return form.$currentInput.map { input in
-            input?.toString()
-        }.assign(to: \UITextField.text, on: self)
-    }
-}
-
 // MARK: - TextForm
 
 open class TextForm: NSObject {
@@ -46,8 +25,8 @@ open class TextForm: NSObject {
         switch inputStyle {
         case let .text(initialText, _):
             currentInput = .text(initialText)
-        case let .datePicker(initialDate, _, formatter):
-            currentInput = .date(initialDate, formatter)
+        case let .datePicker(context):
+            currentInput = .date(context.initialDate, context.formatter)
         case let .picker(context):
             currentInput = .text(context.initialTitle)
         }
@@ -96,7 +75,7 @@ open class TextForm: NSObject {
 
     public enum InputStyle {
         case text(String?, TextInputContext)
-        case datePicker(Date?, UIDatePicker.Mode, DateFormatter?)
+        case datePicker(DatePickerContext = DatePickerContext())
         case picker(PickerContext)
     }
 
@@ -119,6 +98,22 @@ open class TextForm: NSObject {
             }
             return nil
         }
+    }
+
+    public struct DatePickerContext {
+        // MARK: Lifecycle
+
+        public init(_ initialDate: Date? = nil, mode: UIDatePicker.Mode = .date, formatter: DateFormatter? = nil) {
+            self.initialDate = initialDate
+            self.mode = mode
+            self.formatter = formatter
+        }
+
+        // MARK: Public
+
+        public let initialDate: Date?
+        public let mode: UIDatePicker.Mode
+        public let formatter: DateFormatter?
     }
 
     public struct TextInputContext {
@@ -161,6 +156,15 @@ open class TextForm: NSObject {
 
         // MARK: Public
 
+        public var count: Int {
+            switch self {
+            case let .text(string):
+                return string?.count ?? 0
+            case let .date(date, _):
+                return date == nil ? 0 : 1
+            }
+        }
+
         public func toString() -> String? {
             switch self {
             case let .text(string):
@@ -182,19 +186,41 @@ open class TextForm: NSObject {
     public var placeholder: String?
     public var validationHandler: ((Input?) -> ValidationResult)?
 
+    public func bind(_ cell: TextFormCell) -> [AnyCancellable] {
+        cell.textField.placeholder = placeholder
+        switch inputStyle {
+        case let .text(_, context):
+            cell.textField.isSecureTextEntry = context.isSecureText
+            cell.textField.keyboardType = context.keyboardType
+            cell.textField.spellCheckingType = context.spellCheckingType
+            cell.textField.autocorrectionType = context.autocorrectionType
+            cell.textField.autocapitalizationType = context.autocapitalizationType
+        case .datePicker, .picker:
+            cell.textField.isHidden = true
+        }
+        return [
+            $currentInput.map { input in
+                input?.toString()
+            }.assign(to: \UILabel.text, on: cell.pickerValueLabel),
+            $currentInput.map { input in
+                input?.toString()
+            }.assign(to: \UITextField.text, on: cell.textField)
+        ]
+    }
+
     public func currentDatePicker() -> UIDatePicker? {
-        if case let .datePicker(initialDate, mode, _) = inputStyle {
+        if case let .datePicker(context) = inputStyle {
             if let datePicker {
                 return datePicker
             }
             else {
                 let picker = UIDatePicker()
-                if let initialDate {
+                if let initialDate = context.initialDate {
                     picker.date = initialDate
                 }
                 picker.addTarget(self, action: #selector(didDatePickerValueChange), for: .valueChanged)
                 picker.preferredDatePickerStyle = .wheels
-                picker.datePickerMode = mode
+                picker.datePickerMode = context.mode
                 return picker
             }
         }
@@ -234,8 +260,8 @@ open class TextForm: NSObject {
 
     @objc
     private func didDatePickerValueChange(_ sender: UIDatePicker) {
-        if case let .datePicker(_, _, formatter) = inputStyle {
-            currentInput = .date(sender.date, formatter)
+        if case let .datePicker(context) = inputStyle {
+            currentInput = .date(sender.date, context.formatter)
         }
     }
 }

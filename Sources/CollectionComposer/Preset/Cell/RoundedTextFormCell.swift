@@ -21,6 +21,8 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
         let textFieldBaseView = UIView(frame: .zero)
         textFieldBaseView.translatesAutoresizingMaskIntoConstraints = false
         textFieldBaseView.addSubview(textField)
+        textFieldBaseView.addSubview(pickerValueLabel)
+        textFieldBaseView.addSubview(pickerValuePlaceholderLabel)
         let baseStackView = UIStackView(arrangedSubviews: [
             validationHintlabel,
             textFieldBaseView
@@ -41,6 +43,16 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
             textField.trailingAnchor.constraint(equalTo: textFieldBaseView.trailingAnchor),
             textField.leadingAnchor.constraint(equalTo: textFieldBaseView.leadingAnchor),
             textField.centerYAnchor.constraint(equalTo: textFieldBaseView.centerYAnchor),
+
+            pickerValueLabel.trailingAnchor.constraint(equalTo: textFieldBaseView.trailingAnchor),
+            pickerValueLabel.leadingAnchor.constraint(equalTo: textFieldBaseView.leadingAnchor),
+            pickerValueLabel.topAnchor.constraint(equalTo: textFieldBaseView.topAnchor),
+            pickerValueLabel.bottomAnchor.constraint(equalTo: textFieldBaseView.bottomAnchor),
+            pickerValuePlaceholderLabel.trailingAnchor.constraint(equalTo: textFieldBaseView.trailingAnchor),
+            pickerValuePlaceholderLabel.leadingAnchor.constraint(equalTo: textFieldBaseView.leadingAnchor),
+            pickerValuePlaceholderLabel.topAnchor.constraint(equalTo: textFieldBaseView.topAnchor),
+            pickerValuePlaceholderLabel.bottomAnchor.constraint(equalTo: textFieldBaseView.bottomAnchor),
+
             baseStackView.topAnchor.constraint(
                 equalTo: baseView.topAnchor,
                 constant: contentInset.top
@@ -77,11 +89,30 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellBecomesFirstResponder)))
     }
 
     @available(*, unavailable)
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Open
+
+    override open var canBecomeFirstResponder: Bool {
+        return true
+    }
+
+    override open var inputView: UIView? {
+        switch form?.inputStyle {
+        case nil, .text:
+            return nil
+        case .datePicker:
+            return form?.currentDatePicker()
+        case .picker:
+            return form?.currentPickerView()
+        }
     }
 
     // MARK: Public
@@ -90,6 +121,21 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
     public static let defaultHeight: CGFloat = 50
 
     public var form: TextForm?
+
+    public private(set) lazy var textField: UITextField = {
+        let textField = UITextField(frame: .zero)
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.delegate = self
+        textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        textField.textColor = .darkText
+        return textField
+    }()
+
+    public private(set) var pickerValueLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     public func textFieldDidEndEditing(_ textField: UITextField) {
         shouldValidate = true
@@ -117,7 +163,17 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
             label.isHidden = true
         }
         label.text = form.label
-        textField.configure(form: form).store(in: &cancellable)
+
+        pickerValuePlaceholderLabel.text = form.placeholder
+        form.$currentInput.sink { [weak self] input in
+            self?.pickerValuePlaceholderLabel.isHidden = if let input {
+                !input.isEmpty
+            }
+            else {
+                false
+            }
+        }.store(in: &cancellable)
+        form.bind(self).forEach { $0.store(in: &cancellable) }
         form.shouldFocusTextFieldPublisher.sink { [weak self] _ in
             guard let self else {
                 return
@@ -151,6 +207,13 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
 
     // MARK: Private
 
+    private var pickerValuePlaceholderLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .gray
+        return label
+    }()
+
     private let contentInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
 
     private var label: UILabel = {
@@ -170,16 +233,12 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
         return label
     }()
 
-    private lazy var textField: UITextField = {
-        let textField = UITextField(frame: .zero)
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.delegate = self
-        textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
-        textField.textColor = .darkText
-        return textField
-    }()
-
     private var cancellable = Set<AnyCancellable>()
+
+    @objc
+    private func cellBecomesFirstResponder() {
+        becomeFirstResponder()
+    }
 
     @objc private func textDidChange(_ textField: UITextField) {
         validateText()
