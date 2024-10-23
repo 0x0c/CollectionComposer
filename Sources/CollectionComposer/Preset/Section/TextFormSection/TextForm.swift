@@ -105,8 +105,6 @@ open class TextForm: NSObject {
                     coverView.bottomAnchor.constraint(equalTo: bottomAnchor)
                 ])
                 coverView.isHidden = true
-                coverView.backgroundColor = .red
-                coverView.alpha = 0.5
             }
         }
     }
