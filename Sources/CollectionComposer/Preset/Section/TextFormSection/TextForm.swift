@@ -30,7 +30,7 @@ open class TextForm: NSObject {
         case let .datePicker(context):
             currentInput = .date(context.initialDate, context.formatter)
         case let .picker(context):
-            currentInput = .text(context.initialTitle)
+            currentInput = context.initialSelection == nil ? nil : .text(context.initialTitle)
         }
     }
 
