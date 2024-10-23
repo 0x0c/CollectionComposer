@@ -69,6 +69,20 @@ open class TextForm: NSObject {
             return super.caretRect(for: position)
         }
 
+        override open func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
+            if let form, form.inputStyle.isKindOfPicker {
+                return []
+            }
+            return super.selectionRects(for: range)
+        }
+        
+        override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+            if let form, form.inputStyle.isKindOfPicker {
+                return false
+            }
+            return super.canPerformAction(action, withSender: sender)
+        }
+
         @discardableResult
         override open func becomeFirstResponder() -> Bool {
             if let form, form.inputStyle.isKindOfPicker {
