@@ -19,8 +19,6 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell {
     static let defaultTextFieldHeight: CGFloat = 39
     static let defaultHeight: CGFloat = 60
 
-    var pickerValueLabel = UILabel()
-
     var textField: UITextField {
         return inputTextField
     }
@@ -37,7 +35,7 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell {
             label.isHidden = true
         }
         label.text = form.label
-        form.bind(self).forEach { $0.store(in: &cancellable) }
+        form.bind(self).store(in: &cancellable)
         form.shouldFocusTextFieldPublisher.sink { [weak self] _ in
             guard let self else {
                 return

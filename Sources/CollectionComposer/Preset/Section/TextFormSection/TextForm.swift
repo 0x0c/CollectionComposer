@@ -190,7 +190,7 @@ open class TextForm: NSObject {
     public var placeholder: String?
     public var validationHandler: ((Input?) -> ValidationResult)?
 
-    public func bind(_ cell: TextFormCell) -> [AnyCancellable] {
+    public func bind(_ cell: TextFormCell) -> AnyCancellable {
         cell.textField.placeholder = placeholder
         switch inputStyle {
         case let .text(_, context):
@@ -199,17 +199,13 @@ open class TextForm: NSObject {
             cell.textField.spellCheckingType = context.spellCheckingType
             cell.textField.autocorrectionType = context.autocorrectionType
             cell.textField.autocapitalizationType = context.autocapitalizationType
+            cell.textField.isUserInteractionEnabled = true
         case .datePicker, .picker:
-            cell.textField.isHidden = true
+            cell.textField.isUserInteractionEnabled = false
         }
-        return [
-            $currentInput.map { input in
-                input?.toString()
-            }.assign(to: \UILabel.text, on: cell.pickerValueLabel),
-            $currentInput.map { input in
-                input?.toString()
-            }.assign(to: \UITextField.text, on: cell.textField)
-        ]
+        return $currentInput
+            .map { $0?.toString() }
+            .assign(to: \UITextField.text, on: cell.textField)
     }
 
     public func currentDatePicker() -> UIDatePicker? {

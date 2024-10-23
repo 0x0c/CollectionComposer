@@ -22,7 +22,6 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
         textFieldBaseView.translatesAutoresizingMaskIntoConstraints = false
         textFieldBaseView.addSubview(textField)
         textFieldBaseView.addSubview(pickerValueLabel)
-        textFieldBaseView.addSubview(pickerValuePlaceholderLabel)
         let baseStackView = UIStackView(arrangedSubviews: [
             validationHintlabel,
             textFieldBaseView
@@ -43,15 +42,6 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
             textField.trailingAnchor.constraint(equalTo: textFieldBaseView.trailingAnchor),
             textField.leadingAnchor.constraint(equalTo: textFieldBaseView.leadingAnchor),
             textField.centerYAnchor.constraint(equalTo: textFieldBaseView.centerYAnchor),
-
-            pickerValueLabel.trailingAnchor.constraint(equalTo: textFieldBaseView.trailingAnchor),
-            pickerValueLabel.leadingAnchor.constraint(equalTo: textFieldBaseView.leadingAnchor),
-            pickerValueLabel.topAnchor.constraint(equalTo: textFieldBaseView.topAnchor),
-            pickerValueLabel.bottomAnchor.constraint(equalTo: textFieldBaseView.bottomAnchor),
-            pickerValuePlaceholderLabel.trailingAnchor.constraint(equalTo: textFieldBaseView.trailingAnchor),
-            pickerValuePlaceholderLabel.leadingAnchor.constraint(equalTo: textFieldBaseView.leadingAnchor),
-            pickerValuePlaceholderLabel.topAnchor.constraint(equalTo: textFieldBaseView.topAnchor),
-            pickerValuePlaceholderLabel.bottomAnchor.constraint(equalTo: textFieldBaseView.bottomAnchor),
 
             baseStackView.topAnchor.constraint(
                 equalTo: baseView.topAnchor,
@@ -164,16 +154,7 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
         }
         label.text = form.label
 
-        pickerValuePlaceholderLabel.text = form.placeholder
-        form.$currentInput.sink { [weak self] input in
-            self?.pickerValuePlaceholderLabel.isHidden = if let input {
-                !input.isEmpty
-            }
-            else {
-                false
-            }
-        }.store(in: &cancellable)
-        form.bind(self).forEach { $0.store(in: &cancellable) }
+        form.bind(self).store(in: &cancellable)
         form.shouldFocusTextFieldPublisher.sink { [weak self] _ in
             guard let self else {
                 return
@@ -206,13 +187,6 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
     }
 
     // MARK: Private
-
-    private var pickerValuePlaceholderLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .gray
-        return label
-    }()
 
     private let contentInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
 
