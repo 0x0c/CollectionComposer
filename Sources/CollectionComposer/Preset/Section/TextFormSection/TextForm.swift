@@ -75,7 +75,7 @@ open class TextForm: NSObject {
             }
             return super.selectionRects(for: range)
         }
-        
+
         override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
             if let form, form.inputStyle.isKindOfPicker {
                 return false
@@ -348,11 +348,11 @@ open class TextForm: NSObject {
     @Published public var currentInput: Input?
     public var placeholder: String?
     public var validationHandler: ((Input?) -> ValidationResult)?
-    public var focusedHandler: ((TextForm) -> Void)?
-    public var resignedHandler: ((TextForm) -> Void)?
 
     public func bind(_ cell: TextFormCell) -> AnyCancellable {
         cell.inputField.form = self
+        inputField = cell.inputField
+
         cell.inputField.placeholder = placeholder
         switch inputStyle {
         case let .text(_, context):
@@ -367,16 +367,18 @@ open class TextForm: NSObject {
             cell.inputField.inputView = currentDatePicker()
         }
         return $currentInput.sink { [weak cell] input in
-            guard let cell else { return }
+            guard let cell else {
+                return
+            }
             cell.inputField.text = input?.toString()
         }
     }
-    
+
     public func onFocused(_ handler: @escaping (TextForm) -> Void) -> TextForm {
         focusedHandler = handler
         return self
     }
-    
+
     public func onResigned(_ handler: @escaping (TextForm) -> Void) -> TextForm {
         resignedHandler = handler
         return self
@@ -420,12 +422,27 @@ open class TextForm: NSObject {
         return nil
     }
 
+    @discardableResult
+    public func becomeInputFieldFirstResponder() -> Bool {
+        return inputField?.becomeFirstResponder() ?? false
+    }
+
+    @discardableResult
+    public func resignInputFieldFirstResponder() -> Bool {
+        return inputField?.resignFirstResponder() ?? false
+    }
+
     // MARK: Internal
 
     var next: TextForm?
     var previous: TextForm?
 
     // MARK: Private
+
+    private var focusedHandler: ((TextForm) -> Void)?
+    private var resignedHandler: ((TextForm) -> Void)?
+
+    private var inputField: InputField?
 
     private var datePicker: UIDatePicker?
 
