@@ -20,8 +20,8 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
         baseView.translatesAutoresizingMaskIntoConstraints = false
         let textFieldBaseView = UIView(frame: .zero)
         textFieldBaseView.translatesAutoresizingMaskIntoConstraints = false
-        textFieldBaseView.addSubview(textField)
-        textFieldBaseView.addSubview(pickerValueLabel)
+        textFieldBaseView.addSubview(inputField)
+
         let baseStackView = UIStackView(arrangedSubviews: [
             validationHintlabel,
             textFieldBaseView
@@ -39,9 +39,9 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
         baseStackView.clipsToBounds = true
         baseView.addSubview(baseStackView)
         NSLayoutConstraint.activate([
-            textField.trailingAnchor.constraint(equalTo: textFieldBaseView.trailingAnchor),
-            textField.leadingAnchor.constraint(equalTo: textFieldBaseView.leadingAnchor),
-            textField.centerYAnchor.constraint(equalTo: textFieldBaseView.centerYAnchor),
+            inputField.trailingAnchor.constraint(equalTo: textFieldBaseView.trailingAnchor),
+            inputField.leadingAnchor.constraint(equalTo: textFieldBaseView.leadingAnchor),
+            inputField.centerYAnchor.constraint(equalTo: textFieldBaseView.centerYAnchor),
 
             baseStackView.topAnchor.constraint(
                 equalTo: baseView.topAnchor,
@@ -79,35 +79,11 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellBecomesFirstResponder)))
     }
 
     @available(*, unavailable)
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: Open
-
-    override open var canBecomeFirstResponder: Bool {
-        switch form?.inputStyle {
-        case nil, .text:
-            return false
-        case .datePicker, .picker:
-            return true
-        }
-    }
-
-    override open var inputView: UIView? {
-        switch form?.inputStyle {
-        case nil, .text:
-            return nil
-        case .datePicker:
-            return form?.currentDatePicker()
-        case .picker:
-            return form?.currentPickerView()
-        }
     }
 
     // MARK: Public
@@ -117,19 +93,13 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
 
     public var form: TextForm?
 
-    public private(set) lazy var textField: UITextField = {
-        let textField = UITextField(frame: .zero)
+    public private(set) lazy var inputField: TextForm.InputField = {
+        let textField = TextForm.InputField(frame: .zero)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
         textField.textColor = .darkText
         return textField
-    }()
-
-    public private(set) var pickerValueLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
     }()
 
     public func textFieldDidEndEditing(_ textField: UITextField) {
@@ -164,7 +134,7 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
             guard let self else {
                 return
             }
-            textField.becomeFirstResponder()
+            inputField.becomeFirstResponder()
         }.store(in: &cancellable)
     }
 
@@ -174,21 +144,21 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
 
     var isSecureTextEntry: Bool {
         get {
-            return textField.isSecureTextEntry
+            return inputField.isSecureTextEntry
         }
         set {
-            textField.isSecureTextEntry = newValue
+            inputField.isSecureTextEntry = newValue
         }
     }
 
     @objc @discardableResult
     func focus() -> Bool {
-        return textField.becomeFirstResponder()
+        return inputField.becomeFirstResponder()
     }
 
     @discardableResult
     func resign() -> Bool {
-        return textField.resignFirstResponder()
+        return inputField.resignFirstResponder()
     }
 
     // MARK: Private
@@ -213,11 +183,6 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
     }()
 
     private var cancellable = Set<AnyCancellable>()
-
-    @objc
-    private func cellBecomesFirstResponder() {
-        becomeFirstResponder()
-    }
 
     @objc private func textDidChange(_ textField: UITextField) {
         validateText()

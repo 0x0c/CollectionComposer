@@ -35,6 +35,20 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
                         return .invalid(hint: "Password should be longer than 10 characters.")
                     }
             }
+            TextFormSection<RoundedTextFormCell>(id: "text2") {
+                TextForm(label: "Label", text: "Initial text", placeholder: "Placeholder")
+                TextForm(placeholder: "Email")
+                TextForm(placeholder: "Password", isSecureText: true)
+                    .validate { input in
+                        guard let input else {
+                            return .invalid(hint: "Password should not be empty.")
+                        }
+                        if input.count >= 10 {
+                            return .valid
+                        }
+                        return .invalid(hint: "Password should be longer than 10 characters.")
+                    }
+            }
             TextFormSection<RoundedTextFormCell>(id: "picker") {
                 TextForm(
                     placeholder: "Picker",

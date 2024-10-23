@@ -19,15 +19,13 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell {
     static let defaultTextFieldHeight: CGFloat = 39
     static let defaultHeight: CGFloat = 60
 
-    var textField: UITextField {
-        return inputTextField
-    }
+    var inputField: CollectionComposer.TextForm.InputField { textField }
 
     func configure(_ form: CollectionComposer.TextForm) {
         cancellable.removeAll()
         self.form = form
         form.$currentInput.map { $0?.toString() }
-            .assign(to: \UITextField.text, on: inputTextField)
+            .assign(to: \UITextField.text, on: inputField)
             .store(in: &cancellable)
 
         label.isHidden = form.label == nil
@@ -40,7 +38,7 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell {
             guard let self else {
                 return
             }
-            inputTextField.becomeFirstResponder()
+            inputField.becomeFirstResponder()
         }.store(in: &cancellable)
     }
 
@@ -52,6 +50,6 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell {
     // MARK: Private
 
     @IBOutlet private var label: UILabel!
-    @IBOutlet private var inputTextField: UITextField!
+    @IBOutlet private var textField: TextForm.InputField!
     private var cancellable = Set<AnyCancellable>()
 }

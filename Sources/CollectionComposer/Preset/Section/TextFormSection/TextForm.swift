@@ -47,6 +47,70 @@ open class TextForm: NSObject {
 
     // MARK: Open
 
+    open class InputField: UITextField {
+        // MARK: Open
+
+        override open func layoutSubviews() {
+            super.layoutSubviews()
+            if coverView.superview == nil {
+                setupCoverView()
+            }
+        }
+
+        override open func caretRect(for position: UITextPosition) -> CGRect {
+            if let form, form.inputStyle.isKindOfPicker {
+                return .zero
+            }
+            return super.caretRect(for: position)
+        }
+
+        @discardableResult
+        override open func becomeFirstResponder() -> Bool {
+            coverView.isHidden = if let form, form.inputStyle.isKindOfPicker {
+                false
+            }
+            else {
+                true
+            }
+            return super.becomeFirstResponder()
+        }
+
+        @discardableResult
+        override open func resignFirstResponder() -> Bool {
+            coverView.isHidden = if let form, form.inputStyle.isKindOfPicker {
+                true
+            }
+            else {
+                false
+            }
+            return super.resignFirstResponder()
+        }
+
+        // MARK: Public
+
+        public var form: TextForm?
+
+        // MARK: Private
+
+        private var coverView = UIView()
+
+        private func setupCoverView() {
+            if let superview {
+                superview.addSubview(coverView)
+                coverView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    coverView.topAnchor.constraint(equalTo: topAnchor),
+                    coverView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                    coverView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                    coverView.bottomAnchor.constraint(equalTo: bottomAnchor)
+                ])
+                coverView.isHidden = true
+                coverView.backgroundColor = .red
+                coverView.alpha = 0.5
+            }
+        }
+    }
+
     @discardableResult
     open func validate(_ handler: @escaping (Input?) -> ValidationResult) -> Self {
         validationHandler = handler
@@ -77,6 +141,17 @@ open class TextForm: NSObject {
         case text(String?, TextInputContext)
         case datePicker(DatePickerContext = DatePickerContext())
         case picker(PickerContext)
+
+        // MARK: Internal
+
+        var isKindOfPicker: Bool {
+            switch self {
+            case .text:
+                return false
+            case .datePicker, .picker:
+                return true
+            }
+        }
     }
 
     public struct PickerContext {
@@ -191,21 +266,23 @@ open class TextForm: NSObject {
     public var validationHandler: ((Input?) -> ValidationResult)?
 
     public func bind(_ cell: TextFormCell) -> AnyCancellable {
-        cell.textField.placeholder = placeholder
+        cell.inputField.form = self
+        cell.inputField.placeholder = placeholder
         switch inputStyle {
         case let .text(_, context):
-            cell.textField.isSecureTextEntry = context.isSecureText
-            cell.textField.keyboardType = context.keyboardType
-            cell.textField.spellCheckingType = context.spellCheckingType
-            cell.textField.autocorrectionType = context.autocorrectionType
-            cell.textField.autocapitalizationType = context.autocapitalizationType
-            cell.textField.isUserInteractionEnabled = true
-        case .datePicker, .picker:
-            cell.textField.isUserInteractionEnabled = false
+            cell.inputField.isSecureTextEntry = context.isSecureText
+            cell.inputField.keyboardType = context.keyboardType
+            cell.inputField.spellCheckingType = context.spellCheckingType
+            cell.inputField.autocorrectionType = context.autocorrectionType
+            cell.inputField.autocapitalizationType = context.autocapitalizationType
+        case .picker:
+            cell.inputField.inputView = currentPickerView()
+        case .datePicker:
+            cell.inputField.inputView = currentDatePicker()
         }
         return $currentInput
             .map { $0?.toString() }
-            .assign(to: \UITextField.text, on: cell.textField)
+            .assign(to: \UITextField.text, on: cell.inputField)
     }
 
     public func currentDatePicker() -> UIDatePicker? {
