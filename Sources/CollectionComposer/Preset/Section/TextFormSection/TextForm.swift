@@ -217,17 +217,25 @@ open class TextForm: NSObject {
     public struct PickerContext {
         // MARK: Lifecycle
 
-        public init(titles: [String], initialSelection: Int = 0) {
+        public init(titles: [String], initialSelection: Int? = nil) {
             self.titles = titles
-            self.initialSelection = max(0, min(titles.count - 1, initialSelection))
+            if let initialSelection {
+                self.initialSelection = max(0, min(titles.count - 1, initialSelection))
+            }
+            else {
+                self.initialSelection = nil
+            }
         }
 
         // MARK: Public
 
         public let titles: [String]
-        public let initialSelection: Int
+        public let initialSelection: Int?
 
         public var initialTitle: String? {
+            guard let initialSelection else {
+                return nil
+            }
             if titles.count > initialSelection {
                 return titles[initialSelection]
             }
@@ -373,7 +381,9 @@ open class TextForm: NSObject {
                 let picker = UIPickerView()
                 picker.delegate = self
                 picker.dataSource = self
-                picker.selectRow(context.initialSelection, inComponent: 0, animated: false)
+                if let initialSelection = context.initialSelection {
+                    picker.selectRow(initialSelection, inComponent: 0, animated: false)
+                }
                 pickerView = picker
                 return picker
             }
