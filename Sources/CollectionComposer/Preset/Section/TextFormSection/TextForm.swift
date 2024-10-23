@@ -16,10 +16,12 @@ open class TextForm: NSObject {
     public init(
         label: String? = nil,
         placeholder: String? = nil,
+        isRequired: Bool = false,
         inputStyle: InputStyle = .text(nil, TextInputContext())
     ) {
         self.label = label
         self.placeholder = placeholder
+        self.isRequired = isRequired
         self.inputStyle = inputStyle
 
         switch inputStyle {
@@ -36,11 +38,13 @@ open class TextForm: NSObject {
         label: String? = nil,
         text: String? = nil,
         placeholder: String? = nil,
+        isRequired: Bool = false,
         isSecureText: Bool = false
     ) {
         self.init(
             label: label,
             placeholder: placeholder,
+            isRequired: isRequired,
             inputStyle: .text(text, TextInputContext(isSecureText: isSecureText))
         )
     }
@@ -164,6 +168,8 @@ open class TextForm: NSObject {
             }
         }
     }
+
+    open var isRequired: Bool
 
     @discardableResult
     open func validate(_ handler: @escaping (Input?) -> ValidationResult) -> Self {
