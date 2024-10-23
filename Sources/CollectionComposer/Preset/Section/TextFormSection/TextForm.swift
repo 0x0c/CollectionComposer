@@ -116,7 +116,7 @@ open class TextForm: NSObject {
         }
 
         public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-            return originalDelegate?.textFieldShouldBeginEditing?(textField) ?? true
+            return originalDelegate?.textFieldShouldBeginEditing?(textField) ?? form?.showKeyboard ?? true
         }
 
         public func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -349,6 +349,11 @@ open class TextForm: NSObject {
     public var placeholder: String?
     public var validationHandler: ((Input?) -> ValidationResult)?
 
+    public func allowsToShowKeyboard(_ showKeyboard: Bool) -> TextForm {
+        self.showKeyboard = showKeyboard
+        return self
+    }
+
     public func bind(_ cell: TextFormCell) -> AnyCancellable {
         cell.inputField.form = self
         inputField = cell.inputField
@@ -439,6 +444,7 @@ open class TextForm: NSObject {
 
     // MARK: Private
 
+    private var showKeyboard: Bool = true
     private var focusedHandler: ((TextForm) -> Void)?
     private var resignedHandler: ((TextForm) -> Void)?
 

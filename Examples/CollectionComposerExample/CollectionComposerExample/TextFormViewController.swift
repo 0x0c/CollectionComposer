@@ -71,6 +71,10 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
                 TextForm(placeholder: "Time picker", inputStyle: .datePicker(.init(.now, mode: .time, formatter: dateFormatter)))
                 TextForm(placeholder: "Date and time picker", inputStyle: .datePicker(.init(.now, mode: .dateAndTime, formatter: dateFormatter)))
                 TextForm(placeholder: "Date and time picker", inputStyle: .datePicker(.init(.now)))
+                    .allowsToShowKeyboard(false)
+                    .onFocused { _ in
+                        print("focused but dont show keyboard")
+                    }
                 TextForm(placeholder: "YYYYMMDD", inputStyle: .datePicker()).onFocused { form in
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         form.resignInputFieldFirstResponder()
