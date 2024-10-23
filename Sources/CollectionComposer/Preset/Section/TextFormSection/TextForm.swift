@@ -47,11 +47,12 @@ open class TextForm: NSObject {
 
     // MARK: Open
 
-    open class InputField: UITextField {
+    open class InputField: UITextField, UITextFieldDelegate {
         // MARK: Open
 
         override open func layoutSubviews() {
             super.layoutSubviews()
+            delegate = self
             if coverView.superview == nil {
                 setupCoverView()
             }
@@ -89,6 +90,10 @@ open class TextForm: NSObject {
         // MARK: Public
 
         public var form: TextForm?
+
+        public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            return form?.inputStyle.isKindOfPicker != true ?? true
+        }
 
         // MARK: Private
 
