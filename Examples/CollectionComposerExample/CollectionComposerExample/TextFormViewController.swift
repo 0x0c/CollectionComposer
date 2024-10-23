@@ -17,6 +17,8 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
         super.viewDidLoad()
         title = "Text form"
 
+        view.keyboardLayoutGuide.topAnchor.constraint(equalTo: collectionView.bottomAnchor).isActive = true
+
         provider = self
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd 'at' HH:mm"

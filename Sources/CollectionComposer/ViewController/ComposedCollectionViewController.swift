@@ -45,15 +45,20 @@ open class ComposedCollectionViewController: UIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout(configuration: layoutConfiguration()))
+        view.backgroundColor = .systemBackground
         collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
         view.addSubview(collectionView)
         collectionView.delaysContentTouches = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+
+        let constraint = collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        constraint.priority = .defaultHigh
+        constraint.isActive = true
+        view.keyboardLayoutGuide.topAnchor.constraint(equalTo: collectionView.bottomAnchor).isActive = true
 
         dataSource = CollectionComposerDataSource<AnyHashable, AnyHashable>(
             collectionView: collectionView
