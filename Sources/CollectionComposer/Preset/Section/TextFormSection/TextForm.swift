@@ -95,6 +95,57 @@ open class TextForm: NSObject {
             return form?.inputStyle.isKindOfPicker != true ?? true
         }
 
+        public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+            return originalDelegate?.textFieldShouldBeginEditing?(textField) ?? true
+        }
+
+        public func textFieldDidBeginEditing(_ textField: UITextField) {
+            originalDelegate?.textFieldDidBeginEditing?(textField)
+        }
+
+        public func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+            return originalDelegate?.textFieldShouldEndEditing?(textField) ?? true
+        }
+
+        public func textFieldDidEndEditing(_ textField: UITextField) {
+            originalDelegate?.textFieldDidEndEditing?(textField)
+        }
+
+        public func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+            originalDelegate?.textFieldDidEndEditing?(textField, reason: reason)
+        }
+
+        public func textFieldDidChangeSelection(_ textField: UITextField) {
+            originalDelegate?.textFieldDidChangeSelection?(textField)
+        }
+
+        public func textFieldShouldClear(_ textField: UITextField) -> Bool {
+            return originalDelegate?.textFieldShouldClear?(textField) ?? true
+        }
+
+        public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            return originalDelegate?.textFieldShouldReturn?(textField) ?? true
+        }
+
+        @available(iOS 16.0, *)
+        public func textField(_ textField: UITextField, editMenuForCharactersIn range: NSRange, suggestedActions: [UIMenuElement]) -> UIMenu? {
+            originalDelegate?.textField?(textField, editMenuForCharactersIn: range, suggestedActions: suggestedActions)
+        }
+
+        @available(iOS 16.0, *)
+        public func textField(_ textField: UITextField, willPresentEditMenuWith animator: any UIEditMenuInteractionAnimating) {
+            originalDelegate?.textField?(textField, willPresentEditMenuWith: animator)
+        }
+
+        @available(iOS 16.0, *)
+        public func textField(_ textField: UITextField, willDismissEditMenuWith animator: any UIEditMenuInteractionAnimating) {
+            originalDelegate?.textField?(textField, willDismissEditMenuWith: animator)
+        }
+
+        // MARK: Internal
+
+        var originalDelegate: (any UITextFieldDelegate)?
+
         // MARK: Private
 
         private var coverView = UIView()
