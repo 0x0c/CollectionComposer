@@ -59,6 +59,9 @@ open class ComposedCollectionViewController: UIViewController {
         constraint.priority = .defaultHigh
         constraint.isActive = true
         view.keyboardLayoutGuide.topAnchor.constraint(equalTo: collectionView.bottomAnchor).isActive = true
+        if #available(iOS 17.0, *) {
+            view.keyboardLayoutGuide.usesBottomSafeArea = false
+        }
 
         dataSource = CollectionComposerDataSource<AnyHashable, AnyHashable>(
             collectionView: collectionView
