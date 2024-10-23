@@ -82,12 +82,7 @@ open class TextForm: NSObject {
 
         @discardableResult
         override open func resignFirstResponder() -> Bool {
-            coverView.isHidden = if let form, form.inputStyle.isKindOfPicker {
-                true
-            }
-            else {
-                false
-            }
+            coverView.isHidden = true
             return super.resignFirstResponder()
         }
 
