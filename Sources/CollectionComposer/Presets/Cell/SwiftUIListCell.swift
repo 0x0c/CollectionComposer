@@ -28,6 +28,7 @@ open class SwiftUIListCell<View: SwiftUIListCellView>: UICollectionViewListCell 
             indentationLevel = level
         }
         indentsAccessories = model.indentsAccessories
+        accessories = model.accessories
     }
 
     // MARK: Internal
@@ -38,11 +39,13 @@ open class SwiftUIListCell<View: SwiftUIListCellView>: UICollectionViewListCell 
 // MARK: - SwiftUICellViewModel
 
 @available(iOS 16.0, *)
-public protocol SwiftUICellViewModel: Hashable {
+public protocol SwiftUICellViewModel: Hashable, OrderedItem {
     var indentationWidth: CGFloat? { get }
     var indentationLevel: Int? { get }
     var indentsAccessories: Bool { get }
     var removeMargins: Bool { get }
+    var accessories: [UICellAccessory] { get }
+    var canMove: Bool { get }
 }
 
 @available(iOS 16.0, *)
@@ -51,6 +54,8 @@ public extension SwiftUICellViewModel {
     var indentationLevel: Int? { nil }
     var indentsAccessories: Bool { true }
     var removeMargins: Bool { true }
+    var accessories: [UICellAccessory] { [] }
+    var canMove: Bool { false }
 }
 
 // MARK: - SwiftUIListCellView

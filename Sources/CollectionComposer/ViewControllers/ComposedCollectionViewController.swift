@@ -62,6 +62,15 @@ open class ComposedCollectionViewController: UIViewController {
             return cell(for: indexPath, item: item)
         }
         dataSource.indexTitlesProvider = self
+        dataSource.reorderingHandlers.canReorderItem = { [unowned self] item in
+            guard let item = item as? OrderedItem else {
+                return false
+            }
+            return item.canMove
+        }
+        dataSource.reorderingHandlers.didReorder = { transaction in
+            
+        }
         dataSource.supplementaryViewProvider = { [unowned self] _, kind, indexPath in
             return supplementaryView(for: kind, indexPath: indexPath)
         }
@@ -231,6 +240,17 @@ extension ComposedCollectionViewController: UICollectionViewDelegate {
             return false
         }
         return section.isHighlightable(at: indexPath.row)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveOfItemFromOriginalIndexPath originalIndexPath: IndexPath, atCurrentIndexPath currentIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
+        guard let section = provider?.sectionDataSource.section(for: originalIndexPath.section) else {
+            return proposedIndexPath
+        }
+        return section.targetIndexPathForMoveOfItemFromOriginalIndexPath(
+            proposedIndexPath,
+            originalIndexPath: originalIndexPath,
+            currentIndexPath: currentIndexPath
+        )
     }
 }
 

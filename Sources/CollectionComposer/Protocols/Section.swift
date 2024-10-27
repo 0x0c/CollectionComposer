@@ -31,6 +31,10 @@ public struct Decoration {
     public let item: NSCollectionLayoutDecorationItem
 }
 
+public protocol OrderedItem {
+    var canMove: Bool { get }
+}
+
 // MARK: - Section
 
 /// Section is a protocol that abstracts the NSCollectionLayoutSection.
@@ -90,6 +94,8 @@ public protocol Section {
 
     func needsToOverrideHeaderBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool
     func needsToOverrideFooterBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool
+
+    func targetIndexPathForMoveOfItemFromOriginalIndexPath(_ proposedIndexPath: IndexPath, originalIndexPath: IndexPath, currentIndexPath: IndexPath) -> IndexPath
 }
 
 public extension Section {
@@ -195,5 +201,9 @@ public extension Section {
             return hasSectionHeader && hasUniqueSectionHeader
         }
         return false
+    }
+
+    func targetIndexPathForMoveOfItemFromOriginalIndexPath(_ proposedIndexPath: IndexPath, originalIndexPath: IndexPath, currentIndexPath: IndexPath) -> IndexPath {
+        return proposedIndexPath
     }
 }

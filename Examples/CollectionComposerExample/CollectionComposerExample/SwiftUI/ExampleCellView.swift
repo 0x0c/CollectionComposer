@@ -14,6 +14,15 @@ struct ExampleData: SwiftUICellViewModel, Hashable {
     let title: String
 
     var removeMargins: Bool { true }
+    
+    var canMove: Bool = Bool.random()
+    
+    var accessories: [UICellAccessory] {
+        if canMove {
+            return [.reorder(displayed: .always)]
+        }
+        return []
+    }
 }
 
 // MARK: - ExampleCellView

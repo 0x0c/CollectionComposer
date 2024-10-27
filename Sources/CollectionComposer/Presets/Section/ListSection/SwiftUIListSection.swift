@@ -86,6 +86,10 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
     open func isHighlightable(at index: Int) -> Bool {
         return configuration.isHighlightable
     }
+    
+    public func canMoveItemAt(indexPath: IndexPath) -> Bool {
+        return items[indexPath.row].canMove
+    }
 
     @discardableResult
     open func expand(_ expand: Bool) -> Self {

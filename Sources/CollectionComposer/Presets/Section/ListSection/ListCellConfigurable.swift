@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - ListCellConfigurable
 
-public protocol ListCellConfigurable: Hashable {
+public protocol ListCellConfigurable: Hashable, OrderedItem {
     var id: String { get }
     var image: UIImage? { get }
     var text: String? { get }
@@ -43,6 +43,7 @@ public extension ListCellConfigurable {
         }
     }
 
+    var canMove: Bool { false }
     var indentationWidth: CGFloat? { nil }
     var indentationLevel: Int? { nil }
     var indentsAccessories: Bool { true }
