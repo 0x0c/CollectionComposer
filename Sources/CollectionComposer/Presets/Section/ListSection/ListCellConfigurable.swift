@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - ListCellConfigurable
 
-public protocol ListCellConfigurable: Hashable, OrderedItem {
+public protocol ListCellConfigurable: Hashable, ReorderableItem {
     var id: String { get }
     var image: UIImage? { get }
     var text: String? { get }

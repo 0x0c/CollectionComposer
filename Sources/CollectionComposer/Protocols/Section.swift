@@ -31,7 +31,9 @@ public struct Decoration {
     public let item: NSCollectionLayoutDecorationItem
 }
 
-public protocol OrderedItem {
+// MARK: - ReorderableItem
+
+public protocol ReorderableItem {
     var canMove: Bool { get }
 }
 

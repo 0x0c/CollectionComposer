@@ -39,7 +39,7 @@ open class SwiftUIListCell<View: SwiftUIListCellView>: UICollectionViewListCell 
 // MARK: - SwiftUICellViewModel
 
 @available(iOS 16.0, *)
-public protocol SwiftUICellViewModel: Hashable, OrderedItem {
+public protocol SwiftUICellViewModel: Hashable, ReorderableItem {
     var indentationWidth: CGFloat? { get }
     var indentationLevel: Int? { get }
     var indentsAccessories: Bool { get }

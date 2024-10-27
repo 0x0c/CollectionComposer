@@ -63,13 +63,12 @@ open class ComposedCollectionViewController: UIViewController {
         }
         dataSource.indexTitlesProvider = self
         dataSource.reorderingHandlers.canReorderItem = { [unowned self] item in
-            guard let item = item as? OrderedItem else {
+            guard let item = item as? ReorderableItem else {
                 return false
             }
             return item.canMove
         }
-        dataSource.reorderingHandlers.didReorder = { transaction in
-            
+        dataSource.reorderingHandlers.didReorder = { _ in
         }
         dataSource.supplementaryViewProvider = { [unowned self] _, kind, indexPath in
             return supplementaryView(for: kind, indexPath: indexPath)
