@@ -24,12 +24,16 @@ public protocol TextFormCell: UICollectionViewCell {
 open class TextFormSection<T: TextFormCell>: Section {
     // MARK: Lifecycle
 
-    public init(id: String, type: CellType = .class, @ItemBuilder<TextForm> _ items: () -> [TextForm]) {
+    public init(id: String, type: CellType = .class, items: [TextForm]) {
         self.id = id
         self.type = type
-        self.items = items()
+        self.items = items
         self.items.linkForms()
         cellRegistration = makeCellRegistration()
+    }
+
+    public convenience init(id: String, type: CellType = .class, @ItemBuilder<TextForm> _ items: () -> [TextForm]) {
+        self.init(id: id, type: type, items: items())
     }
 
     // MARK: Open
