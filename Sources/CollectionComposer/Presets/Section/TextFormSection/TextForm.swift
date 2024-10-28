@@ -30,7 +30,7 @@ open class TextForm: NSObject {
         case let .datePicker(context):
             currentInput = .date(context.initialDate, context.formatter)
         case let .picker(context):
-            currentInput = context.initialSelection == nil ? nil : .text(context.initialTitle)
+            currentInput = context.initialSelection == nil ? nil : .picker(context.initialTitle)
         }
     }
 
@@ -107,7 +107,7 @@ open class TextForm: NSObject {
                     if form.currentInput == nil,
                        let index = form.currentPickerView()?.selectedRow(inComponent: 0),
                        index < context.titles.count {
-                        form.currentInput = .text(context.titles[index])
+                        form.currentInput = .picker(context.titles[index])
                     }
                 default:
                     break
@@ -242,6 +242,19 @@ open class TextForm: NSObject {
                 return true
             }
         }
+
+        // MARK: Internal
+
+        var inputKind: InputKind {
+            switch self {
+            case .text:
+                return .text
+            case .picker:
+                return .picker
+            case .datePicker:
+                return .datePicker
+            }
+        }
     }
 
     public struct PickerContext {
@@ -325,6 +338,7 @@ open class TextForm: NSObject {
 
     public enum Input: Sendable {
         case text(String?)
+        case picker(String?)
         case date(Date?, DateFormatter?)
 
         // MARK: Public
@@ -332,6 +346,8 @@ open class TextForm: NSObject {
         public var count: Int {
             switch self {
             case let .text(string):
+                return string?.count ?? 0
+            case let .picker(string):
                 return string?.count ?? 0
             case let .date(date, _):
                 return date == nil ? 0 : 1
@@ -346,11 +362,26 @@ open class TextForm: NSObject {
             switch self {
             case let .text(string):
                 return string
+            case let .picker(string):
+                return string
             case let .date(date, formatter):
                 if let date {
                     return formatter?.string(from: date) ?? date.description
                 }
                 return nil
+            }
+        }
+
+        // MARK: Internal
+
+        var inputKind: InputKind {
+            switch self {
+            case .text:
+                return .text
+            case .picker:
+                return .picker
+            case .date:
+                return .datePicker
             }
         }
     }
@@ -385,14 +416,23 @@ open class TextForm: NSObject {
         case .datePicker:
             cell.inputField.inputView = currentDatePicker()
         }
-        let isKindOfPicker = inputStyle.isKindOfPicker
-        return $currentInput.filter { _ in isKindOfPicker == false }
-            .sink { [weak cell] input in
-                guard let cell else {
-                    return
-                }
-                cell.inputField.text = input?.toString()
+        let inputKind = inputStyle.inputKind
+        let inputStyle = inputStyle
+        return $currentInput.filter { newInput in
+            if newInput?.inputKind == .picker,
+               case let .picker(context) = inputStyle,
+               case let .picker(text) = newInput {
+                return context.titles.contains { $0 == text }
             }
+            else {
+                return newInput?.inputKind == inputKind
+            }
+        }.sink { [weak cell] input in
+            guard let cell else {
+                return
+            }
+            cell.inputField.text = input?.toString()
+        }
     }
 
     public func onFocused(_ handler: @escaping (TextForm) -> Void) -> TextForm {
@@ -455,6 +495,12 @@ open class TextForm: NSObject {
 
     // MARK: Internal
 
+    enum InputKind {
+        case text
+        case picker
+        case datePicker
+    }
+
     var next: TextForm?
     var previous: TextForm?
 
@@ -508,7 +554,7 @@ extension TextForm: UIPickerViewDelegate, UIPickerViewDataSource {
 
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if case let .picker(context) = inputStyle {
-            currentInput = .text(context.titles[row])
+            currentInput = .picker(context.titles[row])
         }
     }
 }
