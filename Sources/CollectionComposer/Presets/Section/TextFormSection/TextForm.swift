@@ -387,12 +387,14 @@ open class TextForm: NSObject {
         case .datePicker:
             cell.inputField.inputView = currentDatePicker()
         }
-        return $currentInput.sink { [weak cell] input in
-            guard let cell else {
-                return
+        let isKindOfPicker = inputStyle.isKindOfPicker
+        return $currentInput.filter { _ in isKindOfPicker }
+            .sink { [weak cell] input in
+                guard let cell else {
+                    return
+                }
+                cell.inputField.text = input?.toString()
             }
-            cell.inputField.text = input?.toString()
-        }
     }
 
     public func onFocused(_ handler: @escaping (TextForm) -> Void) -> TextForm {

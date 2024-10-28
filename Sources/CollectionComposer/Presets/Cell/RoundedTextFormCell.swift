@@ -184,6 +184,12 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell {
     private var cancellable = Set<AnyCancellable>()
 
     @objc private func textDidChange(_ textField: UITextField) {
+        guard let form else {
+            return
+        }
+        if form.inputStyle.isKindOfPicker == false {
+            form.currentInput = .text(textField.text)
+        }
         validateText()
     }
 
