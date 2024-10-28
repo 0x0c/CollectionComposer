@@ -103,6 +103,13 @@ open class TextFormSection<T: TextFormCell>: Section {
     public var header: (any BoundarySupplementaryHeaderView)?
     public var footer: (any BoundarySupplementaryFooterView)?
 
+    public func targetIndexPathForMoveOfItemFromOriginalIndexPath(_ proposedIndexPath: IndexPath, originalIndexPath: IndexPath, currentIndexPath: IndexPath) -> IndexPath {
+        if proposedIndexPath.section == originalIndexPath.section {
+            return proposedIndexPath
+        }
+        return currentIndexPath
+    }
+
     public func storeHeader(_ header: (any BoundarySupplementaryHeaderView)?) {
         self.header = header
     }

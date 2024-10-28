@@ -57,6 +57,13 @@ open class SwiftUISection: CollectionComposer.Section {
         return items.map { AnyHashable($0) }
     }
 
+    public func targetIndexPathForMoveOfItemFromOriginalIndexPath(_ proposedIndexPath: IndexPath, originalIndexPath: IndexPath, currentIndexPath: IndexPath) -> IndexPath {
+        if proposedIndexPath.section == originalIndexPath.section {
+            return proposedIndexPath
+        }
+        return currentIndexPath
+    }
+
     @discardableResult
     open func decorations(_ decorations: [Decoration]) -> Self {
         self.decorations = decorations

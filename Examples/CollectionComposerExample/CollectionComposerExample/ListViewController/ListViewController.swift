@@ -34,6 +34,14 @@ open class BackgroundDecorationView: UICollectionReusableView {
     }
 }
 
+// MARK: - ListSection2
+
+class ListSection2: ListSection {
+    override func targetIndexPathForMoveOfItemFromOriginalIndexPath(_ proposedIndexPath: IndexPath, originalIndexPath: IndexPath, currentIndexPath: IndexPath) -> IndexPath {
+        return proposedIndexPath
+    }
+}
+
 // MARK: - ListViewController
 
 class ListViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
@@ -47,7 +55,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
 
         provider = self
         store(animate: false) {
-            ListSection(id: "first", apperarance: .plain) {
+            ListSection2(id: "first", apperarance: .plain) {
                 ListItem(highlightable: true, text: "Item 1")
                 ListItem(text: "Item 2")
                 ListItem(text: "Item 3")
@@ -84,7 +92,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
 //                .header(PlainHeaderView("Expandable Header", isExpandable: true))
 //                .footer(PlainFooterView("Inset Group Footer"))
 //                .decorations([BackgroundDecorationView.decoration()])
-            ListSection(id: "fifth", cellStyle: .value) {
+            ListSection2(id: "fifth", cellStyle: .value) {
                 ListItem(text: "Item 1", secondaryText: "Seconday")
                 ListItem(text: "Item 2", secondaryText: "Seconday")
                 ListItem(text: "Item 3", secondaryText: "Seconday")

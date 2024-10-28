@@ -333,7 +333,7 @@ open class TextForm: NSObject {
 
     public enum ValidationResult {
         case valid
-        case invalid(hint: String)
+        case invalid(hint: String?)
     }
 
     public enum Input: Sendable {

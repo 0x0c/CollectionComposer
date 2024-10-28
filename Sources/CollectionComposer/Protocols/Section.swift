@@ -206,11 +206,4 @@ public extension Section {
         }
         return false
     }
-
-    func targetIndexPathForMoveOfItemFromOriginalIndexPath(_ proposedIndexPath: IndexPath, originalIndexPath: IndexPath, currentIndexPath: IndexPath) -> IndexPath {
-        if proposedIndexPath.section == originalIndexPath.section {
-            return proposedIndexPath
-        }
-        return currentIndexPath
-    }
 }

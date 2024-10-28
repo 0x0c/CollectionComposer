@@ -89,6 +89,13 @@ open class ButtonSection<T: ButtonCell>: Section {
         self.footer = footer
     }
 
+    public func targetIndexPathForMoveOfItemFromOriginalIndexPath(_ proposedIndexPath: IndexPath, originalIndexPath: IndexPath, currentIndexPath: IndexPath) -> IndexPath {
+        if proposedIndexPath.section == originalIndexPath.section {
+            return proposedIndexPath
+        }
+        return currentIndexPath
+    }
+
     // MARK: Internal
 
     let context: ButtonSectionContext

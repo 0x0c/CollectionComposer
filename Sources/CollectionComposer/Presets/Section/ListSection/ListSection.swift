@@ -101,7 +101,13 @@ open class ListSection: ListableSection, HighlightableSection {
         if let newItems = snapshotItems.applying(difference) {
             items = newItems.compactMap { $0 as? Item }
         }
-        print(items)
+    }
+
+    open func targetIndexPathForMoveOfItemFromOriginalIndexPath(_ proposedIndexPath: IndexPath, originalIndexPath: IndexPath, currentIndexPath: IndexPath) -> IndexPath {
+        if proposedIndexPath.section == originalIndexPath.section {
+            return proposedIndexPath
+        }
+        return currentIndexPath
     }
 
     // MARK: Public
