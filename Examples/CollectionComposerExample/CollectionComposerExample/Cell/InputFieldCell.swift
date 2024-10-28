@@ -9,7 +9,7 @@ import CollectionComposer
 import Combine
 import UIKit
 
-class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell {
+class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell, UITextFieldDelegate {
     // MARK: Public
 
     public var form: TextForm?
@@ -45,11 +45,41 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        MainActor.assumeIsolated {
+            textFieldBaseView.layer.borderWidth = 1
+            textFieldBaseView.layer.borderColor = UIColor.green.cgColor
+            textFieldBaseView.translatesAutoresizingMaskIntoConstraints = false
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            textFieldBaseView.addSubview(textField)
+            NSLayoutConstraint.activate([
+                textField.topAnchor.constraint(equalTo: textFieldBaseView.topAnchor),
+                textField.leadingAnchor.constraint(equalTo: textFieldBaseView.leadingAnchor),
+                textField.trailingAnchor.constraint(equalTo: textFieldBaseView.trailingAnchor),
+                textField.bottomAnchor.constraint(equalTo: textFieldBaseView.bottomAnchor)
+            ])
+        }
     }
 
     // MARK: Private
 
+    @IBOutlet private var textFieldBaseView: UIView!
+
     @IBOutlet private var label: UILabel!
-    @IBOutlet private var textField: TextForm.InputField!
+    private lazy var textField: TextForm.InputField = {
+        let textField = TextForm.InputField(frame: .zero)
+        textField.originalDelegate = self
+        textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        return textField
+    }()
+
     private var cancellable = Set<AnyCancellable>()
+
+    @objc private func textDidChange(_ textField: UITextField) {
+        guard let form else {
+            return
+        }
+        if form.inputStyle.isKindOfPicker == false {
+            form.currentInput = .text(textField.text)
+        }
+    }
 }

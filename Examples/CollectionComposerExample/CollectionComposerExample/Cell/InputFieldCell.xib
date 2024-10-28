@@ -11,45 +11,48 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="InputFieldCell" customModule="CollectionComposerExample" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <rect key="frame" x="0.0" y="0.0" width="384" height="60"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                <rect key="frame" x="0.0" y="0.0" width="384" height="60"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRQ-IF-Rlr">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                        <rect key="frame" x="0.0" y="0.0" width="384" height="21"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                         <color key="textColor" systemColor="systemPinkColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vQJ-Er-Roq" customClass="TextForm.InputField" customModule="CollectionComposer">
-                        <rect key="frame" x="0.0" y="21" width="320" height="39"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
-                    </textField>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EZM-1T-Sxj">
+                        <rect key="frame" x="0.0" y="21" width="384" height="39"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="EZM-1T-Sxj" secondAttribute="bottom" id="1zM-YF-sBG"/>
+                <constraint firstAttribute="trailing" secondItem="EZM-1T-Sxj" secondAttribute="trailing" id="3dP-hW-yRd"/>
                 <constraint firstItem="QRQ-IF-Rlr" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="CRN-OV-GxQ"/>
                 <constraint firstAttribute="trailing" secondItem="QRQ-IF-Rlr" secondAttribute="trailing" id="EGm-jU-i3A"/>
-                <constraint firstItem="vQJ-Er-Roq" firstAttribute="top" secondItem="QRQ-IF-Rlr" secondAttribute="bottom" id="L51-bP-2vS"/>
                 <constraint firstItem="QRQ-IF-Rlr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="RTv-aI-hlF"/>
-                <constraint firstAttribute="bottom" secondItem="vQJ-Er-Roq" secondAttribute="bottom" id="m6c-jJ-T4D"/>
-                <constraint firstItem="vQJ-Er-Roq" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="s4y-ad-xpU"/>
-                <constraint firstAttribute="trailing" secondItem="vQJ-Er-Roq" secondAttribute="trailing" id="uEe-p1-xMb"/>
+                <constraint firstItem="EZM-1T-Sxj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ij2-rN-zq4"/>
+                <constraint firstItem="EZM-1T-Sxj" firstAttribute="top" secondItem="QRQ-IF-Rlr" secondAttribute="bottom" id="xc9-Na-VzI"/>
             </constraints>
+            <size key="customSize" width="384" height="60"/>
             <connections>
                 <outlet property="label" destination="QRQ-IF-Rlr" id="aWp-wD-4Qw"/>
-                <outlet property="textField" destination="vQJ-Er-Roq" id="N6n-hT-C5I"/>
+                <outlet property="textFieldBaseView" destination="EZM-1T-Sxj" id="LAS-l0-OyH"/>
             </connections>
-            <point key="canvasLocation" x="577" y="-14"/>
+            <point key="canvasLocation" x="526.71755725190837" y="-14.084507042253522"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -54,6 +54,8 @@ open class TextForm: NSObject {
     open class InputField: UITextField, UITextFieldDelegate {
         // MARK: Open
 
+        open var originalDelegate: (any UITextFieldDelegate)?
+
         override open func layoutSubviews() {
             super.layoutSubviews()
             delegate = self
@@ -178,10 +180,6 @@ open class TextForm: NSObject {
             originalDelegate?.textField?(textField, willDismissEditMenuWith: animator)
         }
 
-        // MARK: Internal
-
-        var originalDelegate: (any UITextFieldDelegate)?
-
         // MARK: Private
 
         private var coverView = UIView()
@@ -234,9 +232,9 @@ open class TextForm: NSObject {
         case datePicker(DatePickerContext = DatePickerContext())
         case picker(PickerContext)
 
-        // MARK: Internal
+        // MARK: Public
 
-        var isKindOfPicker: Bool {
+        public var isKindOfPicker: Bool {
             switch self {
             case .text:
                 return false

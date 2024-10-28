@@ -17,6 +17,20 @@ class LogInFormViewController: ComposedCollectionViewController, SectionProvider
         super.viewDidLoad()
         title = "Log in"
 
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            systemItem: .save,
+            primaryAction: UIAction(handler: { [weak self] _ in
+                let result = self?.sections.compactMap {
+                    $0 as? TextFormSection<RoundedTextFormCell>
+                }.flatMap(\.items).compactMap { item in
+                    item.currentInput?.toString()
+                }.joined(separator: ", ")
+                if let result {
+                    print(result)
+                }
+            })
+        )
+
         provider = self
         store {
             TextFormSection<RoundedTextFormCell>(id: "login") {
@@ -24,6 +38,7 @@ class LogInFormViewController: ComposedCollectionViewController, SectionProvider
                 TextForm(placeholder: "Email")
                 TextForm(placeholder: "Password", isSecureText: true)
                     .validate { input in
+                        print("validate")
                         guard let input else {
                             return .invalid(hint: "Password should not be empty.")
                         }
