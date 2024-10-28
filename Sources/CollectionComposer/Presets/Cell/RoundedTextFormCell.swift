@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-open class RoundedTextFormCell: UICollectionViewCell, TextFormCell {
+open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldDelegate {
     // MARK: Lifecycle
 
     override public init(frame: CGRect) {
@@ -98,6 +98,7 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
         textField.textColor = .darkText
+        textField.originalDelegate = self
         return textField
     }()
 
