@@ -91,6 +91,8 @@ open class TextFormSection<T: TextFormCell>: Section {
         return false
     }
 
+    open func updateItems(with difference: CollectionDifference<AnyHashable>) {}
+
     // MARK: Public
 
     public enum CellType {

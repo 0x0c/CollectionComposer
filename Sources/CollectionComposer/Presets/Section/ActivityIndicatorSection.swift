@@ -107,6 +107,8 @@ open class ActivityIndicatorSection: Section {
         return false
     }
 
+    open func updateItems(with difference: CollectionDifference<AnyHashable>) {}
+
     // MARK: Public
 
     public struct IndicatorContent: Hashable {

@@ -63,9 +63,7 @@ open class ListSection: ListableSection, HighlightableSection {
                 configuration.secondaryText = item.secondaryText
             }
             cell.contentConfiguration = configuration
-            if let accessories = item.accessories {
-                cell.accessories = accessories
-            }
+            cell.accessories = item.accessories
             if let width = item.indentationWidth {
                 cell.indentationWidth = width
             }
@@ -97,6 +95,13 @@ open class ListSection: ListableSection, HighlightableSection {
     open func decorations(_ decorations: [Decoration]) -> Self {
         self.decorations = decorations
         return self
+    }
+
+    open func updateItems(with difference: CollectionDifference<AnyHashable>) {
+        if let newItems = snapshotItems.applying(difference) {
+            items = newItems.compactMap { $0 as? Item }
+        }
+        print(items)
     }
 
     // MARK: Public

@@ -100,6 +100,8 @@ class SupplementarySection: Section {
         return false
     }
 
+    func updateItems(with difference: CollectionDifference<AnyHashable>) {}
+
     func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(0.25),

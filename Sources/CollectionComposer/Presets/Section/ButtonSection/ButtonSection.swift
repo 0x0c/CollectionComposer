@@ -74,6 +74,8 @@ open class ButtonSection<T: ButtonCell>: Section {
         return false
     }
 
+    open func updateItems(with difference: CollectionDifference<AnyHashable>) {}
+
     // MARK: Public
 
     public var header: (any BoundarySupplementaryHeaderView)?

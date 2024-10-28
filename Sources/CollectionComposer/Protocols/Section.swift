@@ -98,6 +98,8 @@ public protocol Section {
     func needsToOverrideFooterBoundarySupplementaryItem(_ layoutSection: NSCollectionLayoutSection) -> Bool
 
     func targetIndexPathForMoveOfItemFromOriginalIndexPath(_ proposedIndexPath: IndexPath, originalIndexPath: IndexPath, currentIndexPath: IndexPath) -> IndexPath
+
+    func updateItems(with difference: CollectionDifference<AnyHashable>)
 }
 
 public extension Section {
@@ -206,6 +208,9 @@ public extension Section {
     }
 
     func targetIndexPathForMoveOfItemFromOriginalIndexPath(_ proposedIndexPath: IndexPath, originalIndexPath: IndexPath, currentIndexPath: IndexPath) -> IndexPath {
-        return proposedIndexPath
+        if proposedIndexPath.section == originalIndexPath.section {
+            return proposedIndexPath
+        }
+        return currentIndexPath
     }
 }

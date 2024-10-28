@@ -94,6 +94,8 @@ open class SwiftUISection: CollectionComposer.Section {
         self.footer = footer
     }
 
+    open func updateItems(with difference: CollectionDifference<AnyHashable>) {}
+
     // MARK: Public
 
     public struct Configuration {

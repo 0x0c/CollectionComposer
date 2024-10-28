@@ -93,6 +93,12 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
         return self
     }
 
+    open func updateItems(with difference: CollectionDifference<AnyHashable>) {
+        if let newItems = snapshotItems.applying(difference) {
+            items = newItems.compactMap { $0 as? Item }
+        }
+    }
+
     // MARK: Public
 
     public typealias Cell = SwiftUIListCell<View>

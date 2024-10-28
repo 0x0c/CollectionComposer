@@ -18,7 +18,7 @@ public protocol ListCellConfigurable: Hashable, ReorderableItem {
     var secondaryAttributedText: NSAttributedString? { get }
     var isHighlightable: Bool { get }
 
-    var accessories: [UICellAccessory]? { get }
+    var accessories: [UICellAccessory] { get }
 
     var indentationWidth: CGFloat? { get }
     var indentationLevel: Int? { get }
@@ -38,9 +38,13 @@ public extension ListCellConfigurable {
         hasher.combine(secondaryText)
         hasher.combine(secondaryAttributedText)
         hasher.combine(isHighlightable)
-        accessories?.forEach {
-            hasher.combine($0.accessoryType.hashValue)
+        for accessory in accessories {
+            hasher.combine(accessory.accessoryType.hashValue)
         }
+        hasher.combine(canMove)
+        hasher.combine(indentationWidth)
+        hasher.combine(indentationLevel)
+        hasher.combine(indentsAccessories)
     }
 
     var canMove: Bool { false }

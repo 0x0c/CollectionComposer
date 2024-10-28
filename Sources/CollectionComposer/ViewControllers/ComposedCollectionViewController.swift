@@ -68,7 +68,18 @@ open class ComposedCollectionViewController: UIViewController {
             }
             return item.canMove
         }
-        dataSource.reorderingHandlers.didReorder = { _ in
+        dataSource.reorderingHandlers.willReorder = { transaction in
+            print(transaction)
+        }
+        dataSource.reorderingHandlers.didReorder = { [unowned self] transaction in
+            for sectionTransaction in transaction.sectionTransactions {
+                if let section = provider?.sectionDataSource.sections.first(where: {
+                    $0.snapshotSection.hashValue == sectionTransaction.sectionIdentifier.hashValue
+                }) {
+                    section.snapshotItems.applying(sectionTransaction.difference)
+                    section.updateItems(with: sectionTransaction.difference)
+                }
+            }
         }
         dataSource.supplementaryViewProvider = { [unowned self] _, kind, indexPath in
             return supplementaryView(for: kind, indexPath: indexPath)

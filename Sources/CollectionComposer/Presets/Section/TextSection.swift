@@ -168,6 +168,8 @@ open class TextSection<T: TextCell>: Section {
         return false
     }
 
+    open func updateItems(with difference: CollectionDifference<AnyHashable>) {}
+
     // MARK: Public
 
     public var header: (any BoundarySupplementaryHeaderView)?

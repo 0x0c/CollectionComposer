@@ -46,7 +46,7 @@ class ViewController: ComposedCollectionViewController, SectionProvider, Section
             return kind.rawValue.capitalized
         }
 
-        var accessories: [UICellAccessory]? {
+        var accessories: [UICellAccessory] {
             return [.disclosureIndicator()]
         }
     }

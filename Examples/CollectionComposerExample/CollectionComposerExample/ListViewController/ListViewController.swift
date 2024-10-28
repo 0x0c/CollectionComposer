@@ -56,33 +56,33 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
             }.header(PlainHeaderView("Header"))
                 .footer(PlainFooterView("Plain Footer"))
                 .indexTitle("A")
-            ListSection(id: "second", apperarance: .insetGrouped) {
-                ListItem(text: "Item 1", secondaryText: "Seconday")
-                ListItem(text: "Item 2", secondaryText: "Seconday")
-                ListItem(text: "Item 3", secondaryText: "Seconday")
-                ListItem(text: "Item 4", secondaryText: "Seconday")
-                ListItem(text: "Item 5", secondaryText: "Seconday")
-            }.header(PlainHeaderView("Expandable Header", isExpandable: true))
-                .footer(PlainFooterView("Inset Group Footer"))
-                .indexTitle("B")
-            ListSection(id: "third", apperarance: .plain) {
-                ListItem(text: "Item 1", secondaryText: "Seconday")
-                ListItem(text: "Item 2", secondaryText: "Seconday")
-                ListItem(text: "Item 3", secondaryText: "Seconday")
-                ListItem(text: "Item 4", secondaryText: "Seconday")
-                ListItem(text: "Item 5", secondaryText: "Seconday")
-            }.header(ExpandableHeaderView())
-                .expand(false)
-                .indexTitle("C")
-            ListSection(id: "fourth", apperarance: .insetGrouped) {
-                ListItem(text: "Item 1")
-                ListItem(text: "Item 2")
-                ListItem(text: "Item 3")
-                ListItem(text: "Item 4")
-                ListItem(text: "Item 5")
-            }.indexTitle("D")
-                .header(PlainHeaderView("Expandable Header", isExpandable: true))
-                .footer(PlainFooterView("Inset Group Footer"))
+//            ListSection(id: "second", apperarance: .insetGrouped) {
+//                ListItem(text: "Item 1", secondaryText: "Seconday")
+//                ListItem(text: "Item 2", secondaryText: "Seconday")
+//                ListItem(text: "Item 3", secondaryText: "Seconday")
+//                ListItem(text: "Item 4", secondaryText: "Seconday")
+//                ListItem(text: "Item 5", secondaryText: "Seconday")
+//            }.header(PlainHeaderView("Expandable Header", isExpandable: true))
+//                .footer(PlainFooterView("Inset Group Footer"))
+//                .indexTitle("B")
+//            ListSection(id: "third", apperarance: .plain) {
+//                ListItem(text: "Item 1", secondaryText: "Seconday")
+//                ListItem(text: "Item 2", secondaryText: "Seconday")
+//                ListItem(text: "Item 3", secondaryText: "Seconday")
+//                ListItem(text: "Item 4", secondaryText: "Seconday")
+//                ListItem(text: "Item 5", secondaryText: "Seconday")
+//            }.header(ExpandableHeaderView())
+//                .expand(false)
+//                .indexTitle("C")
+//            ListSection(id: "fourth", apperarance: .insetGrouped) {
+//                ListItem(text: "Item 1")
+//                ListItem(text: "Item 2")
+//                ListItem(text: "Item 3")
+//                ListItem(text: "Item 4")
+//                ListItem(text: "Item 5")
+//            }.indexTitle("D")
+//                .header(PlainHeaderView("Expandable Header", isExpandable: true))
+//                .footer(PlainFooterView("Inset Group Footer"))
 //                .decorations([BackgroundDecorationView.decoration()])
             ListSection(id: "fifth", cellStyle: .value) {
                 ListItem(text: "Item 1", secondaryText: "Seconday")
@@ -93,10 +93,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                     text: "Item 5",
                     secondaryText: "Seconday",
                     accessories: [
-                        .checkmark(),
-                        .disclosureIndicator(options: .init(tintColor: .systemGray)),
-                        .delete(),
-                        .reorder()
+                        .reorder(displayed: .always)
                     ]
                 )
             }.leadingSwipeActions(swipeActionProvider())
@@ -107,6 +104,12 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                         Label(title: { Text("Label") }, icon: { Image(systemName: "42.circle") })
                     }
                 )
+        }
+
+        for section in sections {
+            for item in section.snapshotItems {
+                print(item.hashValue)
+            }
         }
     }
 

@@ -107,6 +107,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
             print(item)
         }
         collectionView.deselectItem(at: indexPath, animated: true)
+        print(section.items)
     }
 
     func store(_ sections: [any CollectionComposer.Section]) {

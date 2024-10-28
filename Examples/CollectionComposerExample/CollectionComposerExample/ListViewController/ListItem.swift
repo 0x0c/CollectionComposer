@@ -11,7 +11,7 @@ import UIKit
 public struct ListItem: ListCellConfigurable {
     // MARK: Lifecycle
 
-    public init(id: String = UUID().uuidString, highlightable: Bool = false, image: UIImage? = nil, text: String? = nil, attributedText: NSAttributedString? = nil, secondaryText: String? = nil, secondaryAttributedText: NSAttributedString? = nil, accessories: [UICellAccessory]? = nil) {
+    public init(id: String = UUID().uuidString, highlightable: Bool = false, image: UIImage? = nil, text: String? = nil, attributedText: NSAttributedString? = nil, secondaryText: String? = nil, secondaryAttributedText: NSAttributedString? = nil, accessories: [UICellAccessory] = []) {
         self.id = id
         isHighlightable = highlightable
         self.image = image
@@ -31,7 +31,9 @@ public struct ListItem: ListCellConfigurable {
     public let attributedText: NSAttributedString?
     public let secondaryText: String?
     public let secondaryAttributedText: NSAttributedString?
-    public let accessories: [UICellAccessory]?
+    public let accessories: [UICellAccessory]
+
+    public var canMove: Bool { true }
 
     public static func == (lhs: ListItem, rhs: ListItem) -> Bool {
         return lhs.hashValue == rhs.hashValue
