@@ -386,7 +386,7 @@ open class TextForm: NSObject {
             cell.inputField.inputView = currentDatePicker()
         }
         let isKindOfPicker = inputStyle.isKindOfPicker
-        return $currentInput.filter { _ in isKindOfPicker }
+        return $currentInput.filter { _ in isKindOfPicker == false }
             .sink { [weak cell] input in
                 guard let cell else {
                     return
