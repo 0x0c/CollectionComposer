@@ -372,6 +372,15 @@ open class TextForm: NSObject {
             }
         }
 
+        public func toDate() -> Date? {
+            switch self {
+            case .picker, .text:
+                return nil
+            case let .date(date, _):
+                return date
+            }
+        }
+
         // MARK: Internal
 
         var inputKind: InputKind {
