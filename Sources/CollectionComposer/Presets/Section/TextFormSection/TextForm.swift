@@ -526,7 +526,7 @@ open class TextForm: NSObject {
     var next: TextForm?
     var previous: TextForm?
 
-    var isValid: Bool {
+    open var isValid: Bool {
         if let validationHandler {
             return validationHandler(currentInput) == .valid
         }
