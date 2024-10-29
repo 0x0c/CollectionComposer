@@ -331,9 +331,22 @@ open class TextForm: NSObject {
         public let contentType: UITextContentType?
     }
 
-    public enum ValidationResult {
+    public enum ValidationResult: Equatable {
         case valid
         case invalid(hint: String?)
+
+        // MARK: Public
+
+        public static func == (lhs: ValidationResult, rhs: ValidationResult) -> Bool {
+            switch (lhs, rhs) {
+            case (.valid, .valid):
+                return true
+            case (.invalid, .invalid):
+                return true
+            default:
+                return false
+            }
+        }
     }
 
     public enum Input: Sendable {
@@ -512,6 +525,13 @@ open class TextForm: NSObject {
 
     var next: TextForm?
     var previous: TextForm?
+
+    var isValid: Bool {
+        if let validationHandler {
+            return validationHandler(currentInput) == .valid
+        }
+        return true
+    }
 
     // MARK: Private
 
