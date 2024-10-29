@@ -25,7 +25,7 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
                 TextForm(label: "Label", text: "Initial text", placeholder: "Placeholder")
                 TextForm(placeholder: "Email")
                 TextForm(placeholder: "Password", isSecureText: true)
-                    .validate { input in
+                    .validation { input in
                         guard let input else {
                             return .invalid(hint: "Password should not be empty.")
                         }
@@ -39,7 +39,7 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
                 TextForm(label: "Label", text: "Initial text", placeholder: "Placeholder")
                 TextForm(placeholder: "Email")
                 TextForm(placeholder: "Password", isSecureText: true)
-                    .validate { input in
+                    .validation { input in
                         guard let input else {
                             return .invalid(hint: "Password should not be empty.")
                         }

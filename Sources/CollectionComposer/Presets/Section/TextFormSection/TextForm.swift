@@ -201,8 +201,12 @@ open class TextForm: NSObject {
 
     open var isRequired: Bool
 
+    open var isValid: Bool {
+        return validate() == .valid
+    }
+
     @discardableResult
-    open func validate(_ handler: @escaping (Input?) -> ValidationResult) -> Self {
+    open func validation(_ handler: @escaping (Input?) -> ValidationResult) -> Self {
         validationHandler = handler
         return self
     }
@@ -526,11 +530,14 @@ open class TextForm: NSObject {
     var next: TextForm?
     var previous: TextForm?
 
-    open var isValid: Bool {
+    func validate() -> ValidationResult {
         if let validationHandler {
-            return validationHandler(currentInput) == .valid
+            return validationHandler(currentInput)
         }
-        return true
+        if isRequired {
+            return currentInput?.isEmpty == false ? .valid : .invalid(hint: "Form (label: \(label)) is requred but input is empty or nil.")
+        }
+        return .valid
     }
 
     // MARK: Private
