@@ -37,6 +37,21 @@ open class CollectionComposerDataSource<SectionIdentifierType, ItemIdentifierTyp
     weak var indexTitlesProvider: IndexTitlesProvider?
 }
 
+private final class CollectionView: UICollectionView {
+    override func touchesShouldCancel(in view: UIView) -> Bool {
+        if view.isKind(of: UITextField.self) {
+            return true
+        }
+        if view.isKind(of: UIButton.self) {
+            return true
+        }
+        if view.isKind(of: UIPageControl.self) {
+            return true
+        }
+        return super.touchesShouldCancel(in: view)
+    }
+}
+
 // MARK: - ComposedCollectionViewController
 
 open class ComposedCollectionViewController: UIViewController {
@@ -44,12 +59,13 @@ open class ComposedCollectionViewController: UIViewController {
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout(configuration: layoutConfiguration()))
+        collectionView = CollectionView(frame: .zero, collectionViewLayout: layout(configuration: layoutConfiguration()))
         view.backgroundColor = .systemBackground
         collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
         view.addSubview(collectionView)
         collectionView.delaysContentTouches = false
+        collectionView.canCancelContentTouches = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
