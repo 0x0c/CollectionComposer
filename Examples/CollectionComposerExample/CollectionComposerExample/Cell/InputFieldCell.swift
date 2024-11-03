@@ -45,7 +45,7 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell, UIText
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        MainActor.assumeIsolated {
+        Task { @MainActor in
             textFieldBaseView.layer.borderWidth = 1
             textFieldBaseView.layer.borderColor = UIColor.green.cgColor
             textFieldBaseView.translatesAutoresizingMaskIntoConstraints = false
