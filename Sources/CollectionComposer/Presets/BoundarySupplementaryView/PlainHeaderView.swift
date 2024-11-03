@@ -15,7 +15,6 @@ import UIKit
 ///
 /// This header view can be set to extend beyond layout boundaries, pin to visible bounds, and support expandable headers.
 open class PlainHeaderView: PlainBoundaryHeaderView, BoundarySupplementaryHeaderView, ListAppearanceSupplementaryView {
-    
     // MARK: Lifecycle
 
     /// Initializes a new header view with the specified text, boundary, and visibility settings.

@@ -15,7 +15,6 @@ import UIKit
 ///
 /// This footer view can be configured to extend beyond layout boundaries and optionally pin to visible bounds.
 open class PlainFooterView: PlainBoundaryView, BoundarySupplementaryFooterView, ListAppearanceSupplementaryView {
-    
     // MARK: Lifecycle
 
     /// Initializes a new footer view with the specified text, boundary options, and visibility settings.

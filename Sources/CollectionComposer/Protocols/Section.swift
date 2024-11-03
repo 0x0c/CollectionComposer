@@ -98,7 +98,6 @@ public protocol Section {
     /// See also ``ListSection``.
     func exactItem<T>(for item: AnyHashable, in items: [T]) -> T
 
-    
     /// This function is called only once when header supplementary view should be prepare to show.
     func prepareHeaderView()
 
@@ -128,7 +127,6 @@ public protocol Section {
     @discardableResult
     func decorations(_ decorations: [Decoration]) -> Self
 
-    
     /// Register decoration items into the section.
     /// - Parameter section: The section that should be registered the decoration items.
     func registerDecorationItems(_ section: NSCollectionLayoutSection)

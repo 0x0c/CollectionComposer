@@ -37,6 +37,8 @@ open class CollectionComposerDataSource<SectionIdentifierType, ItemIdentifierTyp
     weak var indexTitlesProvider: IndexTitlesProvider?
 }
 
+// MARK: - CollectionView
+
 private final class CollectionView: UICollectionView {
     override func touchesShouldCancel(in view: UIView) -> Bool {
         if view.isKind(of: UITextField.self) {
@@ -239,8 +241,7 @@ open class ComposedCollectionViewController: UIViewController {
             }
             else if layoutSection.boundarySupplementaryItems.isEmpty,
                     let section = section as? any ListableSection,
-                    section.headerMode != .firstItemInSection
-            {
+                    section.headerMode != .firstItemInSection {
                 layoutSection.boundarySupplementaryItems = sectionBoundarySupplementaryItems
             }
             return layoutSection

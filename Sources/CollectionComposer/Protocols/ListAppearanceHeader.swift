@@ -13,7 +13,6 @@ import UIKit
 /// Conforming types use the `appearance` property to set the style and appearance
 /// of the supplementary view in a list layout.
 public protocol ListAppearanceSupplementaryView {
-    
     /// The appearance configuration for the supplementary view in a list layout.
     ///
     /// This property defines the visual style of the supplementary view,

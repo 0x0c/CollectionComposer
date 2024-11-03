@@ -21,7 +21,6 @@ import UIKit
 /// - Note: This class overrides `updateConfiguration(using:)` to apply custom configurations
 ///         based on the cell's state.
 public class ExpandableHeaderListCell: UICollectionViewListCell {
-    
     // MARK: Public
 
     /// Updates the cell’s configuration using the specified state.
@@ -71,7 +70,6 @@ public class ExpandableHeaderListCell: UICollectionViewListCell {
 /// `CellConfiguration` provides various options to define the cell's style, content insets, highlight behavior,
 /// and separator visibility. It includes pre-configured methods for standard and hidden cell configurations.
 public struct CellConfiguration {
-    
     /// Defines various styles for a cell.
     ///
     /// These styles control the appearance and layout of the cell, providing options for default, subtitle,
@@ -98,7 +96,6 @@ public struct CellConfiguration {
     /// `SeparatorEdge` is used to specify which edges should display a separator. It includes options for
     /// top and bottom edges, as well as a combined `all` option.
     public struct SeparatorEdge: OptionSet {
-        
         // MARK: Lifecycle
 
         /// Initializes a `SeparatorEdge` with a raw value.
@@ -181,6 +178,7 @@ public struct CellConfiguration {
     }
 }
 
+// MARK: - HeaderMode
 
 /// An enumeration that defines the display mode for a section header in a collection view layout.
 ///
@@ -191,13 +189,13 @@ public enum HeaderMode {
     ///
     /// In this mode, the header behaves like a regular item at the start of the section.
     case firstItemInSection
-    
+
     /// Displays the header as a supplementary view.
     ///
     /// In this mode, the header is treated as a supplementary view, positioned independently
     /// from the section’s items.
     case supplementary
-    
+
     /// No header is displayed for the section.
     ///
     /// This mode disables the header, making the section appear without a header view.
@@ -216,7 +214,6 @@ public enum HeaderMode {
 ///         are expected to be used on the main thread.
 @MainActor
 public protocol ListableSection: IndexTitleSection & AnyObject {
-    
     /// A type alias for a provider that returns swipe action configurations.
     ///
     /// This provider takes an `Item` and returns an optional `UISwipeActionsConfiguration`
@@ -227,25 +224,25 @@ public protocol ListableSection: IndexTitleSection & AnyObject {
     ///
     /// Defines the appearance and behavior of the cells within this section.
     var configuration: CellConfiguration { get }
-    
+
     /// The layout configuration for the list.
     ///
     /// Controls various layout options for the list, including appearance
     /// and behavior settings for the section's items.
     var listConfiguration: UICollectionLayoutListConfiguration! { get set }
-    
+
     /// A cell registration used to configure expandable header cells.
     ///
     /// Provides a registration object that defines how to configure an
     /// `ExpandableHeaderListCell` for display in the section.
     var expandableHeaderRegistration: UICollectionView.CellRegistration<ExpandableHeaderListCell, Void>? { get set }
-    
+
     /// A provider that supplies the leading swipe actions for the section's items.
     ///
     /// This optional closure defines actions that are displayed when the user
     /// swipes the item from the left edge.
     var leadingSwipeActionsConfigurationProvider: SwipeActionConfigurationProvider? { get }
-    
+
     /// A provider that supplies the trailing swipe actions for the section's items.
     ///
     /// This optional closure defines actions that are displayed when the user
@@ -265,7 +262,7 @@ public protocol ListableSection: IndexTitleSection & AnyObject {
     ///
     /// - Parameter appearance: The appearance style for the list layout.
     func prepare(appearance: UICollectionLayoutListConfiguration.Appearance)
-    
+
     /// Returns the actual index of an item at a specified position.
     ///
     /// This method provides the actual index of an item based on the
@@ -274,7 +271,7 @@ public protocol ListableSection: IndexTitleSection & AnyObject {
     /// - Parameter index: The position index to convert.
     /// - Returns: The actual index of the item.
     func actualIndex(at index: Int) -> Int
-    
+
     /// Sets the top padding for the section header.
     ///
     /// This method allows setting or clearing a specific padding value

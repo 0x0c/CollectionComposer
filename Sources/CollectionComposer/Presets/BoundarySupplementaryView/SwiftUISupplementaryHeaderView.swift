@@ -1,5 +1,5 @@
 //
-//  SwiftUISupllementaryHeaderView.swift
+//  SwiftUISupplementaryHeaderView.swift
 //  CollectionComposer
 //
 //  Created by Akira Matsuda on 2024/05/11.
@@ -14,7 +14,6 @@ import UIKit
 /// and `BoundarySupplementaryHeaderView`, allowing the use of SwiftUI content in collection view
 /// headers. It provides customizable options for visibility, layout boundaries, offsets, and content configuration.
 open class SwiftUISupplementaryHeaderView<T: UICollectionViewCell>: SwiftUISupplementaryView, BoundarySupplementaryHeaderView {
-    
     // MARK: Lifecycle
 
     /// Initializes a new header view with a SwiftUI content builder, available on iOS 16.0 and later.

@@ -1,5 +1,5 @@
 //
-//  SwiftUISupllementaryFooterView.swift
+//  SwiftUISupplementaryFooterView.swift
 //  CollectionComposer
 //
 //  Created by Akira Matsuda on 2024/05/20.
@@ -14,7 +14,6 @@ import UIKit
 /// and `BoundarySupplementaryFooterView`, allowing the use of SwiftUI content in collection view
 /// footers. It provides customizable options for visibility, layout boundaries, offsets, and content configuration.
 open class SwiftUISupplementaryFooterView<T: UICollectionViewCell>: SwiftUISupplementaryView, BoundarySupplementaryFooterView {
-    
     // MARK: Lifecycle
 
     /// Initializes a new footer view with a SwiftUI content builder, available on iOS 16.0 and later.

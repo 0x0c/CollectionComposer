@@ -12,7 +12,6 @@ import Foundation
 /// This extension sorts sections alphabetically by their title property, returning
 /// a new array of sections that conform to `CollectionComposer.Section`.
 public extension [any IndexTitleSection] {
-    
     /// Returns a sorted array of sections based on their titles.
     ///
     /// This method sorts the sections alphabetically using the title of each section. If

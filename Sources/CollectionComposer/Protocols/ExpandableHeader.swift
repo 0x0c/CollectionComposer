@@ -11,7 +11,6 @@ import UIKit
 
 /// This protocol adds expandability features to cells that can be used as section headers
 public protocol ExpandableHeader {
-
     /// Indicates whether the section can be expanded
     var isExpandable: Bool { get }
 
@@ -37,10 +36,9 @@ public protocol ExpandableHeader {
 
 /// Provide default implementations for the ExpandableHeader protocol
 public extension ExpandableHeader {
-    
     /// Default setting for the top separator visibility (automatic configuration)
     var topSeparatorVisibility: UIListSeparatorConfiguration.Visibility { .automatic }
-    
+
     /// Default setting for the bottom separator visibility (automatic configuration)
     var bottomSeparatorVisibility: UIListSeparatorConfiguration.Visibility { .automatic }
 }
