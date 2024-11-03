@@ -32,7 +32,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                     .init(type: "Sphere", count: 4),
                     .init(type: "Pyramid", count: 4)
                 ])
-            }.header(SwiftUISupllementaryHeaderView(
+            }.header(SwiftUISupplementaryHeaderView(
                 elementKind: "swift-ui-header1",
                 configuration: UIHostingConfiguration(content: {
                     Label(title: { Text("Label") }, icon: { Image(systemName: "42.circle") })
@@ -68,7 +68,7 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 configuration: .default(highlightable: true)
             ).indexTitle("D")
                 .header(
-                    SwiftUISupllementaryHeaderView<UICollectionViewListCell>(
+                    SwiftUISupplementaryHeaderView<UICollectionViewListCell>(
                         elementKind: "swift-ui-header2",
                         pinToVisibleBounds: true,
                         configuration: UIHostingConfiguration(content: {
@@ -85,14 +85,14 @@ class SwiftUIViewController: ComposedCollectionViewController, SectionProvider, 
                 ],
                 configuration: .default(highlightable: true)
             ).indexTitle("E")
-                .header(SwiftUISupllementaryHeaderView(
+                .header(SwiftUISupplementaryHeaderView(
                     elementKind: "swift-ui-header",
                     configuration: UIHostingConfiguration(content: {
                         Label(title: { Text("Header") }, icon: { Image(systemName: "42.circle") })
                     })
                 ))
                 .footer(
-                    SwiftUISupllementaryFooterView(
+                    SwiftUISupplementaryFooterView(
                         elementKind: "swift-ui-footer",
                         configuration: UIHostingConfiguration(content: {
                             Label(title: { Text("Footer") }, icon: { Image(systemName: "42.circle") })

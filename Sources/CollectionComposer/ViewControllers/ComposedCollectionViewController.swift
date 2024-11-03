@@ -237,7 +237,10 @@ open class ComposedCollectionViewController: UIViewController {
             if section.needsToOverrideHeaderBoundarySupplementaryItem(layoutSection) || section.needsToOverrideFooterBoundarySupplementaryItem(layoutSection) {
                 layoutSection.boundarySupplementaryItems = sectionBoundarySupplementaryItems
             }
-            else if layoutSection.boundarySupplementaryItems.isEmpty, section.headerMode != .firstItemInSection {
+            else if layoutSection.boundarySupplementaryItems.isEmpty,
+                    let section = section as? any ListableSection,
+                    section.headerMode != .firstItemInSection
+            {
                 layoutSection.boundarySupplementaryItems = sectionBoundarySupplementaryItems
             }
             return layoutSection

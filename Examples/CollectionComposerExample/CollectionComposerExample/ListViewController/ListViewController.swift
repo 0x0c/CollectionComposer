@@ -108,7 +108,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
                 .trailingSwipeActions(swipeActionProvider())
                 .indexTitle("E")
                 .header(
-                    SwiftUISupllementaryHeaderView(elementKind: "swift-ui-header") {
+                    SwiftUISupplementaryHeaderView(elementKind: "swift-ui-header") {
                         Label(title: { Text("Label") }, icon: { Image(systemName: "42.circle") })
                     }
                 )
