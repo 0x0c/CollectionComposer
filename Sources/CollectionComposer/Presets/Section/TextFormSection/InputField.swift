@@ -7,11 +7,35 @@
 
 import UIKit
 
+/// A customizable text input field with additional focus management and picker-related behavior.
+///
+/// `InputField` extends `UITextField` to provide advanced input behavior, such as displaying a hidden overlay view
+/// when a picker input is in use, and delegating focus changes to a `TextForm`. It also supports handling
+/// `UITextFieldDelegate` methods through an `originalDelegate`.
+///
+/// This class is useful for applications that require custom handling of keyboard input, picker display,
+/// and focused/unfocused state transitions.
+///
+/// ### Usage
+/// ```swift
+/// let inputField = InputField()
+/// inputField.form = textForm
+/// inputField.originalDelegate = self
+/// ```
+///
+/// - Note: This class implements `UITextFieldDelegate` and handles its own delegate methods internally.
 open class InputField: UITextField, UITextFieldDelegate {
     // MARK: Open
 
+    // MARK: Open Properties
+
+    /// A reference to the original delegate, allowing custom behavior for delegate methods.
     open var originalDelegate: (any UITextFieldDelegate)?
 
+    /// Called to layout subviews and setup the cover view for picker inputs.
+    ///
+    /// This method sets the delegate to `self` and ensures that the cover view is added to the superview
+    /// if it has not been set up yet.
     override open func layoutSubviews() {
         super.layoutSubviews()
         delegate = self
@@ -20,6 +44,9 @@ open class InputField: UITextField, UITextFieldDelegate {
         }
     }
 
+    // MARK: Open Methods
+
+    /// Returns the caret rectangle, or hides it if the input style is set to picker.
     override open func caretRect(for position: UITextPosition) -> CGRect {
         if let form, form.inputStyle.isKindOfPicker {
             return .zero
@@ -27,6 +54,7 @@ open class InputField: UITextField, UITextFieldDelegate {
         return super.caretRect(for: position)
     }
 
+    /// Returns selection rectangles, or hides them if the input style is set to picker.
     override open func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
         if let form, form.inputStyle.isKindOfPicker {
             return []
@@ -34,6 +62,7 @@ open class InputField: UITextField, UITextFieldDelegate {
         return super.selectionRects(for: range)
     }
 
+    /// Determines if an action can be performed, disallowing it if the input style is set to picker.
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if let form, form.inputStyle.isKindOfPicker {
             return false
@@ -41,6 +70,9 @@ open class InputField: UITextField, UITextFieldDelegate {
         return super.canPerformAction(action, withSender: sender)
     }
 
+    /// Becomes the first responder and shows the cover view if input style is picker.
+    ///
+    /// - Returns: A Boolean indicating whether the field became the first responder.
     @discardableResult
     override open func becomeFirstResponder() -> Bool {
         if let form, form.inputStyle.isKindOfPicker {
@@ -50,9 +82,8 @@ open class InputField: UITextField, UITextFieldDelegate {
             coverView.isHidden = true
         }
 
-        if let form, let handler = form.focusedHandler {
-            handler(form)
-        }
+        form?.focusedHandler?(form!)
+
         if let form {
             switch form.inputStyle {
             case let .datePicker(context):
@@ -72,18 +103,24 @@ open class InputField: UITextField, UITextFieldDelegate {
         return super.becomeFirstResponder()
     }
 
+    /// Resigns the first responder status and hides the cover view.
+    ///
+    /// - Returns: A Boolean indicating whether the field resigned as the first responder.
     @discardableResult
     override open func resignFirstResponder() -> Bool {
         coverView.isHidden = true
-        if let form, let handler = form.resignedHandler {
-            handler(form)
-        }
+        form?.resignedHandler?(form!)
         return super.resignFirstResponder()
     }
 
     // MARK: Public
 
+    // MARK: Public Properties
+
+    /// A reference to the associated `TextForm`, used for managing focus and handling picker input.
     public var form: TextForm?
+
+    // MARK: UITextFieldDelegate Methods
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return form?.inputStyle.isKindOfPicker != true ?? true
@@ -138,8 +175,16 @@ open class InputField: UITextField, UITextFieldDelegate {
 
     // MARK: Private
 
+    // MARK: Private Properties
+
+    /// An overlay view that hides the caret and selection for picker-based input.
     private var coverView = UIView()
 
+    // MARK: Private Methods
+
+    /// Sets up the cover view and adds it to the superview, covering the entire text field.
+    ///
+    /// The cover view is used to prevent the caret and text selection from appearing when the input style is a picker.
     private func setupCoverView() {
         if let superview {
             superview.addSubview(coverView)
