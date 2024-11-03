@@ -82,7 +82,9 @@ open class InputField: UITextField, UITextFieldDelegate {
             coverView.isHidden = true
         }
 
-        form?.focusedHandler?(form!)
+        if let form, let handler = form.focusedHandler {
+            handler(form)
+        }
 
         if let form {
             switch form.inputStyle {
@@ -109,7 +111,9 @@ open class InputField: UITextField, UITextFieldDelegate {
     @discardableResult
     override open func resignFirstResponder() -> Bool {
         coverView.isHidden = true
-        form?.resignedHandler?(form!)
+        if let form, let handler = form.resignedHandler {
+            handler(form)
+        }
         return super.resignFirstResponder()
     }
 
