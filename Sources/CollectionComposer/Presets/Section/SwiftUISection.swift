@@ -9,19 +9,54 @@ import SwiftUI
 
 // MARK: - SwiftUISection
 
+/// A section for displaying SwiftUI content within a collection view.
+///
+/// `SwiftUISection` enables embedding SwiftUI views as sections in a collection view. It provides flexibility
+/// for configuring content with or without margins, and supports both SwiftUI views and UI content configurations.
+/// This class offers multiple initializers to accommodate different types of content and configuration needs.
+///
+/// ### Usage
+/// ```swift
+/// let swiftUISection = SwiftUISection(id: "exampleID", configuration: .defaultConfiguration()) {
+///     Text("Hello, SwiftUI!")
+/// }
+/// ```
+///
+/// - Important: This class supports iOS 16.0 and later for SwiftUI-based initializers.
 open class SwiftUISection: CollectionComposer.Section {
     // MARK: Lifecycle
 
+    /// Initializes a `SwiftUISection` with a unique identifier, configuration, and view configuration item.
+    ///
+    /// - Parameters:
+    ///   - id: The unique identifier for this section.
+    ///   - configuration: The configuration options for the section. Defaults to `.defaultConfiguration()`.
+    ///   - item: The view configuration for the content to be displayed in this section.
     public init(id: String, configuration: Configuration = .defaultConfiguration(), item: ViewConfiguration) {
         self.id = id
         self.configuration = configuration
         items = [item]
     }
 
+    /// Convenience initializer that accepts a UI content configuration for the section’s content.
+    ///
+    /// - Parameters:
+    ///   - id: The unique identifier for this section.
+    ///   - configuration: The configuration options for the section. Defaults to `.defaultConfiguration()`.
+    ///   - contentConfiguration: The `UIContentConfiguration` defining the section's content.
     public convenience init(id: String, configuration: Configuration = .defaultConfiguration(), contentConfiguration: UIContentConfiguration) {
         self.init(id: id, configuration: configuration, item: ViewConfiguration(contentConfiguration))
     }
 
+    /// Convenience initializer that accepts SwiftUI content for the section’s content.
+    ///
+    /// This initializer allows for direct use of SwiftUI views. If the configuration specifies to remove margins,
+    /// the content is displayed without margins.
+    ///
+    /// - Parameters:
+    ///   - id: The unique identifier for this section.
+    ///   - configuration: The configuration options for the section. Defaults to `.defaultConfiguration()`.
+    ///   - content: A closure that returns the SwiftUI view content to be displayed in this section.
     @available(iOS 16.0, *)
     public convenience init(id: String, configuration: Configuration = .defaultConfiguration(), @ViewBuilder content: () -> some View) {
         let viewConfiguration = if configuration.removeMargins {

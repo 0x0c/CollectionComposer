@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-/// `ListSection` provides table layout like UITableView by ``UICollectionLayoutListConfiguration``
+/// `ListSection` provides table layout like UITableView by ``listConfiguration``
 open class ListSection: ListableSection, HighlightableSection {
     // MARK: Lifecycle
 
