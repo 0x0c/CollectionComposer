@@ -24,12 +24,12 @@ public protocol TextFormCell: UICollectionViewCell {
     /// The input field associated with the cell.
     ///
     /// This is an instance of `TextForm.InputField` that manages text input within the form cell.
-    var inputField: InputField { get }
+    @MainActor var inputField: InputField { get }
 
     /// Configures the cell with the specified form.
     ///
     /// - Parameter form: The `TextForm` object that provides data and configuration for the cell.
-    func configure(_ form: TextForm)
+    @MainActor func configure(_ form: TextForm)
 }
 
 // MARK: - TextFormSection

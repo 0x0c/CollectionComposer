@@ -75,7 +75,7 @@ public protocol SwiftUICellViewModel: Hashable, ReorderableItem {
     var removeMargins: Bool { get }
 
     /// An array of accessories to display with the cell.
-    var accessories: [UICellAccessory] { get }
+    @MainActor var accessories: [UICellAccessory] { get }
 
     /// A Boolean indicating whether the cell can be moved in the collection view.
     var canMove: Bool { get }

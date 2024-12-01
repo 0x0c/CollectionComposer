@@ -402,7 +402,7 @@ open class TextForm: NSObject {
     ///
     /// - Parameter cell: The `TextFormCell` to bind to this form.
     /// - Returns: A `AnyCancellable` instance managing the subscription.
-    public func bind(_ cell: TextFormCell) -> AnyCancellable {
+    @MainActor public func bind(_ cell: TextFormCell) -> AnyCancellable {
         cell.inputField.form = self
         inputField = cell.inputField
 
