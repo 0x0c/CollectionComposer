@@ -44,7 +44,7 @@ public protocol SwiftUICellViewModel: Hashable, ReorderableItem {
     var indentationLevel: Int? { get }
     var indentsAccessories: Bool { get }
     var removeMargins: Bool { get }
-    var accessories: [UICellAccessory] { get }
+    @MainActor var accessories: [UICellAccessory] { get }
     var canMove: Bool { get }
 }
 

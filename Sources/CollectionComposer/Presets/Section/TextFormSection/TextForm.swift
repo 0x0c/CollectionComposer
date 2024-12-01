@@ -421,7 +421,7 @@ open class TextForm: NSObject {
         return self
     }
 
-    public func bind(_ cell: TextFormCell) -> AnyCancellable {
+    @MainActor public func bind(_ cell: TextFormCell) -> AnyCancellable {
         cell.inputField.form = self
         inputField = cell.inputField
 

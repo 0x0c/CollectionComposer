@@ -14,9 +14,9 @@ public protocol TextFormCell: UICollectionViewCell {
     static var defaultTextFieldHeight: CGFloat { get }
     static var defaultHeight: CGFloat { get }
 
-    var inputField: TextForm.InputField { get }
+    @MainActor var inputField: TextForm.InputField { get }
 
-    func configure(_ form: TextForm)
+    @MainActor func configure(_ form: TextForm)
 }
 
 // MARK: - TextFormSection
