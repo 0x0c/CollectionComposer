@@ -7,7 +7,8 @@
 
 import Foundation
 
+/// This section allows to higlight cells when the user interacts the cells.
 public protocol HighlightableSection {
-    /// Indicates the section allows to highlight cells.
+    /// This function returns which cells should be highlighted according to the index.
     func isHighlightable(at index: Int) -> Bool
 }

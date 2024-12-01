@@ -7,6 +7,18 @@
 
 import UIKit
 
+/// A section that displays an activity indicator within a collection view.
+///
+/// `ActivityIndicatorSection` is designed for displaying a loading or progress indicator in a collection view layout.
+/// It can be useful for showing ongoing background tasks, data loading processes, or other waiting states
+/// within a collection view context.
+///
+/// ### Usage
+/// ```swift
+/// let activityIndicatorSection = ActivityIndicatorSection()
+/// ```
+///
+/// - Important: Ensure to configure the appearance and behavior of the activity indicator according to the app's loading requirements.
 open class ActivityIndicatorSection: Section {
     // MARK: Lifecycle
 
@@ -111,32 +123,76 @@ open class ActivityIndicatorSection: Section {
 
     // MARK: Public
 
+    /// A structure representing the content and appearance of an indicator.
+    ///
+    /// `IndicatorContent` is used to define properties for an indicator, including an optional title
+    /// and customizable appearance settings. This can be useful for components that need to display
+    /// indicators with varying styles and labels.
+    ///
+    /// ### Usage
+    /// ```swift
+    /// let indicator = IndicatorContent(title: "Loading", appearance: .default)
+    /// ```
+    ///
+    /// - Note: This structure conforms to `Hashable`, allowing it to be used in hashed collections.
     public struct IndicatorContent: Hashable {
         // MARK: Lifecycle
 
+        /// Initializes a new `IndicatorContent` with an optional title and appearance settings.
+        ///
+        /// - Parameters:
+        ///   - title: An optional title for the indicator. Defaults to `nil`.
+        ///   - appearance: The appearance configuration for the indicator. Defaults to `.init()`.
         public init(title: String? = nil, appearance: IndicatorAppearance = .init()) {
             self.title = title
             self.appearance = appearance
         }
 
-        // MARK: Internal
+        // MARK: Public
 
-        let title: String?
-        let appearance: IndicatorAppearance
+        // MARK: Properties
+
+        /// The optional title of the indicator, displayed alongside or within the indicator.
+        public let title: String?
+
+        /// The appearance settings for the indicator, defining its style and visual characteristics.
+        public let appearance: IndicatorAppearance
     }
 
+    /// A structure representing the appearance of an activity indicator, including style and tint color.
+    ///
+    /// `IndicatorAppearance` is used to define the visual style of an indicator, allowing customization of
+    /// its size, color, and other stylistic details. This structure can be applied to components that require
+    /// activity indicators with specific styles.
+    ///
+    /// ### Usage
+    /// ```swift
+    /// let appearance = IndicatorAppearance(style: .large, tintColor: .blue)
+    /// ```
+    ///
+    /// - Note: This structure conforms to `Hashable`, making it suitable for use in hashed collections.
     public struct IndicatorAppearance: Hashable {
         // MARK: Lifecycle
 
+        /// Initializes a new `IndicatorAppearance` with a specified style and optional tint color.
+        ///
+        /// - Parameters:
+        ///   - style: The style of the activity indicator, defining its size and appearance. Defaults to `.medium`.
+        ///   - tintColor: An optional color for the activity indicator. If `nil`, the default color is used.
         public init(style: UIActivityIndicatorView.Style = .medium, tintColor: UIColor? = nil) {
             self.style = style
             self.tintColor = tintColor
         }
 
-        // MARK: Internal
+        // MARK: Public
 
-        let style: UIActivityIndicatorView.Style
-        let tintColor: UIColor?
+        // MARK: Properties
+
+        /// The style of the activity indicator, determining its size and appearance.
+        public let style: UIActivityIndicatorView.Style
+
+        /// The tint color of the activity indicator. If `nil`, the indicator uses its default color.
+        public let tintColor: UIColor?
     }
 
     public typealias Cell = ActivityIndicatorCell

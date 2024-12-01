@@ -7,6 +7,14 @@
 
 import UIKit
 
+/// A reusable view that serves as a separator within a collection view.
+///
+/// `SeparatorView` is a simple, reusable view intended to act as a visual divider between sections
+/// or items in a collection view. It inherits from `UICollectionReusableView`, making it ideal for use
+/// in supplementary views where separators are needed.
+///
+/// - Note: Customize the appearance of `SeparatorView` by setting its background color or by adding
+/// other visual properties to match your app's design.
 public final class SeparatorView: UICollectionReusableView {
     // MARK: Lifecycle
 

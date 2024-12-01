@@ -25,7 +25,7 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
                 TextForm(label: "Label", text: "Initial text", placeholder: "Placeholder")
                 TextForm(placeholder: "Email")
                 TextForm(placeholder: "Password", isSecureText: true)
-                    .validate { input in
+                    .validation { input in
                         guard let input else {
                             return .invalid(hint: "Password should not be empty.")
                         }
@@ -35,11 +35,11 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
                         return .invalid(hint: "Password should be longer than 10 characters.")
                     }
             }
-            TextFormSection<RoundedTextFormCell>(id: "text2") {
+            TextFormSection<InputFieldCell>(id: "text2", type: .nib(UINib(nibName: "InputFieldCell", bundle: nil))) {
                 TextForm(label: "Label", text: "Initial text", placeholder: "Placeholder")
                 TextForm(placeholder: "Email")
                 TextForm(placeholder: "Password", isSecureText: true)
-                    .validate { input in
+                    .validation { input in
                         guard let input else {
                             return .invalid(hint: "Password should not be empty.")
                         }

@@ -19,7 +19,7 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell, UIText
     static let defaultTextFieldHeight: CGFloat = 39
     static let defaultHeight: CGFloat = 60
 
-    var inputField: CollectionComposer.TextForm.InputField { textField }
+    var inputField: CollectionComposer.InputField { textField }
 
     func configure(_ form: CollectionComposer.TextForm) {
         cancellable.removeAll()
@@ -45,7 +45,7 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell, UIText
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        MainActor.assumeIsolated {
+        Task { @MainActor in
             textFieldBaseView.layer.borderWidth = 1
             textFieldBaseView.layer.borderColor = UIColor.green.cgColor
             textFieldBaseView.translatesAutoresizingMaskIntoConstraints = false
@@ -65,8 +65,8 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell, UIText
     @IBOutlet private var textFieldBaseView: UIView!
 
     @IBOutlet private var label: UILabel!
-    private lazy var textField: TextForm.InputField = {
-        let textField = TextForm.InputField(frame: .zero)
+    private lazy var textField: InputField = {
+        let textField = InputField(frame: .zero)
         textField.originalDelegate = self
         textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
         return textField
