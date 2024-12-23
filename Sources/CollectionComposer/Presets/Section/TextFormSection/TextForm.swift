@@ -192,9 +192,23 @@ open class TextForm: NSObject {
         ///   - initialDate: The initial date for the picker, if any.
         ///   - mode: The display mode of the date picker. Defaults to `.date`.
         ///   - formatter: A formatter for displaying the selected date, if any.
-        public init(_ initialDate: Date? = nil, mode: UIDatePicker.Mode = .date, formatter: DateFormatter? = nil) {
+        public init(
+            _ initialDate: Date? = nil,
+            mode: UIDatePicker.Mode = .date,
+            minimumDate: Date? = nil,
+            maximumDate: Date? = nil,
+            minuteInterval: Int? = nil,
+            countDownDuration: TimeInterval? = nil,
+            roundsToMinuteInterval: Bool? = nil,
+            formatter: DateFormatter? = nil
+        ) {
             self.initialDate = initialDate
             self.mode = mode
+            self.minimumDate = minimumDate
+            self.maximumDate = maximumDate
+            self.minuteInterval = minuteInterval
+            self.countDownDuration = countDownDuration
+            self.roundsToMinuteInterval = roundsToMinuteInterval
             self.formatter = formatter
         }
 
@@ -205,6 +219,31 @@ open class TextForm: NSObject {
 
         /// The mode of the date picker (e.g., date, time).
         public let mode: UIDatePicker.Mode
+
+        /// The minimum date that a date picker can show.
+        ///
+        /// If not specified, the default value of UIDatePicker is used.
+        public let minimumDate: Date?
+
+        /// The maximum date that a date picker can show.
+        ///
+        /// If not specified, the default value of UIDatePicker is used.
+        public let maximumDate: Date?
+
+        /// The interval at which the date picker should display minutes.
+        ///
+        /// If not specified, the default value of UIDatePicker is used.
+        public let minuteInterval: Int?
+
+        /// The value displayed by the date picker when the mode property is set to show a countdown time.
+        ///
+        /// If not specified, the default value of UIDatePicker is used.
+        public let countDownDuration: TimeInterval?
+
+        /// A Boolean value that determines whether the date rounds to a specific minute interval.
+        ///
+        /// If not specified, the default value of UIDatePicker is used.
+        public let roundsToMinuteInterval: Bool?
 
         /// The date formatter used for displaying the selected date.
         public let formatter: DateFormatter?
@@ -476,6 +515,21 @@ open class TextForm: NSObject {
                 picker.addTarget(self, action: #selector(didDatePickerValueChange), for: .valueChanged)
                 picker.preferredDatePickerStyle = .wheels
                 picker.datePickerMode = context.mode
+                if let minimumDate = context.minimumDate {
+                    picker.minimumDate = minimumDate
+                }
+                if let maximumDate = context.maximumDate {
+                    picker.maximumDate = maximumDate
+                }
+                if let minuteInterval = context.minuteInterval {
+                    picker.minuteInterval = minuteInterval
+                }
+                if let countDownDuration = context.countDownDuration {
+                    picker.countDownDuration = countDownDuration
+                }
+                if let roundsToMinuteInterval = context.roundsToMinuteInterval {
+                    picker.roundsToMinuteInterval = roundsToMinuteInterval
+                }
                 return picker
             }
         }
