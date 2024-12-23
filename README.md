@@ -98,7 +98,7 @@ func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollecti
     )
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
     let section = NSCollectionLayoutSection(group: group)
-
+    section.boundarySupplementaryItems = boundarySupplementaryItems
     return section
 }
 ```

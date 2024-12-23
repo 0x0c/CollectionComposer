@@ -114,6 +114,7 @@ open class SwiftUISection: CollectionComposer.Section {
         )
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = configuration.contentInsets
+        section.boundarySupplementaryItems = boundarySupplementaryItems
         return section
     }
 

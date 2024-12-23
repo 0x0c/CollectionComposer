@@ -273,6 +273,7 @@ open class TextSection<T: TextCell>: Section {
             subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: group)
+        section.boundarySupplementaryItems = boundarySupplementaryItems
         return section
     }
 
