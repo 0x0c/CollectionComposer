@@ -96,7 +96,7 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
     /// - Parameter title: The title for indexing the section.
     /// - Returns: The updated `SwiftUIListSection` instance.
     @discardableResult
-    open func indexTitle(_ title: String) -> Self {
+    open func indexTitle(_ title: String?) -> Self {
         self.title = title
         return self
     }

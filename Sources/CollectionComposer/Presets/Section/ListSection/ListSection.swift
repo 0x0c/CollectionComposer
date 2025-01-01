@@ -153,7 +153,7 @@ open class ListSection: ListableSection, HighlightableSection {
     }
 
     @discardableResult
-    public func indexTitle(_ title: String) -> Self {
+    public func indexTitle(_ title: String?) -> Self {
         self.title = title
         return self
     }

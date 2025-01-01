@@ -13,5 +13,5 @@ public protocol IndexTitleSection: Section, Sendable {
     var title: String? { get set }
 
     /// Modifier to assign index title.
-    func indexTitle(_ title: String) -> Self
+    func indexTitle(_ title: String?) -> Self
 }
