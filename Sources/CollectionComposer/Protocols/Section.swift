@@ -69,6 +69,7 @@ public protocol Section {
     /// - Parameters:
     ///   - environment: Layout environment for current traits.
     func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection
+
     /// A function to configure cells.
     /// - Parameters:
     ///   - indexPath: The index path that specifies the location of the item.
