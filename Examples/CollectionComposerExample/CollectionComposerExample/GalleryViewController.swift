@@ -72,6 +72,12 @@ class GalleryViewController: ComposedCollectionViewController, SectionProvider, 
                     }
                 }
             )
+
+            SwiftUIButtonSection(id: "button", state: SwiftUIButtonState()) {
+                print("hoge")
+            } label: {
+                Text("Button")
+            }
         }
     }
 
