@@ -175,6 +175,8 @@ open class SwiftUISection: CollectionComposer.Section {
     public typealias Cell = UICollectionViewCell
     public typealias Item = ViewConfiguration
 
+    public var contentInsetsReference: UIContentInsetsReference = .automatic
+    public var supplementaryContentInsetsReference: UIContentInsetsReference = .automatic
     public var header: (any BoundarySupplementaryHeaderView)?
     public var footer: (any BoundarySupplementaryFooterView)?
 

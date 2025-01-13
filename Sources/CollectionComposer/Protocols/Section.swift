@@ -55,6 +55,9 @@ public protocol Section {
     /// Indicates the section allows to expand cells.
     var isExpandable: Bool { get }
 
+    var contentInsetsReference: UIContentInsetsReference { get set }
+    var supplementaryContentInsetsReference: UIContentInsetsReference { get set }
+
     /// A header supplementary view for the section.
     var header: (any BoundarySupplementaryHeaderView)? { get set }
     /// A footer supplementary view for the section.

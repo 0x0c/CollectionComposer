@@ -285,6 +285,8 @@ open class TextSection<T: TextCell>: Section {
 
     // MARK: Public
 
+    public var contentInsetsReference: UIContentInsetsReference = .automatic
+    public var supplementaryContentInsetsReference: UIContentInsetsReference = .automatic
     public var header: (any BoundarySupplementaryHeaderView)?
     public var footer: (any BoundarySupplementaryFooterView)?
 

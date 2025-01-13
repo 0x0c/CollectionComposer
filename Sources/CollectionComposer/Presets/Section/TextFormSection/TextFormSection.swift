@@ -174,6 +174,8 @@ open class TextFormSection<T: TextFormCell>: Section {
         case `class`
     }
 
+    public var contentInsetsReference: UIContentInsetsReference = .automatic
+    public var supplementaryContentInsetsReference: UIContentInsetsReference = .automatic
     /// The header view for the section, if any.
     public var header: (any BoundarySupplementaryHeaderView)?
 

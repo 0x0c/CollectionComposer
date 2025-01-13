@@ -138,6 +138,9 @@ open class ButtonSection<T: ButtonCell>: Section {
 
     // MARK: Public
 
+    public var contentInsetsReference: UIContentInsetsReference = .automatic
+    public var supplementaryContentInsetsReference: UIContentInsetsReference = .automatic
+
     /// The header view for the section, if any.
     public var header: (any BoundarySupplementaryHeaderView)?
 
