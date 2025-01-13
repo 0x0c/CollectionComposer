@@ -139,6 +139,16 @@ open class ListSection: ListableSection, HighlightableSection {
         return items.map { AnyHashable($0) }
     }
 
+    public func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
+        contentInsetsReference = reference
+        return self
+    }
+
+    public func supplementaryContentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
+        supplementaryContentInsetsReference = reference
+        return self
+    }
+
     public func storeHeader(_ header: (any BoundarySupplementaryHeaderView)?) {
         self.header = header
     }

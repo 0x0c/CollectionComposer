@@ -290,6 +290,16 @@ open class TextSection<T: TextCell>: Section {
     public var header: (any BoundarySupplementaryHeaderView)?
     public var footer: (any BoundarySupplementaryFooterView)?
 
+    public func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
+        contentInsetsReference = reference
+        return self
+    }
+
+    public func supplementaryContentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
+        supplementaryContentInsetsReference = reference
+        return self
+    }
+
     public func targetIndexPathForMoveOfItemFromOriginalIndexPath(_ proposedIndexPath: IndexPath, originalIndexPath: IndexPath, currentIndexPath: IndexPath) -> IndexPath {
         if proposedIndexPath.section == originalIndexPath.section {
             return proposedIndexPath

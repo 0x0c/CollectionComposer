@@ -207,6 +207,16 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
     /// The unique identifier for the section.
     public let id: String
 
+    public func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
+        contentInsetsReference = reference
+        return self
+    }
+
+    public func supplementaryContentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
+        supplementaryContentInsetsReference = reference
+        return self
+    }
+
     /// Determines if the item at the specified index path can be moved.
     ///
     /// - Parameter indexPath: The index path of the item to check.

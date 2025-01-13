@@ -58,6 +58,9 @@ public protocol Section {
     var contentInsetsReference: UIContentInsetsReference { get set }
     var supplementaryContentInsetsReference: UIContentInsetsReference { get set }
 
+    func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self
+    func supplementaryContentInsetsReference(_ reference: UIContentInsetsReference) -> Self
+
     /// A header supplementary view for the section.
     var header: (any BoundarySupplementaryHeaderView)? { get set }
     /// A footer supplementary view for the section.

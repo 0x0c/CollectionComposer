@@ -147,6 +147,16 @@ open class ButtonSection<T: ButtonCell>: Section {
     /// The footer view for the section, if any.
     public var footer: (any BoundarySupplementaryFooterView)?
 
+    public func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
+        contentInsetsReference = reference
+        return self
+    }
+
+    public func supplementaryContentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
+        supplementaryContentInsetsReference = reference
+        return self
+    }
+
     /// Stores a header view for the section.
     ///
     /// - Parameter header: The header view to associate with the section.

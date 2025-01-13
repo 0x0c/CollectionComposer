@@ -182,6 +182,16 @@ open class TextFormSection<T: TextFormCell>: Section {
     /// The footer view for the section, if any.
     public var footer: (any BoundarySupplementaryFooterView)?
 
+    public func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
+        contentInsetsReference = reference
+        return self
+    }
+
+    public func supplementaryContentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
+        supplementaryContentInsetsReference = reference
+        return self
+    }
+
     /// Determines the target index path for moving an item within the section.
     ///
     /// This method ensures the item remains within its original section during reordering.
