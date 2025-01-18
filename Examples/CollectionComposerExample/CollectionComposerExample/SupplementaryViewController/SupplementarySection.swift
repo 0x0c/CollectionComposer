@@ -33,11 +33,13 @@ class SupplementarySection: Section {
     public var header: (any BoundarySupplementaryHeaderView)?
     public var footer: (any BoundarySupplementaryFooterView)?
 
+    @discardableResult
     public func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
         contentInsetsReference = reference
         return self
     }
 
+    @discardableResult
     public func supplementaryContentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
         supplementaryContentInsetsReference = reference
         return self

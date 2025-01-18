@@ -58,7 +58,9 @@ public protocol Section {
     var contentInsetsReference: UIContentInsetsReference { get set }
     var supplementaryContentInsetsReference: UIContentInsetsReference { get set }
 
+    @discardableResult
     func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self
+    @discardableResult
     func supplementaryContentInsetsReference(_ reference: UIContentInsetsReference) -> Self
 
     /// A header supplementary view for the section.
