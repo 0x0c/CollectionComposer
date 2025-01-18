@@ -182,11 +182,13 @@ open class SwiftUISection: CollectionComposer.Section {
 
     public let configuration: Configuration
 
+    @discardableResult
     public func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
         contentInsetsReference = reference
         return self
     }
 
+    @discardableResult
     public func supplementaryContentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
         supplementaryContentInsetsReference = reference
         return self

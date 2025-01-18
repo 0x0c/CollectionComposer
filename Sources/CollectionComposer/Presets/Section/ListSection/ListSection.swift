@@ -139,11 +139,13 @@ open class ListSection: ListableSection, HighlightableSection {
         return items.map { AnyHashable($0) }
     }
 
+    @discardableResult
     public func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
         contentInsetsReference = reference
         return self
     }
 
+    @discardableResult
     public func supplementaryContentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
         supplementaryContentInsetsReference = reference
         return self

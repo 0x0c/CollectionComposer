@@ -182,11 +182,13 @@ open class TextFormSection<T: TextFormCell>: Section {
     /// The footer view for the section, if any.
     public var footer: (any BoundarySupplementaryFooterView)?
 
+    @discardableResult
     public func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
         contentInsetsReference = reference
         return self
     }
 
+    @discardableResult
     public func supplementaryContentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
         supplementaryContentInsetsReference = reference
         return self

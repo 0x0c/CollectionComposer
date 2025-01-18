@@ -207,11 +207,13 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
     /// The unique identifier for the section.
     public let id: String
 
+    @discardableResult
     public func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
         contentInsetsReference = reference
         return self
     }
 
+    @discardableResult
     public func supplementaryContentInsetsReference(_ reference: UIContentInsetsReference) -> Self {
         supplementaryContentInsetsReference = reference
         return self
