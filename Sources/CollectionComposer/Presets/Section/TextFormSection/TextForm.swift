@@ -474,6 +474,20 @@ open class TextForm: NSObject {
                 return
             }
             cell.inputField.text = input?.toString()
+
+            switch (cell.inputField.inputView, input, inputStyle) {
+            case let (datePicker as UIDatePicker, .date(date?, _), _):
+                if datePicker.date != date {
+                    datePicker.setDate(date, animated: true)
+                }
+            case let (pickerView as UIPickerView, .picker(text?), .picker(context)):
+                let selectedRow = pickerView.selectedRow(inComponent: 0)
+                if let row = context.titles.firstIndex(of: text), selectedRow != row {
+                    pickerView.selectRow(row, inComponent: 0, animated: true)
+                }
+            default:
+                break
+            }
         }
     }
 
