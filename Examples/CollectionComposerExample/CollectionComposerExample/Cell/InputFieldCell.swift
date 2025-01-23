@@ -78,7 +78,7 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell, UIText
         guard let form else {
             return
         }
-        if form.inputStyle.isKindOfPicker == false {
+        if form.inputStyle.needsKeyboard == false {
             form.currentInput = .text(textField.text)
         }
     }

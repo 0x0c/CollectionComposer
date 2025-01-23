@@ -11,7 +11,31 @@ import UIKit
 class TextFormViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
     private(set) var sections = [any CollectionComposer.Section]()
 
+    lazy var externalInputForm = TextForm(
+        label: "External Input",
+        placeholder: "Placeholder",
+        inputStyle: .externalInput(nil) { [weak self] _ in
+            guard let self else {
+                return
+            }
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+            alert.title = "External input"
+            alert.addTextField()
+            alert.addAction(
+                UIAlertAction(title: "Add", style: .default) { _ in
+                    self.updateExternalInputForm(alert.textFields?.first?.text)
+                }
+            )
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            present(alert, animated: true, completion: nil)
+        }
+    )
+
     var sectionDataSource: CollectionComposer.SectionDataSource { self }
+
+    func updateExternalInputForm(_ text: String?) {
+        externalInputForm.currentInput = TextForm.Input.text(text)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +72,9 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
                         }
                         return .invalid(hint: "Password should be longer than 10 characters.")
                     }
+            }
+            TextFormSection<RoundedTextFormCell>(id: "external") {
+                externalInputForm
             }
             TextFormSection<RoundedTextFormCell>(id: "picker") {
                 TextForm(

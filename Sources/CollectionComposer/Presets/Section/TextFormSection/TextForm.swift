@@ -8,6 +8,13 @@
 import Combine
 import UIKit
 
+// MARK: - TextFormNotification
+
+enum TextFormNotification {
+    static let textFormKey = "CollectionComposer.TextFormNotification.textFormKey"
+    static let willBeginEditingWithExternalInputMethod = Notification.Name("CollectionComposer.TextFormNotification.willBeginEditingWithExternalInputMethod")
+}
+
 // MARK: - TextForm
 
 /// A configurable form input supporting text, date pickers, and selection pickers.
@@ -42,6 +49,8 @@ open class TextForm: NSObject {
             currentInput = .date(context.initialDate, context.formatter)
         case let .picker(context):
             currentInput = context.initialSelection == nil ? nil : .picker(context.initialTitle)
+        case let .externalInput(initialText, _):
+            currentInput = .text(initialText)
         }
     }
 
@@ -125,14 +134,19 @@ open class TextForm: NSObject {
         /// A picker input with an array of selectable titles and optional initial selection.
         case picker(PickerContext)
 
+        /// A picker input with an external input method.
+        case externalInput(String?, ExternalInputHandler)
+
         // MARK: Public
 
+        public typealias ExternalInputHandler = (String?) -> Void
+
         /// A Boolean indicating if the input style is a picker type (either date picker or selection picker).
-        public var isKindOfPicker: Bool {
+        public var needsKeyboard: Bool {
             switch self {
-            case .text:
+            case .datePicker, .externalInput, .picker:
                 return false
-            case .datePicker, .picker:
+            default:
                 return true
             }
         }
@@ -141,7 +155,7 @@ open class TextForm: NSObject {
 
         var inputKind: InputKind {
             switch self {
-            case .text:
+            case .externalInput, .text:
                 return .text
             case .picker:
                 return .picker
@@ -433,7 +447,7 @@ open class TextForm: NSObject {
     /// - Parameter showKeyboard: A Boolean that indicates if the keyboard should be displayed.
     /// - Returns: The configured `TextForm` instance.
     public func allowsToShowKeyboard(_ showKeyboard: Bool) -> TextForm {
-        self.showKeyboard = showKeyboard
+        allowsEditing = showKeyboard
         return self
     }
 
@@ -457,6 +471,8 @@ open class TextForm: NSObject {
             cell.inputField.inputView = currentPickerView()
         case .datePicker:
             cell.inputField.inputView = currentDatePicker()
+        case .externalInput:
+            cell.inputField.inputView = nil
         }
         let inputKind = inputStyle.inputKind
         let inputStyle = inputStyle
@@ -604,14 +620,31 @@ open class TextForm: NSObject {
         case text
         case picker
         case datePicker
+        case externalInput
     }
 
     var next: TextForm?
     var previous: TextForm?
 
-    var showKeyboard: Bool = true
     var focusedHandler: ((TextForm) -> Void)?
     var resignedHandler: ((TextForm) -> Void)?
+
+    var _allowsEditing = true
+
+    var allowsEditing: Bool {
+        get {
+            if inputStyle.inputKind == .externalInput {
+                return false
+            }
+            return _allowsEditing
+        }
+        set {
+            if inputStyle.inputKind == .externalInput {
+                return
+            }
+            _allowsEditing = newValue
+        }
+    }
 
     func validate() -> ValidationResult {
         if let validationHandler {

@@ -25,12 +25,42 @@ import UIKit
 ///
 /// - Note: This class implements `UITextFieldDelegate` and handles its own delegate methods internally.
 open class InputField: UITextField, UITextFieldDelegate {
+    // MARK: Lifecycle
+
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
+        observer = NotificationCenter.default.addObserver(
+            forName: TextFormNotification.willBeginEditingWithExternalInputMethod,
+            object: nil,
+            queue: nil,
+            using: { [weak self] note in
+                guard let self else {
+                    return
+                }
+                if let userInfo = note.userInfo,
+                   let form = userInfo[TextFormNotification.textFormKey] as? InputField,
+                   form != self {
+                    resignFirstResponder()
+                }
+            }
+        )
+    }
+
+    @available(*, unavailable)
+    public required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: Open
 
     // MARK: Open Properties
 
     /// A reference to the original delegate, allowing custom behavior for delegate methods.
     open var originalDelegate: (any UITextFieldDelegate)?
+
+    override open func awakeFromNib() {
+        super.awakeFromNib()
+    }
 
     /// Called to layout subviews and setup the cover view for picker inputs.
     ///
@@ -48,7 +78,7 @@ open class InputField: UITextField, UITextFieldDelegate {
 
     /// Returns the caret rectangle, or hides it if the input style is set to picker.
     override open func caretRect(for position: UITextPosition) -> CGRect {
-        if let form, form.inputStyle.isKindOfPicker {
+        if let form, form.inputStyle.needsKeyboard == false {
             return .zero
         }
         return super.caretRect(for: position)
@@ -56,7 +86,7 @@ open class InputField: UITextField, UITextFieldDelegate {
 
     /// Returns selection rectangles, or hides them if the input style is set to picker.
     override open func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
-        if let form, form.inputStyle.isKindOfPicker {
+        if let form, form.inputStyle.needsKeyboard == false {
             return []
         }
         return super.selectionRects(for: range)
@@ -64,7 +94,7 @@ open class InputField: UITextField, UITextFieldDelegate {
 
     /// Determines if an action can be performed, disallowing it if the input style is set to picker.
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        if let form, form.inputStyle.isKindOfPicker {
+        if let form, form.inputStyle.needsKeyboard == false {
             return false
         }
         return super.canPerformAction(action, withSender: sender)
@@ -75,7 +105,7 @@ open class InputField: UITextField, UITextFieldDelegate {
     /// - Returns: A Boolean indicating whether the field became the first responder.
     @discardableResult
     override open func becomeFirstResponder() -> Bool {
-        if let form, form.inputStyle.isKindOfPicker {
+        if let form, form.inputStyle.needsKeyboard == false {
             coverView.isHidden = false
         }
         else {
@@ -127,11 +157,21 @@ open class InputField: UITextField, UITextFieldDelegate {
     // MARK: UITextFieldDelegate Methods
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return form?.inputStyle.isKindOfPicker != true ?? true
+        return form?.inputStyle.needsKeyboard ?? true
     }
 
     public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        return originalDelegate?.textFieldShouldBeginEditing?(textField) ?? form?.showKeyboard ?? true
+        if case let .externalInput(_, handler) = form?.inputStyle {
+            NotificationCenter.default.post(
+                name: TextFormNotification.willBeginEditingWithExternalInputMethod,
+                object: nil,
+                userInfo: [TextFormNotification.textFormKey: self]
+            )
+            handler(form?.currentInput?.toString())
+            resignFirstResponder()
+            return false
+        }
+        return originalDelegate?.textFieldShouldBeginEditing?(textField) ?? form?.allowsEditing ?? true
     }
 
     public func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -178,6 +218,8 @@ open class InputField: UITextField, UITextFieldDelegate {
     }
 
     // MARK: Private
+
+    private var observer: NSObjectProtocol?
 
     // MARK: Private Properties
 
