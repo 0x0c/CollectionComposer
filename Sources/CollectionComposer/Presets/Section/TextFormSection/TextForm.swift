@@ -544,6 +544,9 @@ open class TextForm: NSObject {
     public func currentDatePicker() -> UIDatePicker? {
         if case let .datePicker(context) = inputStyle {
             if let datePicker {
+                if let date = toDate() {
+                    datePicker.date = date
+                }
                 return datePicker
             }
             else {
