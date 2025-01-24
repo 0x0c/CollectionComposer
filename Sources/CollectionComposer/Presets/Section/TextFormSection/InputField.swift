@@ -126,7 +126,7 @@ open class InputField: UITextField, UITextFieldDelegate {
                 if form.currentInput == nil,
                    let index = form.currentPickerView()?.selectedRow(inComponent: 0),
                    index < context.items.count {
-                    form.currentInput = .picker(context.items[index].collectionComposerPickerItemTitle)
+                    form.currentInput = .picker(context.items[index])
                 }
             default:
                 break
