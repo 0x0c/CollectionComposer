@@ -475,6 +475,16 @@ open class TextForm: NSObject {
         }
     }
 
+    /// Returns the input as a picker item, if applicable.
+    public func toPickerItem() -> (any PickerItem)? {
+        switch currentInput {
+        case .date, nil, .text:
+            return nil
+        case let .picker(item):
+            return item
+        }
+    }
+
     /// Sets whether the keyboard should be shown for this form.
     ///
     /// - Parameter showKeyboard: A Boolean that indicates if the keyboard should be displayed.
