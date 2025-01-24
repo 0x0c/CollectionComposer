@@ -416,12 +416,6 @@ open class TextForm: NSObject {
     /// or beside the input field. It provides users with context about the purpose of the form input.
     public var label: String?
 
-    /// The current input value of the form.
-    ///
-    /// `currentInput` holds the data entered or selected by the user, such as text, a date, or a picker selection.
-    /// It is marked as `@Published`, allowing it to be observed for changes, enabling reactive UI updates.
-    @Published public var currentInput: Input?
-
     /// The placeholder text displayed within the input field when it is empty.
     ///
     /// `placeholder` provides a hint or example input for the user, helping them understand what type of input is
@@ -434,6 +428,18 @@ open class TextForm: NSObject {
     /// is called to perform custom validation on the input and returns a `ValidationResult`, indicating whether
     /// the input meets specified criteria.
     public var validationHandler: ((Input?) -> ValidationResult)?
+
+    /// A publisher that sends the input value and the form when the current input is changed.
+    public lazy var currentInputPublisher = currentInputSubject.eraseToAnyPublisher()
+
+    /// The current input value of the form.
+    ///
+    /// `currentInput` holds the data entered or selected by the user, such as text, a date, or a picker selection.
+    public var currentInput: Input? {
+        didSet {
+            currentInputSubject.send((input: currentInput, form: self))
+        }
+    }
 
     /// Returns the input as a string, if applicable.
     public func toString() -> String? {
@@ -478,54 +484,20 @@ open class TextForm: NSObject {
     /// - Parameter cell: The `TextFormCell` to bind to this form.
     /// - Returns: A `AnyCancellable` instance managing the subscription.
     @MainActor public func bind(_ cell: TextFormCell) -> AnyCancellable {
-        cell.inputField.form = self
-        inputField = cell.inputField
-
-        cell.inputField.placeholder = placeholder
-        switch inputStyle {
-        case let .text(_, context):
-            cell.inputField.isSecureTextEntry = context.isSecureText
-            cell.inputField.keyboardType = context.keyboardType
-            cell.inputField.spellCheckingType = context.spellCheckingType
-            cell.inputField.autocorrectionType = context.autocorrectionType
-            cell.inputField.autocapitalizationType = context.autocapitalizationType
-        case .picker:
-            cell.inputField.inputView = currentPickerView()
-        case .datePicker:
-            cell.inputField.inputView = currentDatePicker()
-        case .externalInput:
-            cell.inputField.inputView = nil
-        }
-        let inputKind = inputStyle.inputKind
-        let inputStyle = inputStyle
-        return $currentInput.filter { newInput in
-            if newInput?.inputKind == .picker,
-               case let .picker(context) = inputStyle,
-               case let .picker(item) = newInput {
+        prepareCell(cell)
+        inputField?.text = toString()
+        return currentInputPublisher.filter { update in
+            if case let .picker(context) = update.form.inputStyle,
+               case let .picker(item) = update.input {
                 return context.items.contains { $0.collectionComposerPickerItemTitle == item?.collectionComposerPickerItemTitle }
             }
-            else {
-                return newInput?.inputKind == inputKind
-            }
-        }.sink { [weak cell, weak self] input in
+            return true
+        }.sink { [weak cell, weak self] _ in
             guard let cell, let self else {
                 return
             }
-            cell.inputField.text = input?.toString(dateFormatter())
-
-            switch (cell.inputField.inputView, input, inputStyle) {
-            case let (datePicker as UIDatePicker, .date(date?), _):
-                if datePicker.date != date {
-                    datePicker.setDate(date, animated: true)
-                }
-            case let (pickerView as UIPickerView, .picker(item?), .picker(context)):
-                let selectedRow = pickerView.selectedRow(inComponent: 0)
-                if let row = context.items.map(\.collectionComposerPickerItemTitle).firstIndex(of: item.collectionComposerPickerItemTitle), selectedRow != row {
-                    pickerView.selectRow(row, inComponent: 0, animated: true)
-                }
-            default:
-                break
-            }
+            inputField?.text = toString()
+            updateInputView()
         }
     }
 
@@ -680,6 +652,7 @@ open class TextForm: NSObject {
 
     // MARK: Private
 
+    private var currentInputSubject = PassthroughSubject<(input: Input?, form: TextForm), Never>()
     private var inputField: InputField?
 
     private var datePicker: UIDatePicker?
@@ -688,6 +661,47 @@ open class TextForm: NSObject {
 
     private var _shouldFocusTextFieldSubject = PassthroughSubject<Void, Never>()
     private let id = UUID()
+
+    @MainActor
+    private func prepareCell(_ cell: TextFormCell) {
+        inputField = cell.inputField
+        cell.inputField.form = self
+        cell.inputField.placeholder = placeholder
+        switch inputStyle {
+        case let .text(_, context):
+            cell.inputField.isSecureTextEntry = context.isSecureText
+            cell.inputField.keyboardType = context.keyboardType
+            cell.inputField.spellCheckingType = context.spellCheckingType
+            cell.inputField.autocorrectionType = context.autocorrectionType
+            cell.inputField.autocapitalizationType = context.autocapitalizationType
+        case .picker:
+            cell.inputField.inputView = currentPickerView()
+        case .datePicker:
+            cell.inputField.inputView = currentDatePicker()
+        case .externalInput:
+            cell.inputField.inputView = nil
+        }
+    }
+
+    @MainActor
+    private func updateInputView() {
+        switch (inputField?.inputView, currentInput, inputStyle) {
+        case let (datePicker as UIDatePicker, .date(date?), _):
+            if datePicker.date != date {
+                datePicker.setDate(date, animated: true)
+            }
+        case let (pickerView as UIPickerView, .picker(item?), .picker(context)):
+            let selectedRow = pickerView.selectedRow(inComponent: 0)
+            if let row = context.items
+                .map(\.collectionComposerPickerItemTitle)
+                .firstIndex(of: item.collectionComposerPickerItemTitle),
+                selectedRow != row {
+                pickerView.selectRow(row, inComponent: 0, animated: true)
+            }
+        default:
+            break
+        }
+    }
 
     private func dateFormatter() -> DateFormatter? {
         guard case let .datePicker(context) = inputStyle else {

@@ -102,7 +102,7 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
                     .onFocused { _ in
                         print("focused but dont show keyboard")
                     }
-                TextForm(placeholder: "YYYYMMDD", inputStyle: .datePicker()).onFocused { form in
+                TextForm(placeholder: "YYYYMMDD (Auto resign)", inputStyle: .datePicker()).onFocused { form in
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         form.resignInputFieldFirstResponder()
                     }
