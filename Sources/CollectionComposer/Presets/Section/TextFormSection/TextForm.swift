@@ -46,7 +46,7 @@ open class TextForm: NSObject {
         case let .text(initialText, _):
             currentInput = .text(initialText)
         case let .datePicker(context):
-            currentInput = .date(context.initialDate, context.formatter)
+            currentInput = .date(context.initialDate)
         case let .picker(context):
             currentInput = context.initialSelection == nil ? nil : .picker(context.initialTitle)
         case let .externalInput(initialText, _):
@@ -344,7 +344,7 @@ open class TextForm: NSObject {
         case picker(String?)
 
         /// A date selected from a date picker, with an optional formatter.
-        case date(Date?, DateFormatter?)
+        case date(Date?)
 
         // MARK: Public
 
@@ -355,7 +355,7 @@ open class TextForm: NSObject {
                 return string?.count ?? 0
             case let .picker(string):
                 return string?.count ?? 0
-            case let .date(date, _):
+            case let .date(date):
                 return date == nil ? 0 : 1
             }
         }
@@ -363,31 +363,6 @@ open class TextForm: NSObject {
         /// A Boolean indicating if the input is empty.
         public var isEmpty: Bool {
             return count == 0
-        }
-
-        /// Returns the input as a string, if applicable.
-        public func toString() -> String? {
-            switch self {
-            case let .text(string):
-                return string
-            case let .picker(string):
-                return string
-            case let .date(date, formatter):
-                if let date {
-                    return formatter?.string(from: date) ?? date.description
-                }
-                return nil
-            }
-        }
-
-        /// Returns the input as a date, if applicable.
-        public func toDate() -> Date? {
-            switch self {
-            case .picker, .text:
-                return nil
-            case let .date(date, _):
-                return date
-            }
         }
 
         // MARK: Internal
@@ -442,6 +417,35 @@ open class TextForm: NSObject {
     /// the input meets specified criteria.
     public var validationHandler: ((Input?) -> ValidationResult)?
 
+    /// Returns the input as a string, if applicable.
+    public func toString() -> String? {
+        switch currentInput {
+        case let .text(string):
+            return string
+        case let .picker(string):
+            return string
+        case let .date(date):
+            if let date, let formatter = dateFormatter() {
+                return formatter.string(from: date) ?? date.description
+            }
+            return nil
+        case .none:
+            return nil
+        }
+    }
+
+    /// Returns the input as a date, if applicable.
+    public func toDate() -> Date? {
+        switch currentInput {
+        case .picker, .text:
+            return nil
+        case let .date(date):
+            return date
+        case .none:
+            return nil
+        }
+    }
+
     /// Sets whether the keyboard should be shown for this form.
     ///
     /// - Parameter showKeyboard: A Boolean that indicates if the keyboard should be displayed.
@@ -485,14 +489,14 @@ open class TextForm: NSObject {
             else {
                 return newInput?.inputKind == inputKind
             }
-        }.sink { [weak cell] input in
-            guard let cell else {
+        }.sink { [weak cell, weak self] input in
+            guard let cell, let self else {
                 return
             }
-            cell.inputField.text = input?.toString()
+            cell.inputField.text = toString()
 
             switch (cell.inputField.inputView, input, inputStyle) {
-            case let (datePicker as UIDatePicker, .date(date?, _), _):
+            case let (datePicker as UIDatePicker, .date(date?), _):
                 if datePicker.date != date {
                     datePicker.setDate(date, animated: true)
                 }
@@ -667,10 +671,17 @@ open class TextForm: NSObject {
     private var _shouldFocusTextFieldSubject = PassthroughSubject<Void, Never>()
     private let id = UUID()
 
+    private func dateFormatter() -> DateFormatter? {
+        guard case let .datePicker(context) = inputStyle else {
+            return nil
+        }
+        return context.formatter
+    }
+
     @objc
     private func didDatePickerValueChange(_ sender: UIDatePicker) {
-        if case let .datePicker(context) = inputStyle {
-            currentInput = .date(sender.date, context.formatter)
+        if case .datePicker = inputStyle {
+            currentInput = .date(sender.date)
         }
     }
 }

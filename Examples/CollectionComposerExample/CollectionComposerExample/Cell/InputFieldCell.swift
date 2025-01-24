@@ -24,8 +24,12 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell, UIText
     func configure(_ form: CollectionComposer.TextForm) {
         cancellable.removeAll()
         self.form = form
-        form.$currentInput.map { $0?.toString() }
-            .assign(to: \UITextField.text, on: inputField)
+        form.$currentInput.map { [weak form] _ in
+            guard let form else {
+                return nil
+            }
+            return form.toString()
+        }.assign(to: \UITextField.text, on: inputField)
             .store(in: &cancellable)
 
         label.isHidden = form.label == nil
