@@ -34,7 +34,9 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
     var sectionDataSource: CollectionComposer.SectionDataSource { self }
 
     func updateExternalInputForm(_ text: String?) {
-        externalInputForm.currentInput = TextForm.Input.text(text)
+        if let text {
+            externalInputForm.currentInput = TextForm.Input.text(text)
+        }
     }
 
     override func viewDidLoad() {
@@ -94,7 +96,7 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
                         )
                     )
                 )
-                TextForm(placeholder: "Date picker", inputStyle: .datePicker(.init(.now, formatter: dateFormatter)))
+                TextForm(placeholder: "Date picker", inputStyle: .datePicker(.init(nil, formatter: dateFormatter)))
                 TextForm(placeholder: "Time picker", inputStyle: .datePicker(.init(.now, mode: .time, formatter: dateFormatter)))
                 TextForm(placeholder: "Date and time picker", inputStyle: .datePicker(.init(.now, mode: .dateAndTime, formatter: dateFormatter)))
                 TextForm(placeholder: "Date and time picker", inputStyle: .datePicker(.init(.now)))

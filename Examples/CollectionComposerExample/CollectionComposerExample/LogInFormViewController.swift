@@ -43,7 +43,6 @@ class LogInFormViewController: ComposedCollectionViewController, SectionProvider
                             return .invalid(hint: "Password should not be empty.")
                         }
                         if case let .text(text) = input,
-                           let text,
                            text.count >= 10 {
                             return .valid
                         }
@@ -60,7 +59,6 @@ class LogInFormViewController: ComposedCollectionViewController, SectionProvider
                             return .invalid(hint: "Password should not be empty.")
                         }
                         if case let .text(text) = input,
-                           let text,
                            text.count >= 10 {
                             return .valid
                         }

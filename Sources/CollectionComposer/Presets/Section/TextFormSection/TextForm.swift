@@ -358,7 +358,8 @@ open class TextForm: NSObject {
         /// A date selected from a date picker, with an optional formatter.
         case date(Date)
 
-        
+        // MARK: Public
+
         /// A count of characters or values in the input.
         public var count: Int {
             switch self {
@@ -375,7 +376,7 @@ open class TextForm: NSObject {
         public var isEmpty: Bool {
             return count == 0
         }
-        
+
         // MARK: Internal
 
         var inputKind: InputKind {
