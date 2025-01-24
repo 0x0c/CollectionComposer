@@ -48,7 +48,7 @@ open class TextForm: NSObject {
         case let .datePicker(context):
             currentInput = .date(context.initialDate)
         case let .picker(context):
-            currentInput = context.initialSelection == nil ? nil : .picker(context.initialTitle)
+            currentInput = context.initialSelection == nil ? nil : .picker(context.initialItem)
         case let .externalInput(initialText, _):
             currentInput = .text(initialText)
         }
@@ -165,6 +165,10 @@ open class TextForm: NSObject {
         }
     }
 
+    public protocol PickerItem {
+        var collectionComposerPickerItemTitle: String { get }
+    }
+
     /// Configuration for selection picker inputs, including selectable titles and an optional initial selection.
     public struct PickerContext {
         // MARK: Lifecycle
@@ -174,25 +178,25 @@ open class TextForm: NSObject {
         /// - Parameters:
         ///   - titles: The titles for picker options.
         ///   - initialSelection: The index of the initially selected option, if any.
-        public init(titles: [String], initialSelection: Int? = nil) {
-            self.titles = titles
-            self.initialSelection = initialSelection.map { max(0, min(titles.count - 1, $0)) }
+        public init(items: [any PickerItem], initialSelection: Int? = nil) {
+            self.items = items
+            self.initialSelection = initialSelection.map { max(0, min(items.count - 1, $0)) }
         }
 
         // MARK: Public
 
         /// The list of titles available for selection in the picker.
-        public let titles: [String]
+        public let items: [any PickerItem]
 
         /// The index of the initially selected option, if any.
         public let initialSelection: Int?
 
         /// The title of the initially selected option, if any.
-        public var initialTitle: String? {
+        public var initialItem: (any PickerItem)? {
             guard let initialSelection else {
                 return nil
             }
-            return titles.count > initialSelection ? titles[initialSelection] : nil
+            return items.count > initialSelection ? items[initialSelection] : nil
         }
     }
 
@@ -341,7 +345,7 @@ open class TextForm: NSObject {
         case text(String?)
 
         /// A selection from a picker.
-        case picker(String?)
+        case picker((any PickerItem)?)
 
         /// A date selected from a date picker, with an optional formatter.
         case date(Date?)
@@ -353,8 +357,8 @@ open class TextForm: NSObject {
             switch self {
             case let .text(string):
                 return string?.count ?? 0
-            case let .picker(string):
-                return string?.count ?? 0
+            case let .picker(item):
+                return item?.collectionComposerPickerItemTitle.count ?? 0
             case let .date(date):
                 return date == nil ? 0 : 1
             }
@@ -375,6 +379,20 @@ open class TextForm: NSObject {
                 return .picker
             case .date:
                 return .datePicker
+            }
+        }
+
+        func toString(_ formatter: DateFormatter? = nil) -> String? {
+            switch self {
+            case let .text(string):
+                return string
+            case let .picker(item):
+                return item?.collectionComposerPickerItemTitle
+            case let .date(date):
+                if let date {
+                    return formatter?.string(from: date) ?? date.description
+                }
+                return nil
             }
         }
     }
@@ -422,8 +440,8 @@ open class TextForm: NSObject {
         switch currentInput {
         case let .text(string):
             return string
-        case let .picker(string):
-            return string
+        case let .picker(item):
+            return item?.collectionComposerPickerItemTitle
         case let .date(date):
             if let date, let formatter = dateFormatter() {
                 return formatter.string(from: date) ?? date.description
@@ -483,8 +501,8 @@ open class TextForm: NSObject {
         return $currentInput.filter { newInput in
             if newInput?.inputKind == .picker,
                case let .picker(context) = inputStyle,
-               case let .picker(text) = newInput {
-                return context.titles.contains { $0 == text }
+               case let .picker(item) = newInput {
+                return context.items.contains { $0.collectionComposerPickerItemTitle == item?.collectionComposerPickerItemTitle }
             }
             else {
                 return newInput?.inputKind == inputKind
@@ -493,16 +511,16 @@ open class TextForm: NSObject {
             guard let cell, let self else {
                 return
             }
-            cell.inputField.text = toString()
+            cell.inputField.text = input?.toString(dateFormatter())
 
             switch (cell.inputField.inputView, input, inputStyle) {
             case let (datePicker as UIDatePicker, .date(date?), _):
                 if datePicker.date != date {
                     datePicker.setDate(date, animated: true)
                 }
-            case let (pickerView as UIPickerView, .picker(text?), .picker(context)):
+            case let (pickerView as UIPickerView, .picker(item?), .picker(context)):
                 let selectedRow = pickerView.selectedRow(inComponent: 0)
-                if let row = context.titles.firstIndex(of: text), selectedRow != row {
+                if let row = context.items.map(\.collectionComposerPickerItemTitle).firstIndex(of: item.collectionComposerPickerItemTitle), selectedRow != row {
                     pickerView.selectRow(row, inComponent: 0, animated: true)
                 }
             default:
@@ -697,7 +715,7 @@ extension TextForm: UIPickerViewDelegate, UIPickerViewDataSource {
 
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if case let .picker(context) = inputStyle {
-            return context.titles.count
+            return context.items.count
         }
         return 0
     }
@@ -706,14 +724,14 @@ extension TextForm: UIPickerViewDelegate, UIPickerViewDataSource {
 
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if case let .picker(context) = inputStyle {
-            return context.titles[row]
+            return context.items[row].collectionComposerPickerItemTitle
         }
         return nil
     }
 
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if case let .picker(context) = inputStyle {
-            currentInput = .picker(context.titles[row])
+            currentInput = .picker(context.items[row])
         }
     }
 }
