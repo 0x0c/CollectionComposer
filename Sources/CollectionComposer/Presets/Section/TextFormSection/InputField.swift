@@ -119,7 +119,8 @@ open class InputField: UITextField, UITextFieldDelegate {
         if let form {
             switch form.inputStyle {
             case let .datePicker:
-                if case let .date = form.currentInput, let picker = form.currentDatePicker() {
+                if form.currentInput == nil,
+                   let picker = form.currentDatePicker() {
                     form.currentInput = .date(picker.date)
                 }
             case let .picker(context):
