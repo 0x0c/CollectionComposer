@@ -44,13 +44,21 @@ open class TextForm: NSObject {
 
         switch inputStyle {
         case let .text(initialText, _):
-            currentInput = .text(initialText)
+            if let initialText {
+                currentInput = .text(initialText)
+            }
         case let .datePicker(context):
-            currentInput = .date(context.initialDate)
+            if let date = context.initialDate {
+                currentInput = .date(date)
+            }
         case let .picker(context):
-            currentInput = context.initialSelection == nil ? nil : .picker(context.initialItem)
+            if let initialInput = context.initialSelection == nil ? nil : context.initialItem {
+                currentInput = .picker(initialInput)
+            }
         case let .externalInput(initialText, _):
-            currentInput = .text(initialText)
+            if let initialText {
+                currentInput = .text(initialText)
+            }
         }
     }
 
@@ -342,25 +350,24 @@ open class TextForm: NSObject {
     /// Represents the possible inputs in a form.
     public enum Input: Sendable {
         /// A text input.
-        case text(String?)
+        case text(String)
 
         /// A selection from a picker.
-        case picker((any PickerItem)?)
+        case picker(any PickerItem)
 
         /// A date selected from a date picker, with an optional formatter.
-        case date(Date?)
+        case date(Date)
 
-        // MARK: Public
-
+        
         /// A count of characters or values in the input.
         public var count: Int {
             switch self {
             case let .text(string):
-                return string?.count ?? 0
+                return string.count ?? 0
             case let .picker(item):
-                return item?.collectionComposerPickerItemTitle.count ?? 0
+                return item.collectionComposerPickerItemTitle.count ?? 0
             case let .date(date):
-                return date == nil ? 0 : 1
+                return 1
             }
         }
 
@@ -368,7 +375,7 @@ open class TextForm: NSObject {
         public var isEmpty: Bool {
             return count == 0
         }
-
+        
         // MARK: Internal
 
         var inputKind: InputKind {
@@ -382,17 +389,14 @@ open class TextForm: NSObject {
             }
         }
 
-        func toString(_ formatter: DateFormatter? = nil) -> String? {
+        func toString(_ formatter: DateFormatter? = nil) -> String {
             switch self {
             case let .text(string):
                 return string
             case let .picker(item):
-                return item?.collectionComposerPickerItemTitle
+                return item.collectionComposerPickerItemTitle
             case let .date(date):
-                if let date {
-                    return formatter?.string(from: date) ?? date.description
-                }
-                return nil
+                return formatter?.string(from: date) ?? date.description
             }
         }
     }
@@ -447,12 +451,12 @@ open class TextForm: NSObject {
         case let .text(string):
             return string
         case let .picker(item):
-            return item?.collectionComposerPickerItemTitle
+            return item.collectionComposerPickerItemTitle
         case let .date(date):
-            if let date, let formatter = dateFormatter() {
-                return formatter.string(from: date) ?? date.description
+            if let formatter = dateFormatter() {
+                return formatter.string(from: date)
             }
-            return nil
+            return date.description
         case .none:
             return nil
         }
@@ -489,7 +493,7 @@ open class TextForm: NSObject {
         return currentInputPublisher.filter { update in
             if case let .picker(context) = update.form.inputStyle,
                case let .picker(item) = update.input {
-                return context.items.contains { $0.collectionComposerPickerItemTitle == item?.collectionComposerPickerItemTitle }
+                return context.items.contains { $0.collectionComposerPickerItemTitle == item.collectionComposerPickerItemTitle }
             }
             return true
         }.sink { [weak cell, weak self] _ in
@@ -686,11 +690,11 @@ open class TextForm: NSObject {
     @MainActor
     private func updateInputView() {
         switch (inputField?.inputView, currentInput, inputStyle) {
-        case let (datePicker as UIDatePicker, .date(date?), _):
+        case let (datePicker as UIDatePicker, .date(date), _):
             if datePicker.date != date {
                 datePicker.setDate(date, animated: true)
             }
-        case let (pickerView as UIPickerView, .picker(item?), .picker(context)):
+        case let (pickerView as UIPickerView, .picker(item), .picker(context)):
             let selectedRow = pickerView.selectedRow(inComponent: 0)
             if let row = context.items
                 .map(\.collectionComposerPickerItemTitle)

@@ -237,8 +237,8 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
         guard let form else {
             return
         }
-        if form.inputStyle.needsKeyboard {
-            form.currentInput = .text(textField.text)
+        if form.inputStyle.needsKeyboard, let text = textField.text {
+            form.currentInput = .text(text)
         }
         validateText()
     }
