@@ -554,6 +554,9 @@ open class TextForm: NSObject {
                 if let initialDate = context.initialDate {
                     picker.date = initialDate
                 }
+                else if let date = toDate() {
+                    picker.date = date
+                }
                 picker.addTarget(self, action: #selector(didDatePickerValueChange), for: .valueChanged)
                 picker.preferredDatePickerStyle = .wheels
                 picker.datePickerMode = context.mode
@@ -596,6 +599,11 @@ open class TextForm: NSObject {
                 picker.dataSource = self
                 if let initialSelection = context.initialSelection {
                     picker.selectRow(initialSelection, inComponent: 0, animated: false)
+                }
+                else if let index = context.items.firstIndex(where: {
+                    $0.collectionComposerPickerItemTitle == toPickerItem()?.collectionComposerPickerItemTitle
+                }) {
+                    picker.selectRow(index, inComponent: 0, animated: false)
                 }
                 pickerView = picker
                 return picker
