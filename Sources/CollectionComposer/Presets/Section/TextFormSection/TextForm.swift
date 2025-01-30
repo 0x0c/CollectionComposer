@@ -138,6 +138,19 @@ open class TextForm: NSObject {
         return true
     }
 
+    open func validate() -> ValidationResult {
+        if shouldValidate == false {
+            return .valid
+        }
+        if let validationHandler {
+            return validationHandler(self)
+        }
+        if isRequired {
+            return currentInput?.isEmpty == false ? .valid : .invalid(hint: "Form (label: \(label)) is requred but input is empty or nil.")
+        }
+        return .valid
+    }
+
     // MARK: Public
 
     /// Represents the various input styles available for a form, including text, date picker, and selection picker.
@@ -681,19 +694,6 @@ open class TextForm: NSObject {
             }
             _allowsEditing = newValue
         }
-    }
-
-    func validate() -> ValidationResult {
-        if shouldValidate == false {
-            return .valid
-        }
-        if let validationHandler {
-            return validationHandler(self)
-        }
-        if isRequired {
-            return currentInput?.isEmpty == false ? .valid : .invalid(hint: "Form (label: \(label)) is requred but input is empty or nil.")
-        }
-        return .valid
     }
 
     // MARK: Private
