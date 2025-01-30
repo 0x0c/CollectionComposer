@@ -377,6 +377,27 @@ open class TextForm: NSObject {
             return count == 0
         }
 
+        /// Returns the input as a date, if applicable.
+        public func toDate() -> Date? {
+            switch self {
+            case .picker, .text:
+                return nil
+            case let .date(date):
+                return date
+                return nil
+            }
+        }
+
+        /// Returns the input as a picker item, if applicable.
+        public func toPickerItem() -> (any PickerItem)? {
+            switch self {
+            case .date, .text:
+                return nil
+            case let .picker(item):
+                return item
+            }
+        }
+
         // MARK: Internal
 
         var inputKind: InputKind {
@@ -463,28 +484,6 @@ open class TextForm: NSObject {
         }
     }
 
-    /// Returns the input as a date, if applicable.
-    public func toDate() -> Date? {
-        switch currentInput {
-        case .picker, .text:
-            return nil
-        case let .date(date):
-            return date
-        case .none:
-            return nil
-        }
-    }
-
-    /// Returns the input as a picker item, if applicable.
-    public func toPickerItem() -> (any PickerItem)? {
-        switch currentInput {
-        case .date, nil, .text:
-            return nil
-        case let .picker(item):
-            return item
-        }
-    }
-
     /// Sets whether the keyboard should be shown for this form.
     ///
     /// - Parameter showKeyboard: A Boolean that indicates if the keyboard should be displayed.
@@ -544,7 +543,7 @@ open class TextForm: NSObject {
     public func currentDatePicker() -> UIDatePicker? {
         if case let .datePicker(context) = inputStyle {
             if let datePicker {
-                if let date = toDate() {
+                if let date = currentInput?.toDate() {
                     datePicker.date = date
                 }
                 return datePicker
@@ -554,7 +553,7 @@ open class TextForm: NSObject {
                 if let initialDate = context.initialDate {
                     picker.date = initialDate
                 }
-                else if let date = toDate() {
+                else if let date = currentInput?.toDate() {
                     picker.date = date
                 }
                 picker.addTarget(self, action: #selector(didDatePickerValueChange), for: .valueChanged)
@@ -601,7 +600,7 @@ open class TextForm: NSObject {
                     picker.selectRow(initialSelection, inComponent: 0, animated: false)
                 }
                 else if let index = context.items.firstIndex(where: {
-                    $0.collectionComposerPickerItemTitle == toPickerItem()?.collectionComposerPickerItemTitle
+                    $0.collectionComposerPickerItemTitle == currentInput?.toPickerItem()?.collectionComposerPickerItemTitle
                 }) {
                     picker.selectRow(index, inComponent: 0, animated: false)
                 }
