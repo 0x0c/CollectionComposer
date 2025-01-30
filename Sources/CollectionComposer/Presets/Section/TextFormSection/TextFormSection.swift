@@ -94,6 +94,8 @@ open class TextFormSection<T: TextFormCell>: Section {
     /// The unique identifier for the section.
     open var id: String
 
+    open var interGroupSpacing: CGFloat = 8
+
     /// An array of items in the section used for generating snapshots.
     open var snapshotItems: [AnyHashable] {
         return items
@@ -125,6 +127,14 @@ open class TextFormSection<T: TextFormCell>: Section {
         return self
     }
 
+    /// Set inter group spacing of NSCollectionLayoutSection
+    /// - Parameter spacing: Space between groups
+    /// - Returns: The updated `TextFormSection` instance.
+    open func interGroupSpacing(_ spacing: CGFloat) -> Self {
+        interGroupSpacing = spacing
+        return self
+    }
+
     /// Creates and returns the layout section for this form section, based on the provided environment.
     ///
     /// This layout section arranges cells with estimated height dimensions and custom insets.
@@ -146,7 +156,7 @@ open class TextFormSection<T: TextFormCell>: Section {
             subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 8
+        section.interGroupSpacing = interGroupSpacing
         section.boundarySupplementaryItems = boundarySupplementaryItems
         return section
     }
