@@ -100,7 +100,7 @@ open class TextForm: NSObject {
     /// - Parameter handler: A closure that takes the current input and returns a `ValidationResult`.
     /// - Returns: The configured `TextForm` instance.
     @discardableResult
-    open func validation(_ handler: @escaping (TextForm) -> ValidationResult) -> Self {
+    open func validation(_ handler: @MainActor @escaping (TextForm) -> ValidationResult) -> Self {
         validationHandler = handler
         return self
     }
