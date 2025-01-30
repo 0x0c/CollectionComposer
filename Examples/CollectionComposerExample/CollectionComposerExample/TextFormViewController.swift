@@ -98,6 +98,7 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
                 )
                 TextForm(placeholder: "Date picker", inputStyle: .datePicker(.init(nil, formatter: dateFormatter)))
                 TextForm(placeholder: "Time picker", inputStyle: .datePicker(.init(.now, mode: .time, formatter: dateFormatter)))
+                TextForm(placeholder: "Date picker (initial picker date)", inputStyle: .datePicker(.init(initialPickerDate: Date(timeIntervalSince1970: 0), formatter: dateFormatter)))
                 TextForm(placeholder: "Date and time picker", inputStyle: .datePicker(.init(.now, mode: .dateAndTime, formatter: dateFormatter)))
                 TextForm(placeholder: "Date and time picker", inputStyle: .datePicker(.init(.now)))
                     .allowsToShowKeyboard(false)

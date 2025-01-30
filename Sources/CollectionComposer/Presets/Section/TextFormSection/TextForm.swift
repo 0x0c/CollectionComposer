@@ -220,6 +220,7 @@ open class TextForm: NSObject {
         ///   - formatter: A formatter for displaying the selected date, if any.
         public init(
             _ initialDate: Date? = nil,
+            initialPickerDate: Date? = nil,
             mode: UIDatePicker.Mode = .date,
             minimumDate: Date? = nil,
             maximumDate: Date? = nil,
@@ -229,6 +230,7 @@ open class TextForm: NSObject {
             formatter: DateFormatter? = nil
         ) {
             self.initialDate = initialDate
+            self.initialPickerDate = initialPickerDate
             self.mode = mode
             self.minimumDate = minimumDate
             self.maximumDate = maximumDate
@@ -240,8 +242,11 @@ open class TextForm: NSObject {
 
         // MARK: Public
 
-        /// The initial date for the picker, if any.
+        /// The initial date for the form, if any.
         public let initialDate: Date?
+
+        /// The initial date for the picker, if any.
+        public let initialPickerDate: Date?
 
         /// The mode of the date picker (e.g., date, time).
         public let mode: UIDatePicker.Mode
@@ -553,6 +558,9 @@ open class TextForm: NSObject {
                 let picker = UIDatePicker()
                 if let initialDate = context.initialDate {
                     picker.date = initialDate
+                }
+                else if let initialPickerDate = context.initialPickerDate {
+                    picker.date = initialPickerDate
                 }
                 else if let date = currentInput?.toDate() {
                     picker.date = date
