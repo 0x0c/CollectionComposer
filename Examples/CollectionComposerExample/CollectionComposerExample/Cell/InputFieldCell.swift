@@ -14,7 +14,7 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell, UIText
 
     public var form: TextForm?
 
-    public func didUpdateFormInput(_ input: TextForm.Input?) {}
+    public func didUpdateFormInput(_ form: TextForm) {}
 
     // MARK: Internal
 

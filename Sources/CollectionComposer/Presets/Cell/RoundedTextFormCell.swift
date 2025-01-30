@@ -123,7 +123,7 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
         return textField
     }()
 
-    public func didUpdateFormInput(_ input: TextForm.Input?) {
+    public func didUpdateFormInput(_ form: TextForm) {
         validateText()
     }
 

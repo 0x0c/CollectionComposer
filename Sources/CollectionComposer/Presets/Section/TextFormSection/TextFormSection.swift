@@ -31,7 +31,10 @@ public protocol TextFormCell: UICollectionViewCell {
     /// - Parameter form: The `TextForm` object that provides data and configuration for the cell.
     @MainActor func configure(_ form: TextForm)
 
-    func didUpdateFormInput(_ input: TextForm.Input?)
+    /// Handle input value change.
+    ///
+    /// - Parameter form: The `TextForm` object that provides data and configuration for the cell.
+    @MainActor func didUpdateFormInput(_ form: TextForm)
 }
 
 // MARK: - TextFormSection
