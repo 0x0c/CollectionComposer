@@ -100,7 +100,7 @@ open class TextForm: NSObject {
     /// - Parameter handler: A closure that takes the current input and returns a `ValidationResult`.
     /// - Returns: The configured `TextForm` instance.
     @discardableResult
-    open func validation(_ handler: @escaping (Input?) -> ValidationResult) -> Self {
+    open func validation(_ handler: @escaping (TextForm, Input?) -> ValidationResult) -> Self {
         validationHandler = handler
         return self
     }
@@ -432,7 +432,7 @@ open class TextForm: NSObject {
     /// `validationHandler` is a closure that evaluates the validity of the current input. When provided, this handler
     /// is called to perform custom validation on the input and returns a `ValidationResult`, indicating whether
     /// the input meets specified criteria.
-    public var validationHandler: ((Input?) -> ValidationResult)?
+    public var validationHandler: ((TextForm, Input?) -> ValidationResult)?
 
     /// A publisher that sends the input value and the form when the current input is changed.
     public lazy var currentInputPublisher = currentInputSubject.eraseToAnyPublisher()
@@ -668,7 +668,7 @@ open class TextForm: NSObject {
 
     func validate() -> ValidationResult {
         if let validationHandler {
-            return validationHandler(currentInput)
+            return validationHandler(self, currentInput)
         }
         if isRequired {
             return currentInput?.isEmpty == false ? .valid : .invalid(hint: "Form (label: \(label)) is requred but input is empty or nil.")

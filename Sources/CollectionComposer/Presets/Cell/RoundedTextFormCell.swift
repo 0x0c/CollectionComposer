@@ -251,7 +251,7 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
         if shouldValidate,
            let form,
            let handler = form.validationHandler {
-            switch handler(form.currentInput) {
+            switch handler(form, form.currentInput) {
             case .valid:
                 validationHintlabel.isHidden = true
                 validationHintlabel.alpha = 0
