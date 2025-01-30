@@ -37,9 +37,9 @@ class LogInFormViewController: ComposedCollectionViewController, SectionProvider
                 TextForm(label: "Username", placeholder: "Your name")
                 TextForm(placeholder: "Email")
                 TextForm(placeholder: "Password", isSecureText: true)
-                    .validation { _, input in
+                    .validation { form in
                         print("validate")
-                        guard let input else {
+                        guard let input = form.currentInput else {
                             return .invalid(hint: "Password should not be empty.")
                         }
                         if case let .text(text) = input,
@@ -54,8 +54,8 @@ class LogInFormViewController: ComposedCollectionViewController, SectionProvider
                 TextForm(label: "Username", placeholder: "Your name")
                 TextForm(label: "Email", placeholder: "Email")
                 TextForm(label: "Password", placeholder: "Password", isSecureText: true)
-                    .validation { _, input in
-                        guard let input else {
+                    .validation { form in
+                        guard let input = form.currentInput else {
                             return .invalid(hint: "Password should not be empty.")
                         }
                         if case let .text(text) = input,
