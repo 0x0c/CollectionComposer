@@ -168,7 +168,7 @@ open class InputField: UITextField, UITextFieldDelegate {
                 object: nil,
                 userInfo: [TextFormNotification.textFormKey: self]
             )
-            handler(form?.toString())
+            handler(form?.toFormattedString())
             resignFirstResponder()
             return false
         }

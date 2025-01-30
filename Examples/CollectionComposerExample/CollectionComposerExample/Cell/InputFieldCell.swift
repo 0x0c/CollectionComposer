@@ -25,7 +25,7 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell, UIText
         cancellable.removeAll()
         self.form = form
         form.currentInputPublisher.map { input in
-            return input.form.toString()
+            return input.form.toFormattedString()
         }.assign(to: \UITextField.text, on: inputField)
             .store(in: &cancellable)
 

@@ -398,6 +398,17 @@ open class TextForm: NSObject {
             }
         }
 
+        public func toString(_ formatter: DateFormatter? = nil) -> String {
+            switch self {
+            case let .text(string):
+                return string
+            case let .picker(item):
+                return item.collectionComposerPickerItemTitle
+            case let .date(date):
+                return formatter?.string(from: date) ?? date.description
+            }
+        }
+
         // MARK: Internal
 
         var inputKind: InputKind {
@@ -408,17 +419,6 @@ open class TextForm: NSObject {
                 return .picker
             case .date:
                 return .datePicker
-            }
-        }
-
-        func toString(_ formatter: DateFormatter? = nil) -> String {
-            switch self {
-            case let .text(string):
-                return string
-            case let .picker(item):
-                return item.collectionComposerPickerItemTitle
-            case let .date(date):
-                return formatter?.string(from: date) ?? date.description
             }
         }
     }
@@ -468,7 +468,7 @@ open class TextForm: NSObject {
     }
 
     /// Returns the input as a string, if applicable.
-    public func toString() -> String? {
+    public func toFormattedString() -> String? {
         switch currentInput {
         case let .text(string):
             return string
@@ -499,7 +499,7 @@ open class TextForm: NSObject {
     /// - Returns: A `AnyCancellable` instance managing the subscription.
     @MainActor public func bind(_ cell: TextFormCell) -> AnyCancellable {
         prepareCell(cell)
-        inputField?.text = toString()
+        inputField?.text = toFormattedString()
         return currentInputPublisher.filter { update in
             if case let .picker(context) = update.form.inputStyle,
                case let .picker(item) = update.input {
@@ -510,7 +510,7 @@ open class TextForm: NSObject {
             guard let cell, let self else {
                 return
             }
-            inputField?.text = toString()
+            inputField?.text = toFormattedString()
             updateInputView()
         }
     }

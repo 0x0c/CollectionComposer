@@ -23,7 +23,7 @@ class LogInFormViewController: ComposedCollectionViewController, SectionProvider
                 let result = self?.sections.compactMap {
                     $0 as? TextFormSection<RoundedTextFormCell>
                 }.flatMap(\.items).compactMap { item in
-                    item.toString()
+                    item.toFormattedString()
                 }.joined(separator: ", ")
                 if let result {
                     print(result)
