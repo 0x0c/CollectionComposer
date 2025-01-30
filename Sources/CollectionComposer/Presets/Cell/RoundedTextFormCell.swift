@@ -123,6 +123,10 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
         return textField
     }()
 
+    public func didUpdateFormInput(_ input: TextForm.Input?) {
+        validateText()
+    }
+
     /// Called when the text field finishes editing.
     ///
     /// This method triggers validation when editing ends.

@@ -14,6 +14,8 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell, UIText
 
     public var form: TextForm?
 
+    public func didUpdateFormInput(_ input: TextForm.Input?) {}
+
     // MARK: Internal
 
     static let defaultTextFieldHeight: CGFloat = 39

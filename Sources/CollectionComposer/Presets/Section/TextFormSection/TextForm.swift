@@ -506,10 +506,11 @@ open class TextForm: NSObject {
                 return context.items.contains { $0.collectionComposerPickerItemTitle == item.collectionComposerPickerItemTitle }
             }
             return true
-        }.sink { [weak cell, weak self] _ in
+        }.sink { [weak cell, weak self] update in
             guard let cell, let self else {
                 return
             }
+            cell.didUpdateFormInput(update.input)
             inputField?.text = toFormattedString()
             updateInputView()
         }
