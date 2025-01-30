@@ -510,7 +510,7 @@ open class TextForm: NSObject {
             guard let cell, let self else {
                 return
             }
-            cell.didUpdateFormInput(update.input)
+            cell.didUpdateFormInput(update.form)
             inputField?.text = toFormattedString()
             updateInputView()
         }
