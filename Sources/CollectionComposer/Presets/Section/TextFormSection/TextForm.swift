@@ -30,16 +30,19 @@ open class TextForm: NSObject {
     ///   - label: The label displayed for the form field. Defaults to `nil`.
     ///   - placeholder: The placeholder text displayed in the input field. Defaults to `nil`.
     ///   - isRequired: A Boolean indicating if the field is required. Defaults to `false`.
+    ///   - shouldValidate: A Boolean indicating whether the form input valiate.
     ///   - inputStyle: The style of input for the form (e.g., text, date picker, or selection picker). Defaults to `.text(nil, TextInputContext())`.
     public init(
         label: String? = nil,
         placeholder: String? = nil,
         isRequired: Bool = false,
+        shouldValidate: Bool = true,
         inputStyle: InputStyle = .text(nil, TextInputContext())
     ) {
         self.label = label
         self.placeholder = placeholder
         self.isRequired = isRequired
+        self.shouldValidate = shouldValidate
         self.inputStyle = inputStyle
 
         switch inputStyle {
@@ -69,18 +72,21 @@ open class TextForm: NSObject {
     ///   - text: The initial text to display in the form field. Defaults to `nil`.
     ///   - placeholder: The placeholder text displayed in the input field. Defaults to `nil`.
     ///   - isRequired: A Boolean indicating if the field is required. Defaults to `false`.
+    ///   - shouldValidate: A Boolean indicating whether the form input valiate.
     ///   - isSecureText: A Boolean indicating if the text should be securely hidden. Defaults to `false`.
     public convenience init(
         label: String? = nil,
         text: String? = nil,
         placeholder: String? = nil,
         isRequired: Bool = false,
+        shouldValidate: Bool = true,
         isSecureText: Bool = false
     ) {
         self.init(
             label: label,
             placeholder: placeholder,
             isRequired: isRequired,
+            shouldValidate: shouldValidate,
             inputStyle: .text(text, TextInputContext(isSecureText: isSecureText))
         )
     }
@@ -89,6 +95,9 @@ open class TextForm: NSObject {
 
     /// A Boolean indicating whether the form input is required.
     open var isRequired: Bool
+
+    /// A Boolean indicating whether the form input valiate.
+    open var shouldValidate: Bool = true
 
     /// A Boolean indicating whether the current input is valid, based on validation rules.
     open var isValid: Bool {
@@ -675,6 +684,9 @@ open class TextForm: NSObject {
     }
 
     func validate() -> ValidationResult {
+        if shouldValidate == false {
+            return .valid
+        }
         if let validationHandler {
             return validationHandler(self)
         }
