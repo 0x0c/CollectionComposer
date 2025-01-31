@@ -123,6 +123,10 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
         return textField
     }()
 
+    public func needsValidateInput() {
+        validateText()
+    }
+
     public func didUpdateFormInput(_ form: TextForm) {
         validateText()
     }
@@ -132,7 +136,7 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
     /// This method triggers validation when editing ends.
     /// - Parameter textField: The text field that ended editing.
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        shouldValidate = true
+        form?.shouldValidate = true
         validateText()
     }
 
@@ -142,7 +146,7 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
     /// - Parameter textField: The text field in which the return button was pressed.
     /// - Returns: A Boolean indicating whether the text field should process the return press.
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        shouldValidate = true
+        form?.shouldValidate = true
         guard let form else {
             return true
         }
@@ -177,9 +181,6 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
     }
 
     // MARK: Internal
-
-    /// Indicates whether validation should be performed.
-    var shouldValidate = false
 
     /// A Boolean indicating whether the text entry is secure.
     var isSecureTextEntry: Bool {
@@ -252,8 +253,8 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
     /// This method checks the input against the form's validation handler and updates
     /// the visibility of the validation hint label based on the result.
     private func validateText() {
-        if shouldValidate,
-           let form,
+        if let form,
+           form.shouldValidate,
            let handler = form.validationHandler {
             switch handler(form) {
             case .valid:

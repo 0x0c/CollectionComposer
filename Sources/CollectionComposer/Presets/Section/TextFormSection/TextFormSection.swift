@@ -35,6 +35,9 @@ public protocol TextFormCell: UICollectionViewCell {
     ///
     /// - Parameter form: The `TextForm` object that provides data and configuration for the cell.
     @MainActor func didUpdateFormInput(_ form: TextForm)
+
+    /// This function is called when the form needs update the cell.
+    @MainActor func needsValidateInput()
 }
 
 // MARK: - TextFormSection

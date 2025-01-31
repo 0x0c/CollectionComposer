@@ -101,7 +101,24 @@ open class TextForm: NSObject {
 
     /// A Boolean indicating whether the current input is valid, based on validation rules.
     open var isValid: Bool {
-        return validate() == .valid
+        return currentValidationResult == .valid
+    }
+
+    /// Returns result of validation.
+    open var currentValidationResult: ValidationResult {
+        var result: ValidationResult = {
+            if shouldValidate == false {
+                return .valid
+            }
+            if let validationHandler {
+                return validationHandler(self)
+            }
+            if isRequired {
+                return currentInput?.isEmpty == false ? .valid : .invalid(hint: "Form (label: \(label)) is requred but input is empty or nil.")
+            }
+            return .valid
+        }()
+        return result
     }
 
     /// Configures a custom validation handler for the form.
@@ -138,17 +155,12 @@ open class TextForm: NSObject {
         return true
     }
 
-    open func validate() -> ValidationResult {
-        if shouldValidate == false {
-            return .valid
+    /// Validate input value.
+    /// This function nofifies binded cell should be update.
+    open func validate() {
+        Task { @MainActor in
+            self.cell?.needsValidateInput()
         }
-        if let validationHandler {
-            return validationHandler(self)
-        }
-        if isRequired {
-            return currentInput?.isEmpty == false ? .valid : .invalid(hint: "Form (label: \(label)) is requred but input is empty or nil.")
-        }
-        return .valid
     }
 
     // MARK: Public
@@ -526,6 +538,7 @@ open class TextForm: NSObject {
     /// - Returns: A `AnyCancellable` instance managing the subscription.
     @MainActor public func bind(_ cell: TextFormCell) -> AnyCancellable {
         prepareCell(cell)
+        self.cell = cell
         inputField?.text = toFormattedString()
         return currentInputPublisher.filter { update in
             if case let .picker(context) = update.form.inputStyle,
@@ -698,6 +711,7 @@ open class TextForm: NSObject {
 
     // MARK: Private
 
+    private weak var cell: TextFormCell?
     private var currentInputSubject = PassthroughSubject<(input: Input?, form: TextForm), Never>()
     private var inputField: InputField?
 
@@ -706,6 +720,8 @@ open class TextForm: NSObject {
     private var pickerView: UIPickerView?
 
     private var _shouldFocusTextFieldSubject = PassthroughSubject<Void, Never>()
+    private var _shouldValidateSubject = PassthroughSubject<Void, Never>()
+
     private let id = UUID()
 
     @MainActor
