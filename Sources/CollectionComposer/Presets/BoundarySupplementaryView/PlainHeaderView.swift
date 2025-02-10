@@ -57,8 +57,8 @@ open class PlainHeaderView: PlainBoundaryHeaderView, BoundarySupplementaryHeader
 
     /// The mode configuration for the header in a list layout.
     ///
-    /// Specifies the header mode, defaulting to `.firstItemInSection` if the header is expandable, otherwise `.none`.
-    open var headerMode: UICollectionLayoutListConfiguration.HeaderMode { isExpandable ? .firstItemInSection : .none }
+    /// Specifies the header mode, defaulting to `.firstItemInSection` if the header is expandable, otherwise `.supplementary`.
+    open var headerMode: UICollectionLayoutListConfiguration.HeaderMode { isExpandable ? .firstItemInSection : .supplementary }
 
     /// The element kind for the header, used to register and dequeue the header in the collection view.
     ///

@@ -59,8 +59,8 @@ open class PlainFooterView: PlainBoundaryView, BoundarySupplementaryFooterView, 
 
     /// The mode configuration for the footer in a list layout.
     ///
-    /// This property determines the footer mode, defaulting to `.none`.
-    open var footerMode: UICollectionLayoutListConfiguration.FooterMode { .none }
+    /// This property determines the footer mode, defaulting to `.supplementary`.
+    open var footerMode: UICollectionLayoutListConfiguration.FooterMode { .supplementary }
 
     /// Prepares the footer view for display by setting up its registration and configuring its content.
     ///
