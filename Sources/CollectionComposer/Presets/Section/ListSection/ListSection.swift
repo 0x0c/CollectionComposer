@@ -115,8 +115,8 @@ open class ListSection: ListableSection, HighlightableSection {
     public typealias Cell = UICollectionViewListCell
     public typealias Item = (any ListCellConfigurable)
 
-    public var contentInsetsReference: UIContentInsetsReference = .automatic
-    public var supplementaryContentInsetsReference: UIContentInsetsReference = .automatic
+    public var contentInsetsReference: UIContentInsetsReference?
+    public var supplementaryContentInsetsReference: UIContentInsetsReference?
     public let id: String
     public private(set) var items: [any ListCellConfigurable]
     public var isExpanded = true

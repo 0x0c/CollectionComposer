@@ -181,8 +181,8 @@ open class SwiftUIListSection<View: SwiftUIListCellView>: ListableSection, Highl
     /// The type of item used in this section.
     public typealias Item = View.Model
 
-    public var contentInsetsReference: UIContentInsetsReference = .automatic
-    public var supplementaryContentInsetsReference: UIContentInsetsReference = .automatic
+    public var contentInsetsReference: UIContentInsetsReference?
+    public var supplementaryContentInsetsReference: UIContentInsetsReference?
     /// The configuration for cells in the section.
     public private(set) var configuration: CellConfiguration
 

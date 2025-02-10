@@ -230,9 +230,13 @@ open class ComposedCollectionViewController: UIViewController {
                 return nil
             }
             let layoutSection = section.layoutSection(for: environment)
-            layoutSection.contentInsetsReference = section.contentInsetsReference
+            if let contentInsetsReference = section.contentInsetsReference {
+                layoutSection.contentInsetsReference = contentInsetsReference
+            }
             if #available(iOS 16.0, *) {
-                layoutSection.supplementaryContentInsetsReference = section.supplementaryContentInsetsReference
+                if let supplementaryContentInsetsReference = section.supplementaryContentInsetsReference {
+                    layoutSection.supplementaryContentInsetsReference = supplementaryContentInsetsReference
+                }
             }
             section.registerDecorationItems(layoutSection)
             let layoutElementKinds = layoutSection.boundarySupplementaryItems.map(\.elementKind)

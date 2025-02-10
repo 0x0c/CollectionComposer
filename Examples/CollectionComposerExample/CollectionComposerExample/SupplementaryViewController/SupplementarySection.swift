@@ -28,8 +28,8 @@ class SupplementarySection: Section {
 
     // MARK: Public
 
-    public var contentInsetsReference: UIContentInsetsReference = .automatic
-    public var supplementaryContentInsetsReference: UIContentInsetsReference = .automatic
+    public var contentInsetsReference: UIContentInsetsReference?
+    public var supplementaryContentInsetsReference: UIContentInsetsReference?
     public var header: (any BoundarySupplementaryHeaderView)?
     public var footer: (any BoundarySupplementaryFooterView)?
 

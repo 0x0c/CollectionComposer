@@ -55,8 +55,8 @@ public protocol Section {
     /// Indicates the section allows to expand cells.
     var isExpandable: Bool { get }
 
-    var contentInsetsReference: UIContentInsetsReference { get set }
-    var supplementaryContentInsetsReference: UIContentInsetsReference { get set }
+    var contentInsetsReference: UIContentInsetsReference? { get set }
+    var supplementaryContentInsetsReference: UIContentInsetsReference? { get set }
 
     @discardableResult
     func contentInsetsReference(_ reference: UIContentInsetsReference) -> Self

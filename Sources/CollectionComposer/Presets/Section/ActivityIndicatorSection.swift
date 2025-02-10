@@ -199,8 +199,8 @@ open class ActivityIndicatorSection: Section {
     public typealias Cell = ActivityIndicatorCell
     public typealias Item = IndicatorContent
 
-    public var contentInsetsReference: UIContentInsetsReference = .automatic
-    public var supplementaryContentInsetsReference: UIContentInsetsReference = .automatic
+    public var contentInsetsReference: UIContentInsetsReference?
+    public var supplementaryContentInsetsReference: UIContentInsetsReference?
     public var id: String
 
     public var header: (any BoundarySupplementaryHeaderView)?
