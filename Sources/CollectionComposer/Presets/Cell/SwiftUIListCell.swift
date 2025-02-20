@@ -20,7 +20,7 @@ import SwiftUI
 open class SwiftUIListCell<View: SwiftUIListCellView>: UICollectionViewListCell {
     // MARK: Open
 
-    /// Configures the cell with a model conforming to the `SwiftUICellViewModel` protocol.
+    /// Configures the cell with a model conforming to the `SwiftUICellViewEntity` protocol.
     ///
     /// This method applies the model to the SwiftUI view and sets up the cell's content configuration,
     /// adjusting margins, indentation, and accessories based on the model's properties.
@@ -52,7 +52,7 @@ open class SwiftUIListCell<View: SwiftUIListCellView>: UICollectionViewListCell 
     private(set) var model: View.Model?
 }
 
-// MARK: - SwiftUICellViewModel
+// MARK: - SwiftUICellViewEntity
 
 /// A protocol that defines the properties required for a model used in a `SwiftUIListCell`.
 ///
@@ -61,7 +61,7 @@ open class SwiftUIListCell<View: SwiftUIListCellView>: UICollectionViewListCell 
 ///
 /// - Note: This protocol is available on iOS 16.0 and later.
 @available(iOS 16.0, *)
-public protocol SwiftUICellViewModel: Hashable, ReorderableItem {
+public protocol SwiftUICellViewEntity: Hashable, ReorderableItem {
     /// The width of the indentation for the cell, if any.
     var indentationWidth: CGFloat? { get }
 
@@ -81,9 +81,9 @@ public protocol SwiftUICellViewModel: Hashable, ReorderableItem {
     var canMove: Bool { get }
 }
 
-/// Default implementations for optional properties in `SwiftUICellViewModel`.
+/// Default implementations for optional properties in `SwiftUICellViewEntity`.
 @available(iOS 16.0, *)
-public extension SwiftUICellViewModel {
+public extension SwiftUICellViewEntity {
     var indentationWidth: CGFloat? { nil }
     var indentationLevel: Int? { nil }
     var indentsAccessories: Bool { true }
@@ -96,7 +96,7 @@ public extension SwiftUICellViewModel {
 
 /// A protocol for SwiftUI views that can be used within a `SwiftUIListCell`.
 ///
-/// Conforming views are initialized with a model conforming to `SwiftUICellViewModel`,
+/// Conforming views are initialized with a model conforming to `SwiftUICellViewEntity`,
 /// allowing SwiftUI content to be dynamically configured and displayed within a collection view cell.
 ///
 /// - Note: This protocol is available on iOS 16.0 and later.
@@ -104,7 +104,7 @@ public extension SwiftUICellViewModel {
 @MainActor
 public protocol SwiftUIListCellView: View {
     /// The model type that the view uses for configuration.
-    associatedtype Model: SwiftUICellViewModel
+    associatedtype Model: SwiftUICellViewEntity
 
     /// Initializes the view with the given model.
     ///

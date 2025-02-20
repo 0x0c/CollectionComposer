@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: - ExampleData
 
-struct ExampleData: SwiftUICellViewModel, Hashable {
+struct ExampleData: SwiftUICellViewEntity, Hashable {
     let title: String
 
     var canMove: Bool = .random()
