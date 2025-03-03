@@ -106,7 +106,7 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
     public static let defaultTextFieldHeight: CGFloat = 30
 
     /// The default height for the cell.
-    public static let defaultHeight: CGFloat = 50
+    public static let defaultHeight: NSCollectionLayoutDimension = .absolute(50)
 
     /// The form object that manages the text input and validation for the cell.
     public var form: TextForm?

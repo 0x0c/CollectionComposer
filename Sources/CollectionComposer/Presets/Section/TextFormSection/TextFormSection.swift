@@ -19,7 +19,7 @@ public protocol TextFormCell: UICollectionViewCell {
     static var defaultTextFieldHeight: CGFloat { get }
 
     /// The default height for the cell.
-    static var defaultHeight: CGFloat { get }
+    static var defaultHeight: NSCollectionLayoutDimension { get }
 
     /// The input field associated with the cell.
     ///
@@ -147,12 +147,12 @@ open class TextFormSection<T: TextFormCell>: Section {
     open func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(T.defaultHeight)
+            heightDimension: T.defaultHeight
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(T.defaultHeight)
+            heightDimension: T.defaultHeight
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,

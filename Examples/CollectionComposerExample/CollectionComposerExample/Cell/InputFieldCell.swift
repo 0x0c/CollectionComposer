@@ -20,7 +20,7 @@ class InputFieldCell: UICollectionViewCell, @preconcurrency TextFormCell, UIText
     // MARK: Internal
 
     static let defaultTextFieldHeight: CGFloat = 39
-    static let defaultHeight: CGFloat = 60
+    static let defaultHeight: NSCollectionLayoutDimension = .absolute(60)
 
     var inputField: CollectionComposer.InputField { textField }
 
