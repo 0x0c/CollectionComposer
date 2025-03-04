@@ -114,7 +114,9 @@ open class TextForm: NSObject {
                 return validationHandler(self)
             }
             if isRequired {
-                return currentInput?.isEmpty == false ? .valid : .invalid(hint: "Form (label: \(label)) is requred but input is empty or nil.")
+                return currentInput?.isEmpty == false ? .valid : .invalid(
+                    hint: .string("Should not be empty.")
+                )
             }
             return .valid
         }()
@@ -370,9 +372,14 @@ open class TextForm: NSObject {
         case valid
 
         /// The input is invalid, with an optional hint message.
-        case invalid(hint: String?)
+        case invalid(hint: Hint)
 
         // MARK: Public
+
+        public enum Hint {
+            case string(String)
+            case silent
+        }
 
         public static func == (lhs: ValidationResult, rhs: ValidationResult) -> Bool {
             switch (lhs, rhs) {

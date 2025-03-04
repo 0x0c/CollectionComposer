@@ -261,9 +261,15 @@ open class RoundedTextFormCell: UICollectionViewCell, TextFormCell, UITextFieldD
                 validationHintlabel.isHidden = true
                 validationHintlabel.alpha = 0
             case let .invalid(hint):
-                validationHintlabel.isHidden = false
-                validationHintlabel.alpha = 1
-                validationHintlabel.text = hint
+                switch hint {
+                case let .string(hint):
+                    validationHintlabel.isHidden = false
+                    validationHintlabel.alpha = 1
+                    validationHintlabel.text = hint
+                case .silent:
+                    validationHintlabel.isHidden = true
+                    validationHintlabel.alpha = 0
+                }
             }
         }
         else {
