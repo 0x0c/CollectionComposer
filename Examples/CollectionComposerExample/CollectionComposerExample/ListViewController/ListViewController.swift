@@ -57,7 +57,7 @@ class ListViewController: ComposedCollectionViewController, SectionProvider, Sec
         store(animate: false) {
             ListSection2(id: "first", apperarance: .plain) {
                 ListItem(highlightable: true, text: "Item 1")
-                ListItem(text: "Item 2")
+                ListItem(highlightable: true, text: "Item 2")
                 ListItem(text: "Item 3")
                 ListItem(text: "Item 4")
                 ListItem(text: "Item 5")

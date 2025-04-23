@@ -382,7 +382,7 @@ public extension ListableSection {
     }
 
     func actualIndex(at index: Int) -> Int {
-        if header is ExpandableHeader {
+        if let header = header as? ExpandableHeader, header.isExpandable {
             return max(0, index - 1)
         }
         if listConfiguration.headerMode == .firstItemInSection {
