@@ -105,9 +105,4 @@ public extension SwiftUICellViewEntity {
 public protocol SwiftUIListCellView: View {
     /// The model type that the view uses for configuration.
     associatedtype Model: SwiftUICellViewEntity
-
-    /// Initializes the view with the given model.
-    ///
-    /// - Parameter model: The model that provides data and layout settings for the view.
-    init(_ model: Model)
 }
