@@ -57,6 +57,6 @@ open class TextViewCell: UICollectionViewCell {
             textView.text = nil
         }
         let height = textView.sizeThatFits(CGSize(width: textView.frame.size.width, height: CGFloat.greatestFiniteMagnitude)).height
-        textView.heightAnchor.constraint(equalToConstant: height).isActive = true
+        textView.heightAnchor.constraint(equalToConstant: height + 8).isActive = true
     }
 }
