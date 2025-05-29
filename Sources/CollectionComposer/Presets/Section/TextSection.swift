@@ -47,7 +47,7 @@ public protocol TextCell: UICollectionViewCell {
 /// - Note: This enum conforms to `Hashable`, making it suitable for use in hashed collections.
 public enum StringRepresentation: Hashable {
     /// Plain text with a specified font.
-    case plain(text: String, font: UIFont)
+    case plain(text: String, font: UIFont = .systemFont(ofSize: UIFont.labelFontSize))
 
     /// Attributed text.
     case attributed(text: NSAttributedString)
