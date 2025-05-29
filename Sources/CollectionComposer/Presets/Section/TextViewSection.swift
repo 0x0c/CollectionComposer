@@ -63,6 +63,22 @@ open class TextViewSection: Section {
             subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: group)
+        if let header {
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: header.layoutSize,
+                elementKind: header.elementKind,
+                alignment: .top
+            )
+            section.boundarySupplementaryItems.append(sectionHeader)
+        }
+        if let footer {
+            let sectionFooter = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: footer.layoutSize,
+                elementKind: footer.elementKind,
+                alignment: .bottom
+            )
+            section.boundarySupplementaryItems.append(sectionFooter)
+        }
         return section
     }
 

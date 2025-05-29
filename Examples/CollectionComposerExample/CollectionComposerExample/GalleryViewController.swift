@@ -82,7 +82,7 @@ class GalleryViewController: ComposedCollectionViewController, SectionProvider, 
                     """,
                     font: UIFont.systemFont(ofSize: UIFont.labelFontSize)
                 )
-            )
+            ).header(PlainHeaderView("Text View"))
             SwiftUIButtonSection(id: "button2", state: SwiftUIButtonState()) {
                 print("hoge")
             } label: {
