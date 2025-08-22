@@ -48,8 +48,8 @@ class TextFormViewController: ComposedCollectionViewController, SectionProvider,
         dateFormatter.dateFormat = "yyyy-MM-dd 'at' HH:mm"
         store {
             TextFormSection<RoundedTextFormCell>(id: "text") {
-                TextForm(label: "Label", text: "Initial text", placeholder: "Placeholder")
-                TextForm(placeholder: "Email")
+                TextForm(label: "Label", text: "Initial text", placeholder: "Placeholder", clearButtonMode: .always)
+                TextForm(placeholder: "Email", clearButtonMode: .whileEditing)
                 TextForm(placeholder: "Password", isSecureText: true)
                     .validation { form in
                         guard let input = form.currentInput else {

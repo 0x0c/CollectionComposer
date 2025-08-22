@@ -29,18 +29,27 @@ open class TextForm: NSObject {
     /// - Parameters:
     ///   - label: The label displayed for the form field. Defaults to `nil`.
     ///   - placeholder: The placeholder text displayed in the input field. Defaults to `nil`.
+    ///   - clearButtonMode: The clear button mode in the input field. Defaults to `.never`.
+    ///   - rightViewMode: The right view mode in the input field. Defaults to `.never`.
+    ///   - leftViewMode: The left view mode in the input field. Defaults to `.never`.
     ///   - isRequired: A Boolean indicating if the field is required. Defaults to `false`.
     ///   - shouldValidate: A Boolean indicating whether the form input valiate.
     ///   - inputStyle: The style of input for the form (e.g., text, date picker, or selection picker). Defaults to `.text(nil, TextInputContext())`.
     public init(
         label: String? = nil,
         placeholder: String? = nil,
+        clearButtonMode: UITextField.ViewMode = .never,
+        rightViewMode: UITextField.ViewMode = .never,
+        leftViewMode: UITextField.ViewMode = .never,
         isRequired: Bool = false,
         shouldValidate: Bool = true,
         inputStyle: InputStyle = .text(nil, TextInputContext())
     ) {
         self.label = label
         self.placeholder = placeholder
+        self.clearButtonMode = clearButtonMode
+        self.rightViewMode = rightViewMode
+        self.leftViewMode = leftViewMode
         self.isRequired = isRequired
         self.shouldValidate = shouldValidate
         self.inputStyle = inputStyle
@@ -71,6 +80,9 @@ open class TextForm: NSObject {
     ///   - label: The label displayed for the form field. Defaults to `nil`.
     ///   - text: The initial text to display in the form field. Defaults to `nil`.
     ///   - placeholder: The placeholder text displayed in the input field. Defaults to `nil`.
+    ///   - clearButtonMode: The clear button mode in the input field. Defaults to `.never`.
+    ///   - rightViewMode: The right view mode in the input field. Defaults to `.never`.
+    ///   - leftViewMode: The left view mode in the input field. Defaults to `.never`.
     ///   - isRequired: A Boolean indicating if the field is required. Defaults to `false`.
     ///   - shouldValidate: A Boolean indicating whether the form input valiate.
     ///   - isSecureText: A Boolean indicating if the text should be securely hidden. Defaults to `false`.
@@ -78,6 +90,9 @@ open class TextForm: NSObject {
         label: String? = nil,
         text: String? = nil,
         placeholder: String? = nil,
+        clearButtonMode: UITextField.ViewMode = .never,
+        rightViewMode: UITextField.ViewMode = .never,
+        leftViewMode: UITextField.ViewMode = .never,
         isRequired: Bool = false,
         shouldValidate: Bool = true,
         isSecureText: Bool = false
@@ -85,6 +100,9 @@ open class TextForm: NSObject {
         self.init(
             label: label,
             placeholder: placeholder,
+            clearButtonMode: clearButtonMode,
+            rightViewMode: rightViewMode,
+            leftViewMode: leftViewMode,
             isRequired: isRequired,
             shouldValidate: shouldValidate,
             inputStyle: .text(text, TextInputContext(isSecureText: isSecureText))
@@ -494,6 +512,15 @@ open class TextForm: NSObject {
     /// expected. It is displayed in a grayed-out font and disappears once the user begins entering text.
     public var placeholder: String?
 
+    /// The clear button mode of the input field.
+    public var clearButtonMode: UITextField.ViewMode
+
+    /// The right view mode of the input field.
+    public var rightViewMode: UITextField.ViewMode
+
+    /// The left view mode of the input field.
+    public var leftViewMode: UITextField.ViewMode
+
     /// A handler that defines custom validation logic for the input.
     ///
     /// `validationHandler` is a closure that evaluates the validity of the current input. When provided, this handler
@@ -736,6 +763,9 @@ open class TextForm: NSObject {
         inputField = cell.inputField
         cell.inputField.form = self
         cell.inputField.placeholder = placeholder
+        cell.inputField.clearButtonMode = clearButtonMode
+        cell.inputField.rightViewMode = rightViewMode
+        cell.inputField.leftViewMode = leftViewMode
         switch inputStyle {
         case let .text(_, context):
             cell.inputField.isSecureTextEntry = context.isSecureText
