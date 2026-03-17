@@ -153,15 +153,12 @@ open class ComposedCollectionViewController: UIViewController {
 
     open func updateDataSource(_ sections: [any Section], animateWhenUpdate: Bool = true) {
         // Check duplicated ids
-        let sectionIds = sections.map(\.snapshotSection).map(\.hashValue)
-        let sectionIdsSet = Set(sectionIds)
-        guard sectionIds.count == sectionIdsSet.count else {
+        let sectionIds = sections.map(\.snapshotSection)
+        guard sectionIds.count == Set(sectionIds).count else {
             fatalError("Duplicated section Ids.")
         }
         for section in sections {
-            let itemIds = section.snapshotItems.map(\.hashValue)
-            let itemIdsSet = Set(itemIds)
-            guard itemIds.count == itemIdsSet.count else {
+            guard section.snapshotItems.count == Set(section.snapshotItems).count else {
                 fatalError("Duplicated item Ids.")
             }
         }
