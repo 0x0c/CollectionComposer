@@ -152,6 +152,20 @@ open class ComposedCollectionViewController: UIViewController {
     }
 
     open func updateDataSource(_ sections: [any Section], animateWhenUpdate: Bool = true) {
+        // Check duplicated ids
+        let sectionIds = sections.map(\.id)
+        let sectionIdsSet = Set(sectionIds)
+        guard sectionIds.count == sectionIdsSet.count else {
+            fatalError("Duplicated section Ids.")
+        }
+        for section in sections {
+            let itemIds = section.snapshotItems.map(\.hashValue)
+            let itemIdsSet = Set(itemIds)
+            guard itemIds.count == itemIdsSet.count else {
+                fatalError("Duplicated item Ids.")
+            }
+        }
+
         let layout = collectionView.collectionViewLayout as! UICollectionViewCompositionalLayout
         registerDecorationView(on: layout)
         var snapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashable>()
