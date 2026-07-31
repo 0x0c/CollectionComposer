@@ -96,15 +96,13 @@ open class PlainFooterView: PlainBoundaryView, BoundarySupplementaryFooterView, 
     /// If `true`, the footer remains visible even when scrolling.
     public let pinToVisibleBounds: Bool
 
-    // MARK: Internal
-
     /// Returns a configuration object for the footer based on the appearance setting.
     ///
     /// This method generates a `UIListContentConfiguration` appropriate to the list appearance
     /// (e.g., grouped or plain).
     ///
     /// - Returns: A `UIListContentConfiguration` configured for the current appearance style.
-    func footerConfiguration() -> UIListContentConfiguration {
+    public func footerConfiguration() -> UIListContentConfiguration {
         switch appearance {
         case .grouped, .insetGrouped, .sidebar:
             return .groupedFooter()
