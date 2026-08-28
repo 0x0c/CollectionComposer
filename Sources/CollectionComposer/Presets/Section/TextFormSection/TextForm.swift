@@ -594,7 +594,7 @@ open class TextForm: NSObject {
     ///
     /// - Parameter handler: The handler to trigger on focus.
     /// - Returns: The configured `TextForm` instance.
-    public func onFocused(_ handler: @escaping (TextForm) -> Void) -> TextForm {
+    public func onFocused(_ handler: @MainActor @escaping (TextForm) -> Void) -> TextForm {
         focusedHandler = handler
         return self
     }
@@ -603,7 +603,7 @@ open class TextForm: NSObject {
     ///
     /// - Parameter handler: The handler to trigger on loss of focus.
     /// - Returns: The configured `TextForm` instance.
-    public func onResigned(_ handler: @escaping (TextForm) -> Void) -> TextForm {
+    public func onResigned(_ handler: @MainActor @escaping (TextForm) -> Void) -> TextForm {
         resignedHandler = handler
         return self
     }
@@ -723,8 +723,8 @@ open class TextForm: NSObject {
     var next: TextForm?
     var previous: TextForm?
 
-    var focusedHandler: ((TextForm) -> Void)?
-    var resignedHandler: ((TextForm) -> Void)?
+    var focusedHandler: (@MainActor (TextForm) -> Void)?
+    var resignedHandler: (@MainActor (TextForm) -> Void)?
 
     var _allowsEditing = true
 
